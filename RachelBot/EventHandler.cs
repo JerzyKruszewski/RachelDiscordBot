@@ -8,6 +8,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Discord.Addons.Interactive;
 using RachelBot.Services.Storage;
+using RachelBot.Core.Configs;
 
 namespace RachelBot
 {
@@ -16,6 +17,7 @@ namespace RachelBot
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider _service;
+        private readonly IStorageService _storage = new JsonStorageService();
 
         public async Task InitializeAsync(DiscordSocketClient client)
         {
@@ -23,8 +25,8 @@ namespace RachelBot
 
             (_service as IDisposable)?.Dispose();
             _service = new ServiceCollection()
-                .AddSingleton<IStorageService, JsonStorageService>()
-                .AddSingleton(client)
+                .AddSingleton(_storage)
+                .AddSingleton(_client)
                 .AddSingleton(new InteractiveService(_client))
                 .BuildServiceProvider();
 
@@ -53,9 +55,22 @@ namespace RachelBot
                 if (msg == null) return;
                 SocketCommandContext context = new SocketCommandContext(_client, msg);
 
+                GuildConfig config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
+
                 int argPos = 0;
-                if (msg.HasStringPrefix(ConfigurationManager.AppSettings["Prefix"], ref argPos)
-                    || msg.HasMentionPrefix(_client.CurrentUser, ref argPos))
+                bool hasPrefix;
+                if (config == null)
+                {
+                    hasPrefix = (msg.HasStringPrefix(ConfigurationManager.AppSettings["Prefix"], ref argPos)
+                    || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
+                }
+                else
+                {
+                    hasPrefix = (msg.HasStringPrefix(config.GuildPrefix, ref argPos)
+                    || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
+                }
+
+                if (hasPrefix)
                 {
                     var result = await _commands.ExecuteAsync(context, argPos, _service);
                     if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)

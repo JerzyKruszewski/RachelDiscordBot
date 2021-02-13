@@ -5,6 +5,19 @@ namespace RachelBot.Services.Storage
 {
     public class JsonStorageService : IStorageService
     {
+        public void EnsureDirectoryExist(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+        }
+
+        public bool FileExist(string filepath)
+        {
+            return File.Exists(filepath);
+        }
+
         public T RestoreObject<T>(string filepath)
         {
             string json = File.ReadAllText(filepath);
@@ -16,11 +29,6 @@ namespace RachelBot.Services.Storage
             string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
 
             File.WriteAllText(filepath, json);
-        }
-
-        public bool FileExist(string filepath)
-        {
-            return File.Exists(filepath);
         }
     }
 }
