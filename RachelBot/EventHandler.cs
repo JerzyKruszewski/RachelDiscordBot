@@ -57,7 +57,14 @@ namespace RachelBot
                 ThumbnailUrl = arg.GetAvatarUrl()
             };
 
-            await Utility.GetMessageChannelById(guild, config.OutChannelId).SendMessageAsync("", embed: embed.Build());
+            ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.OutChannelId);
+
+            if (channel == null)
+            {
+                return;
+            }
+
+            await channel.SendMessageAsync("", embed: embed.Build());
         }
 
         private async Task HandleUserJoinAsync(SocketGuildUser arg)
@@ -72,7 +79,14 @@ namespace RachelBot
                 ThumbnailUrl = arg.GetAvatarUrl()
             };
 
-            await Utility.GetMessageChannelById(guild, config.InChannelId).SendMessageAsync("", embed: embed.Build());
+            ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.InChannelId);
+
+            if (channel == null)
+            {
+                return;
+            }
+
+            await channel.SendMessageAsync("", embed: embed.Build());
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
@@ -105,7 +119,7 @@ namespace RachelBot
 
                 if (hasPrefix)
                 {
-                    var result = await _commands.ExecuteAsync(context, argPos, _service);
+                    IResult result = await _commands.ExecuteAsync(context, argPos, _service);
                     if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
                     {
                         Console.WriteLine(result.ErrorReason);
