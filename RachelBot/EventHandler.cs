@@ -9,6 +9,7 @@ using Discord.WebSocket;
 using Discord.Addons.Interactive;
 using RachelBot.Services.Storage;
 using RachelBot.Core.Configs;
+using RachelBot.Utils;
 
 namespace RachelBot
 {
@@ -40,6 +41,38 @@ namespace RachelBot
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _service);
 
             _client.MessageReceived += HandleCommandAsync;
+            _client.UserJoined += HandleUserJoinAsync;
+            _client.UserLeft += HandleUserLeftAsync;
+        }
+
+        private async Task HandleUserLeftAsync(SocketGuildUser arg)
+        {
+            SocketGuild guild = arg.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = string.Format(config.LeftMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                Color = new Color(255, 0, 0),
+                ThumbnailUrl = arg.GetAvatarUrl()
+            };
+
+            await Utility.GetMessageChannelById(guild, config.OutChannelId).SendMessageAsync("", embed: embed.Build());
+        }
+
+        private async Task HandleUserJoinAsync(SocketGuildUser arg)
+        {
+            SocketGuild guild = arg.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = string.Format(config.WelcomeMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                Color = new Color(0, 255, 0),
+                ThumbnailUrl = arg.GetAvatarUrl()
+            };
+
+            await Utility.GetMessageChannelById(guild, config.InChannelId).SendMessageAsync("", embed: embed.Build());
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
