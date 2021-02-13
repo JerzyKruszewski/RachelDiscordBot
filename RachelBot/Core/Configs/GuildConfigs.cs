@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using RachelBot.Services.Storage;
 
 namespace RachelBot.Core.Configs
@@ -65,7 +66,7 @@ namespace RachelBot.Core.Configs
             return _config;
         }
 
-        public GuildConfig AddStaffRoles(params ulong[] staffRoles)
+        public GuildConfig AddStaffRoles(IEnumerable<ulong> staffRoles)
         {
             foreach (ulong role in staffRoles)
             {
@@ -82,7 +83,7 @@ namespace RachelBot.Core.Configs
             return _config;
         }
 
-        public GuildConfig ChangeStaffRoles(params ulong[] staffRoles)
+        public GuildConfig ChangeStaffRoles(IEnumerable<ulong> staffRoles)
         {
             _config.StaffRoleIds.Clear();
 
