@@ -7,6 +7,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Discord.Addons.Interactive;
+using RachelBot.Services.Storage;
 
 namespace RachelBot
 {
@@ -22,6 +23,7 @@ namespace RachelBot
 
             (_service as IDisposable)?.Dispose();
             _service = new ServiceCollection()
+                .AddSingleton<IStorageService, JsonStorageService>()
                 .AddSingleton(client)
                 .AddSingleton(new InteractiveService(_client))
                 .BuildServiceProvider();
