@@ -8,7 +8,7 @@ namespace RachelBot.Core.UserAccounts
 {
     public class Warning
     {
-        public uint Id { init; get; }
+        public int Id { init; get; }
 
         public int Value { init; get; } = 20;
         

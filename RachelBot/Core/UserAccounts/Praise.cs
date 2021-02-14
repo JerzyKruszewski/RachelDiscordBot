@@ -8,7 +8,7 @@ namespace RachelBot.Core.UserAccounts
 {
     public class Praise
     {
-        public uint Id { init; get; }
+        public int Id { init; get; }
 
         public ulong GiverId { init; get; }
 

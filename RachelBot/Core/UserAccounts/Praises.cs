@@ -8,12 +8,12 @@ namespace RachelBot.Core.UserAccounts
 {
     public class Praises
     {
-        public static Praise GetPraise(UserAccount user, uint id)
+        public static Praise GetPraise(UserAccount user, int id)
         {
             return user.Praises.SingleOrDefault(p => p.Id == id);
         }
 
-        public static Praise CreatePraise(ulong giverId, uint id, string reason)
+        public static Praise CreatePraise(ulong giverId, int id, string reason)
         {
             return new Praise()
             {
@@ -22,6 +22,18 @@ namespace RachelBot.Core.UserAccounts
                 Reason = reason,
                 GivenAt = DateTime.Now
             };
+        }
+
+        public static int GetNextId(IList<Praise> praises)
+        {
+            try
+            {
+                return praises.Max(w => w.Id);
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
         }
     }
 }

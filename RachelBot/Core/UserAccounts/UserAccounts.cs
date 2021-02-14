@@ -1,4 +1,5 @@
-﻿using RachelBot.Services.Storage;
+﻿using RachelBot.Core.Configs;
+using RachelBot.Services.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,48 @@ namespace RachelBot.Core.UserAccounts
             return account;
         }
 
+        public void AddXP(UserAccount account, ulong exp)
+        {
+            account.XP += exp;
+            Save();
+        }
+
+        public void AddPraise(UserAccount account, ulong giverId, string reason)
+        {
+            account.Praises.Add(Praises.CreatePraise(giverId, Praises.GetNextId(account.Praises), reason));
+            Save();
+        }
+
+        public void AddWarning(UserAccount account, string reason, GuildConfig config)
+        {
+            if (config.PointBasedWarns)
+            {
+                string[] words = reason.Split(' ');
+                int value = int.Parse(reason.Split(' ')[0]);
+                reason = words[1];
+
+                for (int i = 2; i < words.Length; i++)
+                {
+                    reason += $" {words[i]}";
+                }
+
+                account.Warnings.Add(Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), value, reason, config.WarnDuration));
+            }
+            else
+            {
+                account.Warnings.Add(Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), reason, config.WarnDuration));
+            }
+
+            Save();
+        }
+
+        public void RemoveWarning(UserAccount account, int warnId)
+        {
+            account.Warnings.Remove(account.Warnings.SingleOrDefault(w => w.Id == warnId));
+
+            Save();
+        }
+
         public void DeleteExpiredWarnings(UserAccount account)
         {
             try
@@ -81,6 +124,12 @@ namespace RachelBot.Core.UserAccounts
                 Console.WriteLine(ex.Message);
             }
 
+            Save();
+        }
+
+        public void AddAchievement(UserAccount account, string achievement)
+        {
+            account.Archievements.Add(achievement);
             Save();
         }
     }
