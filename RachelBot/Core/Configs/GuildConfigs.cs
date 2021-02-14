@@ -222,14 +222,5 @@ namespace RachelBot.Core.Configs
 
             return _config;
         }
-
-        public GuildConfig ChangeDaysTillNextNicknameChange(uint nextNicknameChangeIn)
-        {
-            _config.DaysTillNextNicknameChange = nextNicknameChangeIn;
-
-            Save();
-
-            return _config;
-        }
     }
 }

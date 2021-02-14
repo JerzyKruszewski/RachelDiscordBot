@@ -50,8 +50,6 @@ namespace RachelBot.Core.Configs
 
         #region Others
         public ulong AnnouncementChannelId { get; set; } = 0;
-
-        public uint DaysTillNextNicknameChange { get; set; } = 0;
         #endregion
     }
 }

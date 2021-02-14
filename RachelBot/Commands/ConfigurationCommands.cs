@@ -161,12 +161,5 @@ namespace RachelBot.Commands
         {
             new GuildConfigs(Context.Guild.Id, _storage).ChangeAnnouncementChannel(channel.Id);
         }
-
-        [Command("ChangeDaysTillNextNicknameChange")]
-        [RequireUserPermission(GuildPermission.Administrator)]
-        public async Task ChangeDaysTillNextNicknameChange(uint nextNicknameChangeIn)
-        {
-            new GuildConfigs(Context.Guild.Id, _storage).ChangeDaysTillNextNicknameChange(nextNicknameChangeIn);
-        }
     }
 }

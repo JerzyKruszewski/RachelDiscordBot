@@ -19,6 +19,7 @@ namespace RachelBot
         private CommandService _commands;
         private IServiceProvider _service;
         private readonly IStorageService _storage = new JsonStorageService();
+        private readonly Random _random = new Random();
 
         public async Task InitializeAsync(DiscordSocketClient client)
         {
@@ -26,6 +27,7 @@ namespace RachelBot
 
             (_service as IDisposable)?.Dispose();
             _service = new ServiceCollection()
+                .AddSingleton(_random)
                 .AddSingleton(_storage)
                 .AddSingleton(_client)
                 .AddSingleton(new InteractiveService(_client))
