@@ -12,6 +12,7 @@ using RachelBot.Services.Storage;
 using RachelBot.Preconditions;
 using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
+using RachelBot.Core.LevelingSystem;
 
 namespace RachelBot.Commands
 {
@@ -86,6 +87,41 @@ namespace RachelBot.Commands
             UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
 
             accounts.AddAchievement(accounts.GetUserAccount(user.Id), archievement);
+        }
+
+        [Command("unlock channel")]
+        [RequireStaff]
+        public async Task UnlockChannels(IRole role, params IGuildChannel[] channels)
+        {
+            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Allow, sendMessages: PermValue.Allow, embedLinks: PermValue.Allow, attachFiles: PermValue.Allow,
+                readMessageHistory: PermValue.Allow, mentionEveryone: PermValue.Deny, useExternalEmojis: PermValue.Allow);
+
+            foreach (IGuildChannel channel in channels)
+            {
+                await channel.AddPermissionOverwriteAsync(role, permissions);
+            }
+        }
+
+        [Command("lock channel")]
+        [RequireStaff]
+        public async Task LockChannels(IRole role, params IGuildChannel[] channels)
+        {
+            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Deny, sendMessages: PermValue.Deny, embedLinks: PermValue.Deny, attachFiles: PermValue.Deny,
+                readMessageHistory: PermValue.Deny, mentionEveryone: PermValue.Deny, useExternalEmojis: PermValue.Deny);
+
+            foreach (IGuildChannel channel in channels)
+            {
+                await channel.AddPermissionOverwriteAsync(role, permissions);
+            }
+        }
+
+        [Command("Add level role")]
+        [RequireStaff]
+        public async Task AddLevelRole(IRole role, uint level)
+        {
+            new LevelRoleRewards(Context.Guild.Id, _storage).CreateLevelRoleReward(role.Id, level);
+
+            await Context.Channel.SendMessageAsync("Level Role Added");
         }
     }
 }

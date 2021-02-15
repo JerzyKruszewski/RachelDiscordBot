@@ -10,6 +10,7 @@ using Discord.Addons.Interactive;
 using RachelBot.Services.Storage;
 using RachelBot.Core.Configs;
 using RachelBot.Utils;
+using RachelBot.Core.LevelingSystem;
 
 namespace RachelBot
 {
@@ -105,6 +106,8 @@ namespace RachelBot
                 SocketCommandContext context = new SocketCommandContext(_client, msg);
 
                 GuildConfig config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
+
+                new LevelingHandler(_storage).UserSendMessage(context.User as SocketGuildUser);
 
                 int argPos = 0;
                 bool hasPrefix;
