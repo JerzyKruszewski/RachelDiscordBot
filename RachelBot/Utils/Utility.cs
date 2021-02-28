@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using RachelBot.Core.Configs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,22 @@ namespace RachelBot.Utils
         public static IRole GetRoleById(SocketGuild guild, ulong id)
         {
             return guild.Roles.SingleOrDefault(r => r.Id == id);
+        }
+
+        public static string ParseReason(string reason, GuildConfig config)
+        {
+            if (config.PointBasedWarns)
+            {
+                string[] words = reason.Split(' ');
+                reason = words[1];
+
+                for (int i = 2; i < words.Length; i++)
+                {
+                    reason += $" {words[i]}";
+                }
+            }
+
+            return reason;
         }
     }
 }

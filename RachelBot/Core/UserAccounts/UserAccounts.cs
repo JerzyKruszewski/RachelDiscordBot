@@ -77,8 +77,10 @@ namespace RachelBot.Core.UserAccounts
             Save();
         }
 
-        public void AddWarning(UserAccount account, string reason, GuildConfig config)
+        public Warning AddWarning(UserAccount account, string reason, GuildConfig config)
         {
+            Warning warn;
+
             if (config.PointBasedWarns)
             {
                 string[] words = reason.Split(' ');
@@ -90,14 +92,17 @@ namespace RachelBot.Core.UserAccounts
                     reason += $" {words[i]}";
                 }
 
-                account.Warnings.Add(Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), value, reason, config.WarnDuration));
+                warn = Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), value, reason, config.WarnDuration);
             }
             else
             {
-                account.Warnings.Add(Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), reason, config.WarnDuration));
+                warn = Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), reason, config.WarnDuration);
             }
 
+            account.Warnings.Add(warn);
             Save();
+
+            return warn;
         }
 
         public void RemoveWarning(UserAccount account, int warnId)
