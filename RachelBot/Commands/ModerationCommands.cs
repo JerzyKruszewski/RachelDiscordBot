@@ -80,9 +80,7 @@ namespace RachelBot.Commands
             await channel.SendMessageAsync(alerts.GetFormattedAlert("USER_PRAISED", user.Mention, Context.User.Mention, reason));
         }
 
-        //TODO:
-        //Add message to user
-        [Command("Warn")]
+        [Command("Warn", RunMode = RunMode.Async)]
         [Alias("Ostrzeżenie")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.Administrator)]
@@ -118,13 +116,32 @@ namespace RachelBot.Commands
                                                                            alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
             }
 
-            if (config.PointBasedWarns)
+            string message;
+
+            try
             {
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, "PLACEHOLDER"));
+                IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+
+                if (config.PointBasedWarns)
+                {
+                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, warn.Value, warn.Reason,
+                                                       accounts.GetWarningsCount(account), accounts.GetWarningsPower(account), config.ToSChannelId);
+
+                    await dmChannel.SendMessageAsync(message);
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, message));
+                }
+                else
+                {
+                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, warn.Reason,
+                                                       accounts.GetWarningsCount(account), config.ToSChannelId);
+
+                    await dmChannel.SendMessageAsync(message);
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, message));
+                }
             }
-            else
+            catch (Exception)
             {
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, "PLACEHOLDER"));
+                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS", user.Mention));
             }
         }
 

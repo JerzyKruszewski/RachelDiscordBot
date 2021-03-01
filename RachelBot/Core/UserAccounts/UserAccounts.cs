@@ -132,6 +132,23 @@ namespace RachelBot.Core.UserAccounts
             Save();
         }
 
+        public int GetWarningsCount(UserAccount account)
+        {
+            return account.Warnings.Count;
+        }
+
+        public int GetWarningsPower(UserAccount account)
+        {
+            int power = 0;
+
+            foreach (Warning warn in account.Warnings)
+            {
+                power += warn.Value;
+            }
+
+            return power;
+        }
+
         public void AddAchievement(UserAccount account, string achievement)
         {
             account.Archievements.Add(achievement);

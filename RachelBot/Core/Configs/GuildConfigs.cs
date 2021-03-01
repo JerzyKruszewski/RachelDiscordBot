@@ -222,5 +222,14 @@ namespace RachelBot.Core.Configs
 
             return _config;
         }
+
+        public GuildConfig ChangeToSChannel(ulong id)
+        {
+            _config.ToSChannelId = id;
+
+            Save();
+
+            return _config;
+        }
     }
 }

@@ -50,6 +50,8 @@ namespace RachelBot.Core.Configs
 
         #region Others
         public ulong AnnouncementChannelId { get; set; } = 0;
+
+        public ulong ToSChannelId { get; set; } = 0;
         #endregion
     }
 }

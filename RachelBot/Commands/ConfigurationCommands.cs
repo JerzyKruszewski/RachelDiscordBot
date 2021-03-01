@@ -161,5 +161,12 @@ namespace RachelBot.Commands
         {
             new GuildConfigs(Context.Guild.Id, _storage).ChangeAnnouncementChannel(channel.Id);
         }
+
+        [Command("ChangeToSChannel")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task ChangeToSChannel(ITextChannel channel)
+        {
+            new GuildConfigs(Context.Guild.Id, _storage).ChangeToSChannel(channel.Id);
+        }
     }
 }
