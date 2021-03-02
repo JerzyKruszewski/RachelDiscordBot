@@ -107,7 +107,7 @@ namespace RachelBot.Core.UserAccounts
 
         public void RemoveWarning(UserAccount account, int warnId)
         {
-            account.Warnings.Remove(account.Warnings.SingleOrDefault(w => w.Id == warnId));
+            account.Warnings.Remove(account.Warnings.Single(w => w.Id == warnId));
 
             Save();
         }

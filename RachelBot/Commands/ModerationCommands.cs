@@ -145,6 +145,34 @@ namespace RachelBot.Commands
             }
         }
 
+        [Command("Remove Warn", RunMode = RunMode.Async)]
+        [Alias("Usuń Ostrzeżenie")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task WarnUser(SocketGuildUser user, int warnId)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+            UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
+            UserAccount account = accounts.GetUserAccount(user.Id);
+
+            accounts.DeleteExpiredWarnings(account);
+
+            try
+            {
+                accounts.RemoveWarning(account, warnId);
+            }
+            catch (Exception)
+            {
+                await modChannel.SendMessageAsync(alerts.GetAlert("WARN_REMOVE_FAIL"));
+                return;
+            }
+
+            await modChannel.SendMessageAsync(alerts.GetAlert("WARN_REMOVE_SUCCESS"));
+        }
+
         [Command("Archievement")]
         [Alias("Osiągnięcie")]
         [RequireStaff]
