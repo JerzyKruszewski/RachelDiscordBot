@@ -24,5 +24,9 @@
   "CHECK_WARNINGS_TEMPLATE_POINT": "{0} has {1} (**{2}**) active warns.\n{3}",
   "CHECK_WARNINGS_TEMPLATE": "{0} has {1} active warns.\n{2}",
   "PARSE_WARN_POINT": "{0} - (**{1}**) {2} [Expire: {3}]\n",
-  "PARSE_WARN": "{0} - {1} [Expire: {2}]\n"
+  "PARSE_WARN": "{0} - {1} [Expire: {2}]\n",
+  "CHECK_PRAISES_TEMPLATE": "{0} has {1} praises.\n{2}",
+  "PARSE_PRAISE": "{0} - {1} ({2})\n",
+  "CHECK_ARCHIEVEMENTS_TEMPLATE": "{0} has {1} archievements.\n{2}",
+  "PARSE_ARCHIEVEMENT": "{0} - {1}\n"
 }

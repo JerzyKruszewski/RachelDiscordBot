@@ -94,5 +94,51 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync(message);
         }
+
+        [Command("Praises")]
+        public async Task CheckPraises(SocketGuildUser user = null)
+        {
+            if (user == null)
+            {
+                user = Context.User as SocketGuildUser;
+            }
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            UserAccounts accounts = new UserAccounts(guild.Id, _storage);
+            UserAccount account = accounts.GetUserAccount(user.Id);
+
+            string praiseList = "";
+
+            foreach (Praise praise in account.Praises)
+            {
+                praiseList += alerts.GetFormattedAlert("PARSE_PRAISE", praise.Id, praise.Reason, praise.GivenAt.ToString(@"dd\/MM\/yyyy HH:mm"));
+            }
+            
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_PRAISES_TEMPLATE", user.Username, account.Praises.Count, praiseList));
+        }
+
+        [Command("Archievements")]
+        public async Task CheckArchievements(SocketGuildUser user = null)
+        {
+            if (user == null)
+            {
+                user = Context.User as SocketGuildUser;
+            }
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            UserAccounts accounts = new UserAccounts(guild.Id, _storage);
+            UserAccount account = accounts.GetUserAccount(user.Id);
+
+            string archievementsList = "";
+
+            for (int i = 1; i <= account.Archievements.Count; i++)
+            {
+                archievementsList += alerts.GetFormattedAlert("PARSE_ARCHIEVEMENT", i, account.Archievements[i]);
+            }
+
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ARCHIEVEMENTS_TEMPLATE", user.Username, account.Archievements.Count, archievementsList));
+        }
     }
 }
