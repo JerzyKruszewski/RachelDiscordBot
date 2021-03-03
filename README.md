@@ -82,10 +82,10 @@
 
 ***
 ## User join/leave messages placeholders
-{0} - user mention
-{1} - user username
-{2} - user id
-{3} - guild (server) name
+- {0} - user mention
+- {1} - user username
+- {2} - user id
+- {3} - guild (server) name
 
 ***
 ## Currently supported languages
