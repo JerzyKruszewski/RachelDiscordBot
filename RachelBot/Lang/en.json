@@ -28,5 +28,9 @@
   "CHECK_PRAISES_TEMPLATE": "{0} has {1} praises.\n{2}",
   "PARSE_PRAISE": "{0} - {1} ({2})\n",
   "CHECK_ARCHIEVEMENTS_TEMPLATE": "{0} has {1} archievements.\n{2}",
-  "PARSE_ARCHIEVEMENT": "{0} - {1}\n"
+  "PARSE_ARCHIEVEMENT": "{0} - {1}\n",
+  "SOCIALS_TITLE": "Rachel's Socials",
+  "SOCIALS": "Discord: Bajarz Development {0}",
+  "CREDITS_TITLE": "Credits",
+  "CREDITS": "Gave me life: Jurij98 (<@331026920269414410>)\nMade amazing avatars: aster_atheris {0}"
 }

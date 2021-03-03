@@ -13,6 +13,8 @@ namespace RachelBot.Utils
     {
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 
+        public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
+
         public static ISocketMessageChannel GetMessageChannelById(SocketGuild guild, ulong id)
         {
             return guild.TextChannels.SingleOrDefault(c => c.Id == id);

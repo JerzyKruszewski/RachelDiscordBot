@@ -144,10 +144,32 @@ namespace RachelBot.Commands
         [Command("Socials")]
         public async Task GetSocials()
         {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
             EmbedBuilder embed = new EmbedBuilder()
             {
-                Title = "Rachel's Socials",
-                Description = $"Discord: Bajarz Development {Utility.DiscordInviteLink}",
+                Title = alerts.GetAlert("SOCIALS_TITLE"),
+                Description = alerts.GetFormattedAlert("SOCIALS", Utility.DiscordInviteLink),
+                ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
+
+        [Command("Credits")]
+        public async Task GetCredits()
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetAlert("CREDITS_TITLE"),
+                Description = alerts.GetFormattedAlert("CREDITS", Utility.SaraArtistInstagram),
                 ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
                 Color = new Color(1, 69, 44)
             };
