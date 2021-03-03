@@ -140,5 +140,19 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ARCHIEVEMENTS_TEMPLATE", user.Username, account.Archievements.Count, archievementsList));
         }
+
+        [Command("Socials")]
+        public async Task GetSocials()
+        {
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = "Rachel's Socials",
+                Description = $"Discord: Bajarz Development {Utility.DiscordInviteLink}",
+                ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
     }
 }

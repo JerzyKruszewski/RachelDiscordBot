@@ -11,6 +11,8 @@ namespace RachelBot.Utils
 {
     public class Utility
     {
+        public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
+
         public static ISocketMessageChannel GetMessageChannelById(SocketGuild guild, ulong id)
         {
             return guild.TextChannels.SingleOrDefault(c => c.Id == id);
