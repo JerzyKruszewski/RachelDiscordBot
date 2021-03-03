@@ -29,6 +29,7 @@
 ### Configuration Commands
 
 **All configuration commands require user and Rachel to have administrator privileges.**
+
 *Bolded commands are obligatory.*
 
 | Command | Parameters | Outcome | Example |
@@ -98,11 +99,13 @@ If you like Rachel bot consider giving us a GitHub star and we invite you to our
 ***
 ## Credits
 Idea and realization: Jerzy Kruszewski
+
 Avatars: aster_atheris ([artist instagram page][ArtistInstagram])
 
 ***
 ## License
 Code: MIT License
+
 Images: All rights reserved. They are intellectual properties of respective artist. 
 
 ***
