@@ -11,6 +11,8 @@ namespace RachelBot.Utils
 {
     public class Utility
     {
+        public const string Version = "1.0.0";
+
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";

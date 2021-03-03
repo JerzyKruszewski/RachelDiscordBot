@@ -13,7 +13,6 @@ using RachelBot.Lang;
 
 namespace RachelBot.Commands
 {
-    [Group("Config")]
     public class ConfigurationCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;
@@ -23,9 +22,10 @@ namespace RachelBot.Commands
             _storage = storage;
         }
 
-        [Command("GuildPrefix")]
+        [Command("ChangeGuildPrefix")]
         [RequireUserPermission(GuildPermission.Administrator)]
-        public async Task ChangeGuildPrefix(string prefix)
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task ChangeGuildPrefix([Remainder]string prefix)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
 
@@ -36,6 +36,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeGuildLanguage")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeGuildLanguage(string languageIso)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -47,6 +48,7 @@ namespace RachelBot.Commands
 
         [Command("AddStaffRoles")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task AddStaffRoles(params SocketRole[] staffRoles)
         {
             List<ulong> list = new List<ulong>();
@@ -65,6 +67,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeStaffRoles")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeStaffRoles(params SocketRole[] staffRoles)
         {
             List<ulong> list = new List<ulong>();
@@ -81,8 +84,9 @@ namespace RachelBot.Commands
             await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
         }
 
-        [Command("ChangeGuildModerationChannel")]
+        [Command("ChangeModerationChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeGuildModerationChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -94,6 +98,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeUsersJoiningChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeUsersJoiningChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -105,6 +110,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWelcomeMessage")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWelcomeMessage([Remainder]string message)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -116,6 +122,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeUsersLeftChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeUsersLeftChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -127,6 +134,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeUserLeftMessage")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeUserLeftMessage([Remainder]string message)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -138,6 +146,7 @@ namespace RachelBot.Commands
 
         [Command("ChangePunishmentRole")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangePunishmentRole(IRole role)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -149,6 +158,7 @@ namespace RachelBot.Commands
 
         [Command("ChangePunishmentChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangePunishmentChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -160,6 +170,7 @@ namespace RachelBot.Commands
 
         [Command("TogglePointSystemWarns")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task TogglePointSystemWarns(bool toggle)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -171,6 +182,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWarnDuration")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWarnDuration(uint duration)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -182,6 +194,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWarnCountTillBan")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWarnCountTillBan(uint warnCount)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -193,6 +206,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWarnCountTillPunishment")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWarnCountTillPunishment(uint warnCount)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -204,6 +218,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWarnPointsTillBan")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWarnPointsTillBan(uint warnCount)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -215,6 +230,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeWarnPointsTillPunishment")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeWarnPointsTillPunishment(uint warnCount)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -226,6 +242,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeAnnouncementChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeAnnouncementChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
@@ -237,6 +254,7 @@ namespace RachelBot.Commands
 
         [Command("ChangeToSChannel")]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ChangeToSChannel(ITextChannel channel)
         {
             GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);

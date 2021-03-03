@@ -17,7 +17,6 @@ using RachelBot.Lang;
 
 namespace RachelBot.Commands
 {
-    [Group("Staff")]
     public class ModerationCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;
@@ -60,6 +59,7 @@ namespace RachelBot.Commands
         [Command("Praise")]
         [Alias("Pochwal")]
         [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task PraiseUser(SocketGuildUser user, [Remainder]string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -176,6 +176,7 @@ namespace RachelBot.Commands
         [Command("Archievement")]
         [Alias("Osiągnięcie")]
         [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task Archievement(SocketGuildUser user, [Remainder]string archievement)
         {
             SocketGuild guild = Context.Guild;
@@ -196,8 +197,9 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_ARCHIEVEMENT", user.Mention, archievement));
         }
 
-        [Command("unlock channel")]
+        [Command("Unlock Channel")]
         [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task UnlockChannels(IRole role, params IGuildChannel[] channels)
         {
             SocketGuild guild = Context.Guild;
@@ -216,8 +218,9 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetAlert("CHANNELS_UNLOCKED"));
         }
 
-        [Command("lock channel")]
+        [Command("Lock Channel")]
         [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task LockChannels(IRole role, params IGuildChannel[] channels)
         {
             SocketGuild guild = Context.Guild;
@@ -238,6 +241,7 @@ namespace RachelBot.Commands
 
         [Command("Add level role")]
         [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task AddLevelRole(IRole role, uint level)
         {
             SocketGuild guild = Context.Guild;
