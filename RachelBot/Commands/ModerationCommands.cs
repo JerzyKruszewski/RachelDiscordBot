@@ -269,7 +269,7 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("LEVEL_ROLE_REMOVED", role.Id));
         }
 
-        [Command("Show Level Roles")]
+        [Command("Show Level Roles", RunMode = RunMode.Async)]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ShowLevelRoles()
@@ -281,10 +281,10 @@ namespace RachelBot.Commands
 
             IList<LevelRoleReward> roleRewards = new LevelRoleRewards(Context.Guild.Id, _storage).GetLevelRoleRewards();
             string description = "";
-
-            for (int i = 1; i <= roleRewards.Count; i++)
+            
+            for (int i = 0; i < roleRewards.Count; i++)
             {
-                description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
+                description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i + 1, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
             }
 
             EmbedBuilder embed = new EmbedBuilder()
