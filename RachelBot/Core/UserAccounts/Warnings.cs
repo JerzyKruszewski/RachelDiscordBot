@@ -38,7 +38,7 @@ namespace RachelBot.Core.UserAccounts
         {
             try
             {
-                return warnings.Max(w => w.Id);
+                return warnings.Max(w => w.Id) + 1;
             }
             catch (Exception)
             {
