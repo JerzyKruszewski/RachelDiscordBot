@@ -15,6 +15,8 @@ namespace RachelBot.Utils
 
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 
+        public const string GitHubPage = @"https://github.com/JerzyKruszewski/RachelDiscordBot";
+
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
 
         public static ISocketMessageChannel GetMessageChannelById(SocketGuild guild, ulong id)

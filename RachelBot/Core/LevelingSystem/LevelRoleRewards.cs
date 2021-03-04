@@ -73,5 +73,19 @@ namespace RachelBot.Core.LevelingSystem
 
             return reward;
         }
+
+        public void RemoveLevelRoleReward(ulong id)
+        {
+            LevelRoleReward reward = _roleRewards.SingleOrDefault(r => r.RoleId == id);
+
+            if (reward == null)
+            {
+                return;
+            }
+
+            _roleRewards.Remove(reward);
+
+            Save();
+        }
     }
 }

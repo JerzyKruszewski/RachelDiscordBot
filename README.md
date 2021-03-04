@@ -4,13 +4,13 @@
 ***
 ![Rachel by aster_atheris][RachelNormal]
 
-## Feature list:
+## Feature list
 - Banning and kicking users
 - Two warning systems (quantity- and point-based)
 - Praise system
 - Archievement system
 - Mention command prefix
-- Customizable guild (server) wise command prefix (default $ )
+- Customizable guild (server) wise command prefix (default $)
 - Customizable guild (server) wise user join and left message
 - Simple user leveling system
 
@@ -68,6 +68,8 @@
 | Unlock Channel | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
 | Lock Channel | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
+| Remove Level Role | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
+| Show Level Roles | --- | Will show all role rewards | $show level roles |
 
 ### User commands
 
@@ -79,6 +81,7 @@
 | Archievements | Optional user object | Will return more detailed information about user achievements | $achievements |
 | Socials | --- | Will return Rachel's socials | $socials |
 | Credits | --- | Will return Rachel's credits | $credits |
+| Help | --- | Will show basic information about how to get support | $help |
 
 ***
 ## User join/leave messages placeholders

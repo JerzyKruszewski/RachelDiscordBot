@@ -176,5 +176,23 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
+
+        [Command("Help")]
+        public async Task GetHelp()
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetAlert("HELP_TITLE"),
+                Description = alerts.GetFormattedAlert("HELP", Utility.GitHubPage, Utility.DiscordInviteLink),
+                ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
     }
 }

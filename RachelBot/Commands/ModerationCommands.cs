@@ -239,7 +239,7 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetAlert("CHANNELS_LOCKED"));
         }
 
-        [Command("Add level role")]
+        [Command("Add Level Role")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.Administrator)]
         public async Task AddLevelRole(IRole role, uint level)
@@ -252,6 +252,49 @@ namespace RachelBot.Commands
             new LevelRoleRewards(Context.Guild.Id, _storage).CreateLevelRoleReward(role.Id, level);
 
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("LEVEL_ROLE_ADDED", role.Id, level));
+        }
+
+        [Command("Remove Level Role")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task RemoveLevelRole(IRole role)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+
+            new LevelRoleRewards(Context.Guild.Id, _storage).RemoveLevelRoleReward(role.Id);
+
+            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("LEVEL_ROLE_REMOVED", role.Id));
+        }
+
+        [Command("Show Level Roles")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task ShowLevelRoles()
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+
+            IList<LevelRoleReward> roleRewards = new LevelRoleRewards(Context.Guild.Id, _storage).GetLevelRoleRewards();
+            string description = "";
+
+            for (int i = 1; i <= roleRewards.Count; i++)
+            {
+                description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
+            }
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetAlert("LEVEL_ROLE_LIST_TEMPLATE"),
+                Description = description,
+                Color = new Color(1, 69, 44)
+            };
+
+            await modChannel.SendMessageAsync("", embed: embed.Build());
         }
     }
 }

@@ -19,6 +19,9 @@
   "CHANNELS_UNLOCKED": "Channels got successfully unlocked with default template.",
   "CHANNELS_LOCKED": "Channels got successfully locked with default template.",
   "LEVEL_ROLE_ADDED": "Added level role for role <&{0}> (Require level: {1}+)",
+  "LEVEL_ROLE_REMOVED": "Removed level role for role <&{0}>",
+  "LEVEL_ROLE_LIST_TEMPLATE": "Level roles:",
+  "LEVEL_ROLE_LIST_ITEM": "{0} - <&{1}> (min lvl: {2})\n",
   "STATUS_MESSAGE_POINT": "{0} has {1} lvl, {2} xp.\nWas prised {3} times and has {4} archievements.\nHas {5} (**{6}**) active warns.",
   "STATUS_MESSAGE": "{0} has {1} lvl, {2} xp.\nWas prised {3} times and has {4} archievements.\nHas {5} active warns.",
   "CHECK_WARNINGS_TEMPLATE_POINT": "{0} has {1} (**{2}**) active warns.\n{3}",
@@ -32,5 +35,7 @@
   "SOCIALS_TITLE": "Rachel's Socials",
   "SOCIALS": "Discord: Bajarz Development {0}",
   "CREDITS_TITLE": "Credits",
-  "CREDITS": "Gave me life: Jurij98 (<@331026920269414410>)\nMade amazing avatars: aster_atheris {0}"
+  "CREDITS": "Gave me life: Jurij98 (<@331026920269414410>)\nMade amazing avatars: aster_atheris {0}",
+  "HELP_TITLE": "Need help?",
+  "HELP": "Commands list available here: {0}\nIf you still have problems join our discord server and get direct support: {1}"
 }
