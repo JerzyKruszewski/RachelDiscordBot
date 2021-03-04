@@ -35,8 +35,8 @@
 5. Enjoy!
 
 ***
-## Command List
 ![Smiling Rachel by aster_atheris][RachelSmiling]
+## Command List
 
 ### Configuration Commands
 
@@ -108,8 +108,8 @@
 
 ***
 ## Support us
-![Affectionate Rachel by aster_atheris][RachelAffectionate]
 If you like Rachel bot consider giving us a GitHub star and we invite you to our [Discord server][DiscordInvite].
+![Affectionate Rachel by aster_atheris][RachelAffectionate]
 
 ***
 ## Credits
