@@ -50,46 +50,60 @@ namespace RachelBot
 
         private async Task HandleUserLeftAsync(SocketGuildUser arg)
         {
-            SocketGuild guild = arg.Guild;
-            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
-
-            EmbedBuilder embed = new EmbedBuilder()
+            try
             {
-                Title = string.Format(config.LeftMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
-                Color = new Color(255, 0, 0),
-                ThumbnailUrl = arg.GetAvatarUrl()
-            };
+                SocketGuild guild = arg.Guild;
+                GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
 
-            ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.OutChannelId);
+                EmbedBuilder embed = new EmbedBuilder()
+                {
+                    Title = string.Format(config.LeftMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                    Color = new Color(255, 0, 0),
+                    ThumbnailUrl = arg.GetAvatarUrl()
+                };
 
-            if (channel == null)
-            {
-                return;
+                ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.OutChannelId);
+
+                if (channel == null)
+                {
+                    return;
+                }
+
+                await channel.SendMessageAsync("", embed: embed.Build());
             }
-
-            await channel.SendMessageAsync("", embed: embed.Build());
+            catch (Exception ex)
+            {
+                Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
+            }
         }
 
         private async Task HandleUserJoinAsync(SocketGuildUser arg)
         {
-            SocketGuild guild = arg.Guild;
-            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
-
-            EmbedBuilder embed = new EmbedBuilder()
+            try
             {
-                Title = string.Format(config.WelcomeMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
-                Color = new Color(0, 255, 0),
-                ThumbnailUrl = arg.GetAvatarUrl()
-            };
+                SocketGuild guild = arg.Guild;
+                GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
 
-            ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.InChannelId);
+                EmbedBuilder embed = new EmbedBuilder()
+                {
+                    Title = string.Format(config.WelcomeMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                    Color = new Color(0, 255, 0),
+                    ThumbnailUrl = arg.GetAvatarUrl()
+                };
 
-            if (channel == null)
-            {
-                return;
+                ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.InChannelId);
+
+                if (channel == null)
+                {
+                    return;
+                }
+
+                await channel.SendMessageAsync("", embed: embed.Build());
             }
-
-            await channel.SendMessageAsync("", embed: embed.Build());
+            catch (Exception ex)
+            {
+                Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
+            }
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
@@ -129,13 +143,14 @@ namespace RachelBot
                     {
                         Console.WriteLine(result.ErrorReason);
                         await context.Channel.SendMessageAsync(result.ErrorReason);
+                        Program.LogToFile($"WARNING: {result.ErrorReason}");
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw;
+                Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
             }
         }
     }

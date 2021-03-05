@@ -125,6 +125,11 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.1.0
+	- Added bot owner commands
+	- Added file logger
+	- Administrators are now staff members by default
+	- Fixed critical bug
 - Version 1.0.1
 	- Fixed issue with warns and praises ids
 - Version 1.0.0

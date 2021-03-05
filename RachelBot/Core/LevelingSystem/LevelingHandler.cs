@@ -61,7 +61,7 @@ namespace RachelBot.Core.LevelingSystem
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        throw;
+                        Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
                     }
                 }
             }

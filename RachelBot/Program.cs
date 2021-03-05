@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
@@ -12,6 +14,7 @@ namespace RachelBot
     {
         private DiscordSocketClient _client;
         private EventHandler _handler;
+        private const string LogFilePath = "./Log.txt";
 
         private static void Main() => new Program().RunBotAsync().GetAwaiter().GetResult();
 
@@ -40,6 +43,7 @@ namespace RachelBot
             catch (Exception ex)
             {
                 Console.WriteLine($"ERROR: {ex.Message}");
+                LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
             }
         }
 
@@ -72,7 +76,18 @@ namespace RachelBot
         private Task BotLog(LogMessage msg)
         {
             Console.WriteLine(msg.Message);
+
+            LogToFile(msg.Message);
+
             return Task.CompletedTask;
+        }
+
+        public static void LogToFile(string message)
+        {
+            using (StreamWriter writer = new StreamWriter(LogFilePath, true, Encoding.UTF8))
+            {
+                writer.WriteLine(message);
+            }
         }
     }
 }

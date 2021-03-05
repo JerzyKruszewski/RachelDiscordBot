@@ -15,11 +15,18 @@ namespace RachelBot.Preconditions
     {
         public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
+            SocketGuildUser user = context.User as SocketGuildUser;
+
+            if (user.GuildPermissions.Administrator)
+            {
+                return Task.FromResult(PreconditionResult.FromSuccess());
+            }
+
             GuildConfig config = new GuildConfigs(context.Guild.Id, services.GetService<IStorageService>()).GetGuildConfig();
 
             foreach (ulong roleId in config.StaffRoleIds)
             {
-                if ((context.User as SocketGuildUser).Roles.SingleOrDefault(r => r.Id == roleId) != null)
+                if (user.Roles.SingleOrDefault(r => r.Id == roleId) != null)
                 {
                     return Task.FromResult(PreconditionResult.FromSuccess());
                 }
