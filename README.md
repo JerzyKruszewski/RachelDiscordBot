@@ -73,7 +73,7 @@
 | Praise | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
 | Warn | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
 | Remove Warn | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
-| Archievement | User object and string representing archievement | Will add archievement to user account | $archievement @Jurij98 achievement |
+| Achievement | User object and string representing achievement | Will add achievement to user account | $achievement @Jurij98 achievement |
 | Unlock Channel | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
 | Lock Channel | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
@@ -86,7 +86,7 @@
 | Status | Optional user object | Will return basic information about user warns, praises and achievements | $status |
 | Warns | Optional user object | Will return more detailed information about user warns | $warns @Jurij98 |
 | Praises | Optional user object | Will return more detailed information about user praises | $praises |
-| Archievements | Optional user object | Will return more detailed information about user achievements | $achievements |
+| Achievements | Optional user object | Will return more detailed information about user achievements | $achievements |
 | Socials | --- | Will return Rachel's socials | $socials |
 | Credits | --- | Will return Rachel's credits | $credits |
 | Help | --- | Will show basic information about how to get support | $help |
