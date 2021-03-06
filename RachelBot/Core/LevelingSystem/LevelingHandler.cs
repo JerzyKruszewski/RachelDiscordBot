@@ -20,19 +20,28 @@ namespace RachelBot.Core.LevelingSystem
             _storage = storage;
         }
 
-        public async void UserSendMessage(SocketGuildUser user)
+        public void UserSendMessage(SocketUser user, SocketGuild guild)
         {
-            UserAccounts.UserAccounts accounts = new UserAccounts.UserAccounts(user.Guild.Id, _storage);
+            UserAccounts.UserAccounts accounts = new UserAccounts.UserAccounts(guild.Id, _storage);
+
             UserAccount account = accounts.GetUserAccount(user.Id);
+
             uint oldLevel = account.LevelNumber;
 
             accounts.AddXP(account, 50UL);
+
+            SocketGuildUser socketGuildUser = Utility.GetGuildUserById(guild, user.Id);
+
+            if (socketGuildUser == null)
+            {
+                return;
+            }
 
             uint newLevel = account.LevelNumber;
 
             if (newLevel > oldLevel)
             {
-                HandleRewards(user, account);
+                HandleRewards(socketGuildUser, account);
             }
         }
 

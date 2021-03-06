@@ -29,6 +29,11 @@ namespace RachelBot.Utils
             return guild.Roles.SingleOrDefault(r => r.Id == id);
         }
 
+        public static SocketGuildUser GetGuildUserById(SocketGuild guild, ulong id)
+        {
+            return guild.Users.SingleOrDefault(u => u.Id == id);
+        }
+
         public static string ParseReason(string reason, GuildConfig config)
         {
             if (config.PointBasedWarns)

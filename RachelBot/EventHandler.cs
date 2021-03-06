@@ -115,13 +115,21 @@ namespace RachelBot
                     return;
                 }
 
-                SocketUserMessage msg = arg as SocketUserMessage;
-                if (msg == null) return;
+                if (arg is not SocketUserMessage msg) return;
+
                 SocketCommandContext context = new SocketCommandContext(_client, msg);
 
                 GuildConfig config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
 
-                new LevelingHandler(_storage).UserSendMessage(context.User as SocketGuildUser);
+                try
+                {
+                    new LevelingHandler(_storage).UserSendMessage(context.User, context.Guild);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR with Leveling System: {ex}");
+                    Program.LogToFile($"ERROR with Leveling System: {ex}");
+                }
 
                 int argPos = 0;
                 bool hasPrefix;
@@ -149,8 +157,8 @@ namespace RachelBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
+                Console.WriteLine($"ERROR: {ex}");
+                Program.LogToFile($"ERROR: {ex}");
             }
         }
     }
