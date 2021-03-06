@@ -133,9 +133,9 @@ namespace RachelBot.Commands
 
             string archievementsList = "";
 
-            for (int i = 1; i <= account.Achievements.Count; i++)
+            foreach (Achievement achievement in account.Achievements)
             {
-                archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", account.Achievements[i].Id, account.Achievements[i].Content);
+                archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", achievement.Id, achievement.Content);
             }
 
             await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ACHIEVEMENTS_TEMPLATE", user.Username, account.Achievements.Count, archievementsList));
