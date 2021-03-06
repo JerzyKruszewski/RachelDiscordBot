@@ -26,6 +26,6 @@ namespace RachelBot.Core.UserAccounts
 
         public IList<Warning> Warnings { init; get; } = new List<Warning>();
 
-        public IList<string> Archievements { init; get; } = new List<string>();
+        public IList<Achievement> Achievements { init; get; } = new List<Achievement>();
     }
 }

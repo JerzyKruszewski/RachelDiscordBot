@@ -8,7 +8,7 @@
 - Banning and kicking users
 - Two warning systems (quantity- and point-based)
 - Praise system
-- Archievement system
+- Achievement system
 - Mention command prefix
 - Customizable guild (server) wise command prefix (default $)
 - Customizable guild (server) wise user join and left message
@@ -17,10 +17,7 @@
 ***
 ## Requirements
 - Rachel must have administrator privileges on your server.
-- Your server must have moderation channel.
 - Your server must have rules channel.
-- Your server must have channel to welcome new users.
-- Your server must have channel to log user left messages.
 
 ***
 ## Getting Started
@@ -28,10 +25,10 @@
 2. [Invite Rachel.][InviteRachel]
 3. Make sure Rachel role is as high as possible in role hierarchy.
 4. Call 4 commands:
-	- $ChangeModerationChannel
-	- $ChangeUsersJoiningChannel
-	- $ChangeUsersLeftChannel
-	- $ChangeToSChannel
+	- $ChangeToSChannel **Required**
+	- $ChangeModerationChannel *Optional*
+	- $ChangeUsersJoiningChannel *Optional*
+	- $ChangeUsersLeftChannel *Optional*
 5. Enjoy!
 
 ***
@@ -50,10 +47,10 @@
 | ChangeGuildLanguage | string representing [language ISO code][ISOCodes] | Change guild language | $ChangeGuildLanguage pl |
 | AddStaffRoles | at least one SocketRole object (discord role) | Adds roles to staff roles | $AddStaffRoles @Owner @Admin @Moderator |
 | ChangeStaffRoles | at least one SocketRole object (discord role) | Clears staff roles and adds specified roles to staff roles | $ChangeStaffRoles @Owner @Admin @Moderator |
-| **ChangeModerationChannel** | Text channel object | Change where to log moderation commands output | $ChangeModerationChannel #server-staff |
-| **ChangeUsersJoiningChannel** | Text channel object | Change where to welcome users | $ChangeUsersJoiningChannel #welcome-channel |
+| ChangeModerationChannel | Text channel object | Change where to log moderation commands output | $ChangeModerationChannel #server-staff |
+| ChangeUsersJoiningChannel | Text channel object | Change where to welcome users | $ChangeUsersJoiningChannel #welcome-channel |
 | ChangeWelcomeMessage | string representing new welcome message | Change welcome message (more detailed information in different section) | $ChangeWelcomeMessage User {1} joined our server! |
-| **ChangeUsersLeftChannel** | Text channel object | Change where log user left messages | $ChangeUsersLeftChannel #left-channel |
+| ChangeUsersLeftChannel | Text channel object | Change where log user left messages | $ChangeUsersLeftChannel #left-channel |
 | ChangeUserLeftMessage | string representing new user left message | Change user left message (more detailed information in different section) | $ChangeUserLeftMessage User {1}({2}) left our server! |
 | ChangePunishmentRole | SocketRole object (discord role) | Change punishment role which user can get when exceeding warn limits | $ChangePunishmentRole @PunishmentRole |
 | ChangePunishmentChannel | Text channel object | Change channel for users with punishment role | $ChangePunishmentChannel #punishment-channel |
@@ -81,7 +78,6 @@
 | Lock Channel | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
 | Remove Level Role | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
-| Show Level Roles | --- | Will show all role rewards | $show level roles |
 
 ### User commands
 
@@ -94,6 +90,7 @@
 | Socials | --- | Will return Rachel's socials | $socials |
 | Credits | --- | Will return Rachel's credits | $credits |
 | Help | --- | Will show basic information about how to get support | $help |
+| Show Level Roles | --- | Will show all role rewards | $show level roles |
 
 ***
 ## User join/leave messages placeholders
@@ -125,6 +122,11 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.2.0
+	- Actually fixed critical bug
+	- Improved achievement system code
+	- Fixed some typos
+	- Made Show Level Roles command available for everyone
 - Version 1.1.0
 	- Added bot owner commands
 	- Added file logger

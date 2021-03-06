@@ -173,11 +173,11 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetAlert("WARN_REMOVE_SUCCESS"));
         }
 
-        [Command("Archievement")]
+        [Command("Achievement")]
         [Alias("Osiągnięcie")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.Administrator)]
-        public async Task Archievement(SocketGuildUser user, [Remainder]string archievement)
+        public async Task Achievement(SocketGuildUser user, [Remainder]string achievement)
         {
             SocketGuild guild = Context.Guild;
             GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
@@ -186,15 +186,15 @@ namespace RachelBot.Commands
 
             if (user == Context.User)
             {
-                await Context.Channel.SendMessageAsync(alerts.GetAlert("SELF_ARCHIEVEMENT_ABUSE"));
+                await Context.Channel.SendMessageAsync(alerts.GetAlert("SELF_ACHIEVEMENT_ABUSE"));
                 return;
             }
 
             UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
 
-            accounts.AddAchievement(accounts.GetUserAccount(user.Id), archievement);
+            accounts.AddAchievement(accounts.GetUserAccount(user.Id), achievement);
 
-            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_ARCHIEVEMENT", user.Mention, archievement));
+            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_ACHIEVEMENT", user.Mention, achievement));
         }
 
         [Command("Unlock Channel")]
@@ -267,34 +267,6 @@ namespace RachelBot.Commands
             new LevelRoleRewards(Context.Guild.Id, _storage).RemoveLevelRoleReward(role.Id);
 
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("LEVEL_ROLE_REMOVED", role.Id));
-        }
-
-        [Command("Show Level Roles", RunMode = RunMode.Async)]
-        [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
-        public async Task ShowLevelRoles()
-        {
-            SocketGuild guild = Context.Guild;
-            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
-            AlertsHandler alerts = new AlertsHandler(config);
-            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
-
-            IList<LevelRoleReward> roleRewards = new LevelRoleRewards(Context.Guild.Id, _storage).GetLevelRoleRewards();
-            string description = "";
-            
-            for (int i = 0; i < roleRewards.Count; i++)
-            {
-                description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i + 1, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
-            }
-
-            EmbedBuilder embed = new EmbedBuilder()
-            {
-                Title = alerts.GetAlert("LEVEL_ROLE_LIST_TEMPLATE"),
-                Description = description,
-                Color = new Color(1, 69, 44)
-            };
-
-            await modChannel.SendMessageAsync("", embed: embed.Build());
         }
     }
 }

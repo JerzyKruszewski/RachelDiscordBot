@@ -45,12 +45,12 @@ namespace RachelBot.Commands
 
             if (config.PointBasedWarns)
             {
-                message = alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Archievements.Count,
+                message = alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
                                                                            account.Warnings.Count, accounts.GetWarningsPower(account));
             }
             else
             {
-                message = alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Archievements.Count,
+                message = alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
                                                                      account.Warnings.Count);
             }
 
@@ -118,8 +118,8 @@ namespace RachelBot.Commands
             await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_PRAISES_TEMPLATE", user.Username, account.Praises.Count, praiseList));
         }
 
-        [Command("Archievements")]
-        public async Task CheckArchievements(SocketGuildUser user = null)
+        [Command("Achievements")]
+        public async Task CheckAchievements(SocketGuildUser user = null)
         {
             if (user == null)
             {
@@ -133,12 +133,12 @@ namespace RachelBot.Commands
 
             string archievementsList = "";
 
-            for (int i = 1; i <= account.Archievements.Count; i++)
+            for (int i = 1; i <= account.Achievements.Count; i++)
             {
-                archievementsList += alerts.GetFormattedAlert("PARSE_ARCHIEVEMENT", i, account.Archievements[i]);
+                archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", account.Achievements[i].Id, account.Achievements[i].Content);
             }
 
-            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ARCHIEVEMENTS_TEMPLATE", user.Username, account.Archievements.Count, archievementsList));
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ACHIEVEMENTS_TEMPLATE", user.Username, account.Achievements.Count, archievementsList));
         }
 
         [Command("Socials")]
@@ -189,6 +189,32 @@ namespace RachelBot.Commands
                 Title = alerts.GetAlert("HELP_TITLE"),
                 Description = alerts.GetFormattedAlert("HELP", Utility.GitHubPage, Utility.DiscordInviteLink),
                 ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
+
+        [Command("Show Level Roles", RunMode = RunMode.Async)]
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task ShowLevelRoles()
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            IList<LevelRoleReward> roleRewards = new LevelRoleRewards(guild.Id, _storage).GetLevelRoleRewards();
+            string description = "";
+
+            for (int i = 0; i < roleRewards.Count; i++)
+            {
+                description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i + 1, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
+            }
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetAlert("LEVEL_ROLE_LIST_TEMPLATE"),
+                Description = description,
                 Color = new Color(1, 69, 44)
             };
 
