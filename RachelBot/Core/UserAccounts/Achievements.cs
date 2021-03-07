@@ -13,11 +13,12 @@ namespace RachelBot.Core.UserAccounts
             return user.Achievements.SingleOrDefault(a => a.Id == id);
         }
 
-        public static Achievement CreateAchievement(int id, string content)
+        public static Achievement CreateAchievement(int id, int value, string content)
         {
             return new Achievement()
             {
                 Id = id,
+                Value = value,
                 Content = content
             };
         }

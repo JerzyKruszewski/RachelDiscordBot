@@ -177,7 +177,7 @@ namespace RachelBot.Commands
         [Alias("Osiągnięcie")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.Administrator)]
-        public async Task Achievement(SocketGuildUser user, [Remainder]string achievement)
+        public async Task Achievement(SocketGuildUser user, int value, [Remainder]string achievement)
         {
             SocketGuild guild = Context.Guild;
             GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
@@ -192,7 +192,7 @@ namespace RachelBot.Commands
 
             UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
 
-            accounts.AddAchievement(accounts.GetUserAccount(user.Id), achievement);
+            accounts.AddAchievement(accounts.GetUserAccount(user.Id), value, achievement);
 
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_ACHIEVEMENT", user.Mention, achievement));
         }

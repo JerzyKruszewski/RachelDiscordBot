@@ -135,10 +135,11 @@ namespace RachelBot.Commands
 
             foreach (Achievement achievement in account.Achievements)
             {
-                archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", achievement.Id, achievement.Content);
+                archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", achievement.Id, achievement.Value, achievement.Content);
             }
 
-            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ACHIEVEMENTS_TEMPLATE", user.Username, account.Achievements.Count, archievementsList));
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ACHIEVEMENTS_TEMPLATE", user.Username, account.Achievements.Count,
+                                                                            accounts.GetAchievementsTotalPoints(account), archievementsList));
         }
 
         [Command("Socials")]

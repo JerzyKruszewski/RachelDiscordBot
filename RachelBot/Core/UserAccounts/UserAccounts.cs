@@ -149,11 +149,23 @@ namespace RachelBot.Core.UserAccounts
             return power;
         }
 
-        public void AddAchievement(UserAccount account, string content)
+        public void AddAchievement(UserAccount account, int value, string content)
         {
-            Achievement achievement = Achievements.CreateAchievement(Achievements.GetNextId(account.Achievements), content);
+            Achievement achievement = Achievements.CreateAchievement(Achievements.GetNextId(account.Achievements), value, content);
             account.Achievements.Add(achievement);
             Save();
+        }
+
+        public int GetAchievementsTotalPoints(UserAccount account)
+        {
+            int points = 0;
+
+            foreach (Achievement achievement in account.Achievements)
+            {
+                points += achievement.Value;
+            }
+
+            return points;
         }
     }
 }

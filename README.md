@@ -8,7 +8,7 @@
 - Banning and kicking users
 - Two warning systems (quantity- and point-based)
 - Praise system
-- Achievement system
+- Point-based, XBOX-like  achievement system
 - Mention command prefix
 - Customizable guild (server) wise command prefix (default $)
 - Customizable guild (server) wise user join and left message
@@ -73,7 +73,7 @@
 | Praise | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
 | Warn | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
 | Remove Warn | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
-| Achievement | User object and string representing achievement | Will add achievement to user account | $achievement @Jurij98 achievement |
+| Achievement | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
 | Unlock Channel | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
 | Lock Channel | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
