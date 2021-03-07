@@ -234,5 +234,48 @@ namespace RachelBot.Commands
 
             await Context.Message.AddReactionsAsync(emotes);
         }
+
+        [Command("Leaderboard", RunMode = RunMode.Async)]
+        [Alias("Ranking")]
+        public async Task Leaderboard(int places = 15, char type = 'x')
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            UserAccounts accounts = new UserAccounts(guild.Id, _storage);
+            UserAccount account = accounts.GetUserAccount(Context.User.Id);
+            IList<UserAccount> userAccounts;
+
+            switch (type)
+            {
+                case 'a':
+                    userAccounts = accounts.GetUserAccounts().OrderByDescending(u => u.Achievements.Sum(a => a.Value)).ToList();
+                    break;
+                case 'p':
+                    userAccounts = accounts.GetUserAccounts().OrderByDescending(u => u.Praises.Count).ToList();
+                    break;
+                default:
+                    userAccounts = accounts.GetUserAccounts().OrderByDescending(u => u.XP).ToList();
+                    break;
+            }
+
+            int index = userAccounts.IndexOf(account) + 1;
+
+            string msg = "";
+
+            for (int i = 0; i < places; i++)
+            {
+                msg += $"{i + 1}. <@{userAccounts[i].Id}>\n";
+            }
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetFormattedAlert("LEADERBOARD_TITLE", guild.Name),
+                Description = alerts.GetFormattedAlert("LEADERBOARD", msg, index),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
     }
 }

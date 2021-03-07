@@ -40,6 +40,11 @@ namespace RachelBot.Core.UserAccounts
             _storage.StoreObject(_accounts, _filePath);
         }
 
+        public IList<UserAccount> GetUserAccounts()
+        {
+            return _accounts;
+        }
+
         public UserAccount GetUserAccount(ulong id)
         {
             UserAccount account = _accounts.SingleOrDefault(u => u.Id == id);

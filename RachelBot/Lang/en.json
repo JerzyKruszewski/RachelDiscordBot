@@ -37,5 +37,7 @@
   "CREDITS_TITLE": "Credits",
   "CREDITS": "Gave me life: Jurij98 (<@331026920269414410>)\nMade amazing avatars: aster_atheris {0}",
   "HELP_TITLE": "Need help?",
-  "HELP": "Commands list available here: {0}\nIf you still have problems join our discord server and get direct support: {1}"
+  "HELP": "Commands list available here: {0}\nIf you still have problems join our discord server and get direct support: {1}",
+  "LEADERBOARD_TITLE": "{0} Leaderboard",
+  "LEADERBOARD": "{0}\n\nYou are {1}."
 }
