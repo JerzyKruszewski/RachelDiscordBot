@@ -222,8 +222,8 @@ namespace RachelBot.Commands
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
-        [Command("vote")]
-        [Alias("głosowanie", "glosowanie", "propozycja")]
+        [Command("Vote")]
+        [Alias("Głosowanie", "Glosowanie", "Propozycja")]
         public async Task Vote([Remainder]string msg = null)
         {
             Emoji yes = new Emoji("❤");

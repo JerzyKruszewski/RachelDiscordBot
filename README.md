@@ -71,6 +71,7 @@
 | Ban | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason |
 | Kick | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason |
 | Praise | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
+| Reprimand | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
 | Warn | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
 | Remove Warn | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
 | Achievement | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
@@ -91,6 +92,10 @@
 | Credits | --- | Will return Rachel's credits | $credits |
 | Help | --- | Will show basic information about how to get support | $help |
 | Show Level Roles | --- | Will show all role rewards | $show level roles |
+| Vote | String representing vote content | Will add few reactions under message to simulate voting system | $Vote something to vote |
+| Leaderboard | Optional integer representing how many users need to be in leaderboard and optional character representing type of leaderboard (a, p or x) | Will show server leaderboard | $Leaderboard 15 x |
+| Quote | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
+| Avatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
 
 ***
 ## User join/leave messages placeholders
@@ -122,6 +127,12 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.4.0
+	- Added Reprimand command
+	- Added Vote command
+	- Added Leaderboard command
+	- Added Quote command
+	- Added Avatar command
 - Version 1.3.0
 	- Achievements system overhaul
 - Version 1.2.0

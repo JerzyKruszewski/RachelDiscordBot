@@ -80,6 +80,33 @@ namespace RachelBot.Commands
             await channel.SendMessageAsync(alerts.GetFormattedAlert("USER_PRAISED", user.Mention, Context.User.Mention, reason));
         }
 
+        [Command("Reprimand", RunMode = RunMode.Async)]
+        [Alias("Upomnienie")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.Administrator)]
+        public async Task RebukeUser(SocketGuildUser user, [Remainder] string reason)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+            string message;
+
+            try
+            {
+                IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+
+                message = alerts.GetFormattedAlert("USER_REPRIMANDED_MESSAGE", user.Mention, reason, config.ToSChannelId);
+
+                await dmChannel.SendMessageAsync(message);
+                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_REPRIMANDED", user.Mention, reason, message));
+            }
+            catch (Exception)
+            {
+                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS", user.Mention));
+            }
+        }
+
         [Command("Warn", RunMode = RunMode.Async)]
         [Alias("Ostrzeżenie")]
         [RequireStaff]
@@ -141,7 +168,7 @@ namespace RachelBot.Commands
             }
             catch (Exception)
             {
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS", user.Mention));
+                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS_WARN", user.Mention));
             }
         }
 
