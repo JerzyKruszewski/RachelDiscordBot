@@ -221,5 +221,18 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
+
+        [Command("vote")]
+        [Alias("głosowanie", "glosowanie", "propozycja")]
+        public async Task Vote([Remainder]string msg = null)
+        {
+            Emoji yes = new Emoji("❤");
+            Emoji wait = new Emoji("✋");
+            Emoji no = new Emoji("👎");
+
+            IEmote[] emotes = new IEmote[3] { yes, wait, no };
+
+            await Context.Message.AddReactionsAsync(emotes);
+        }
     }
 }
