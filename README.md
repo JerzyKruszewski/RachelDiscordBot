@@ -122,6 +122,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.3.0
+	- Achievements system overhaul
 - Version 1.2.0
 	- Actually fixed critical bug
 	- Improved achievement system code
