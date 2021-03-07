@@ -277,5 +277,26 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
+
+        [Command("Quote")]
+        [Alias("Zacytuj", "Cytuj")]
+        public async Task Cytuj(ulong msgId, ISocketMessageChannel channel = null)
+        {
+            if (channel == null)
+            {
+                channel = Context.Channel;
+            }
+
+            IMessage msg = await channel.GetMessageAsync(msgId);
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Description = $"{msg.Timestamp.DateTime}:\n {msg.Content}",
+                Color = new Color(1, 69, 44)
+            };
+            embed.WithAuthor(msg.Author);
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
     }
 }
