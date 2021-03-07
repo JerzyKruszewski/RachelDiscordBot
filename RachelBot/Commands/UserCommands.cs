@@ -280,7 +280,7 @@ namespace RachelBot.Commands
 
         [Command("Quote")]
         [Alias("Zacytuj", "Cytuj")]
-        public async Task Cytuj(ulong msgId, ISocketMessageChannel channel = null)
+        public async Task Quote(ulong msgId, ISocketMessageChannel channel = null)
         {
             if (channel == null)
             {
@@ -297,6 +297,18 @@ namespace RachelBot.Commands
             embed.WithAuthor(msg.Author);
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
+
+        [Command("avatar")]
+        [Alias("awatar")]
+        public async Task GetAvatar(SocketUser user = null)
+        {
+            if (user == null)
+            {
+                user = Context.User;
+            }
+
+            await Context.Channel.SendMessageAsync(user.GetAvatarUrl(ImageFormat.Auto, 2048));
         }
     }
 }
