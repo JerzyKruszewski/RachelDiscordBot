@@ -197,7 +197,6 @@ namespace RachelBot.Commands
         }
 
         [Command("Show Level Roles", RunMode = RunMode.Async)]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task ShowLevelRoles()
         {
             SocketGuild guild = Context.Guild;

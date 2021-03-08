@@ -16,8 +16,16 @@
 
 ***
 ## Requirements
-- Rachel must have administrator privileges on your server.
-- Your server must have rules channel.
+There are no hard requirements but some commands won't work properly without additional permissions.
+
+Additional "requirements":
+- Rachel should have administrator privileges on your server.
+	- If you don't want to give Rachel administrator privileges, you can give her:
+		- Banning members
+		- Kicking members
+		- Managing roles
+		- Managing channels
+- Your server should have rules channel.
 
 ***
 ## Getting Started
@@ -37,7 +45,7 @@
 
 ### Configuration Commands
 
-**All configuration commands require user and Rachel to have administrator privileges.**
+**All configuration commands require user to have administrator privileges.**
 
 *Bolded commands are obligatory.*
 
@@ -64,7 +72,7 @@
 | **ChangeToSChannel** | Text channel object | Change channel with server rules | $ChangeToSChannel #server-rules |
 
 ### Moderator commands
-**All moderation commands require user to have one of staff roles and Rachel to have administrator privileges.**
+**All moderation commands require user to have one of staff roles and some Rachel to have additional privileges (Banning members, kicking members, managing roles and channels).**
 
 | Command | Parameters | Outcome | Example |
 | --- | --- | --- | --- |
@@ -127,6 +135,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.4.1
+	- Removed unnecessary permission requirements
 - Version 1.4.0
 	- Added Reprimand command
 	- Added Vote command

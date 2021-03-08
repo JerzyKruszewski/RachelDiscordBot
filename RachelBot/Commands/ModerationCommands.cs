@@ -28,7 +28,7 @@ namespace RachelBot.Commands
 
         [Command("Ban")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.BanMembers)]
         public async Task BanUser(SocketGuildUser user, [Remainder]string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -43,7 +43,7 @@ namespace RachelBot.Commands
 
         [Command("Kick")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.KickMembers)]
         public async Task KickUser(SocketGuildUser user, [Remainder]string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -59,7 +59,6 @@ namespace RachelBot.Commands
         [Command("Praise")]
         [Alias("Pochwal")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task PraiseUser(SocketGuildUser user, [Remainder]string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -83,7 +82,6 @@ namespace RachelBot.Commands
         [Command("Reprimand", RunMode = RunMode.Async)]
         [Alias("Upomnienie")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task RebukeUser(SocketGuildUser user, [Remainder] string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -110,7 +108,7 @@ namespace RachelBot.Commands
         [Command("Warn", RunMode = RunMode.Async)]
         [Alias("Ostrzeżenie")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.BanMembers | GuildPermission.ManageRoles)]
         public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -175,7 +173,6 @@ namespace RachelBot.Commands
         [Command("Remove Warn", RunMode = RunMode.Async)]
         [Alias("Usuń Ostrzeżenie")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task WarnUser(SocketGuildUser user, int warnId)
         {
             SocketGuild guild = Context.Guild;
@@ -203,7 +200,6 @@ namespace RachelBot.Commands
         [Command("Achievement")]
         [Alias("Osiągnięcie")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task Achievement(SocketGuildUser user, int value, [Remainder]string achievement)
         {
             SocketGuild guild = Context.Guild;
@@ -226,7 +222,7 @@ namespace RachelBot.Commands
 
         [Command("Unlock Channel")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.ManageChannels)]
         public async Task UnlockChannels(IRole role, params IGuildChannel[] channels)
         {
             SocketGuild guild = Context.Guild;
@@ -247,7 +243,7 @@ namespace RachelBot.Commands
 
         [Command("Lock Channel")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.ManageChannels)]
         public async Task LockChannels(IRole role, params IGuildChannel[] channels)
         {
             SocketGuild guild = Context.Guild;
@@ -268,7 +264,7 @@ namespace RachelBot.Commands
 
         [Command("Add Level Role")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
         public async Task AddLevelRole(IRole role, uint level)
         {
             SocketGuild guild = Context.Guild;
@@ -283,7 +279,6 @@ namespace RachelBot.Commands
 
         [Command("Remove Level Role")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.Administrator)]
         public async Task RemoveLevelRole(IRole role)
         {
             SocketGuild guild = Context.Guild;
