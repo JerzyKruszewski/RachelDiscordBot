@@ -29,8 +29,10 @@ Additional "requirements":
 
 ***
 ## Getting Started
+
+### Basic Configuration
 1. Make sure your server meets Rachel requirements.
-2. [Invite Rachel.][InviteRachel]
+2. [Invite Rachel.][InviteRachel] (or if you don't want to give her administrator privileges: [Use this link][NotRecommendedInviteRachelLink])
 3. Make sure Rachel role is as high as possible in role hierarchy.
 4. Call 4 commands:
 	- $ChangeToSChannel **Required**
@@ -169,6 +171,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [DiscordIcon]: https://img.shields.io/discord/591914197219016707.svg?color=7289da&label=BajarzDevelopment&logo=discord&style=flat-square
 [DiscordInvite]: https://discord.gg/TjCDEQU
 [InviteRachel]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=8&scope=bot
+[NotRecommendedInviteRachelLink]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=268553238&scope=bot
 [RachelNormal]: ./RachelBot/Images/normal.png
 [RachelSmiling]: ./RachelBot/Images/smiling.png
 [RachelAffectionate]: ./RachelBot/Images/affectionate.png
