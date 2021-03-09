@@ -140,6 +140,10 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.5.0
+	- Added Remove Praise command
+	- Added Remove Achievement command
+	- Added Poll command
 - Version 1.4.1
 	- Removed unnecessary permission requirements
 - Version 1.4.0
