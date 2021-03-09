@@ -79,6 +79,23 @@ namespace RachelBot.Commands
             await channel.SendMessageAsync(alerts.GetFormattedAlert("USER_PRAISED", user.Mention, Context.User.Mention, reason));
         }
 
+        [Command("Remove Praise")]
+        [Alias("Usuń pochwałę")]
+        [RequireStaff]
+        public async Task RemovePraise(SocketGuildUser user, int id)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel channel = Context.Channel;
+
+            UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
+
+            accounts.RemovePraise(accounts.GetUserAccount(user.Id), id);
+
+            await channel.SendMessageAsync(alerts.GetFormattedAlert("PRAISE_REMOVED", id, user.Mention));
+        }
+
         [Command("Reprimand", RunMode = RunMode.Async)]
         [Alias("Upomnienie")]
         [RequireStaff]

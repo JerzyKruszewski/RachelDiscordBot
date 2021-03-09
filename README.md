@@ -20,7 +20,7 @@ There are no hard requirements but some commands won't work properly without add
 
 Additional "requirements":
 - Rachel should have administrator privileges on your server.
-	- If you don't want to give Rachel administrator privileges, you can give her:
+	- If you don't want to give Rachel administrator privileges, you can give her (some commands will require this permissions in order to work):
 		- Banning members
 		- Kicking members
 		- Managing roles
@@ -81,6 +81,7 @@ Additional "requirements":
 | Ban | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason |
 | Kick | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason |
 | Praise | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
+| Remove Praise | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 |
 | Reprimand | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
 | Warn | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
 | Remove Warn | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |

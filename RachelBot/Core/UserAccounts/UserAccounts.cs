@@ -82,6 +82,19 @@ namespace RachelBot.Core.UserAccounts
             Save();
         }
 
+        public void RemovePraise(UserAccount account, int id)
+        {
+            Praise praise = account.Praises.SingleOrDefault(p => p.Id == id);
+
+            if (praise == null)
+            {
+                return;
+            }
+
+            account.Praises.Remove(praise);
+            Save();
+        }
+
         public Warning AddWarning(UserAccount account, string reason, GuildConfig config)
         {
             Warning warn;
