@@ -19,6 +19,30 @@ namespace RachelBot.Utils
 
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
 
+        public static IEnumerable<Emoji> AnswersEmojis { get; } = new List<Emoji>()
+        {
+            new Emoji("🇦"),
+            new Emoji("🇧"),
+            new Emoji("🇨"),
+            new Emoji("🇩"),
+            new Emoji("🇪"),
+            new Emoji("🇫"),
+            new Emoji("🇬"),
+            new Emoji("🇭"),
+            new Emoji("🇮"),
+            new Emoji("🇯"),
+            new Emoji("🇰"),
+            new Emoji("🇱"),
+            new Emoji("🇲"),
+            new Emoji("🇳"),
+            new Emoji("🇴"),
+            new Emoji("🇵"),
+            new Emoji("🇷"),
+            new Emoji("🇸"),
+            new Emoji("🇹"),
+            new Emoji("🇺")
+        };
+
         public static ISocketMessageChannel GetMessageChannelById(SocketGuild guild, ulong id)
         {
             return guild.TextChannels.SingleOrDefault(c => c.Id == id);

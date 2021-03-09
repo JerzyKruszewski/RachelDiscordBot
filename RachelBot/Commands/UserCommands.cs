@@ -14,6 +14,7 @@ using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
+using Discord.Rest;
 
 namespace RachelBot.Commands
 {
@@ -232,6 +233,33 @@ namespace RachelBot.Commands
             IEmote[] emotes = new IEmote[3] { yes, wait, no };
 
             await Context.Message.AddReactionsAsync(emotes);
+        }
+
+        [Command("Poll", RunMode = RunMode.Async)]
+        [Alias("Ankieta")]
+        public async Task Poll([Remainder] string msg)
+        {
+            await Context.Message.DeleteAsync();
+
+            string[] possibleAnswers = msg.Split('|');
+            IEmote[] emotes = new IEmote[possibleAnswers.Length - 1];
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = possibleAnswers[0],
+                Color = new Color(1, 69, 44)
+            };
+
+            embed.WithAuthor(Context.User);
+
+            for (int i = 0; i < possibleAnswers.Length - 1; i++)
+            {
+                emotes[i] = Utility.AnswersEmojis.ToArray()[i];
+                embed.AddField($"{emotes[i]}", $"**{possibleAnswers[i + 1]}**", true);
+            }
+
+            RestUserMessage pollMessage = await Context.Channel.SendMessageAsync("", embed: embed.Build());
+            await pollMessage.AddReactionsAsync(emotes);
         }
 
         [Command("Leaderboard", RunMode = RunMode.Async)]

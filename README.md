@@ -103,6 +103,7 @@ Additional "requirements":
 | Help | --- | Will show basic information about how to get support | $help |
 | Show Level Roles | --- | Will show all role rewards | $show level roles |
 | Vote | String representing vote content | Will add few reactions under message to simulate voting system | $Vote something to vote |
+| Poll | String representing poll question and possible answers. Poll question and each answer divided with \| character | Will create message with poll | $Poll Cats or Dogs?\|Cats\|Dogs |
 | Leaderboard | Optional integer representing how many users need to be in leaderboard and optional character representing type of leaderboard (a, p or x) | Will show server leaderboard | $Leaderboard 15 x |
 | Quote | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
 | Avatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
