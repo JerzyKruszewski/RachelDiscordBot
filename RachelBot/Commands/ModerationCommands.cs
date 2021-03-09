@@ -111,7 +111,7 @@ namespace RachelBot.Commands
             {
                 IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
 
-                message = alerts.GetFormattedAlert("USER_REPRIMANDED_MESSAGE", user.Mention, reason, config.ToSChannelId);
+                message = alerts.GetFormattedAlert("USER_REPRIMANDED_MESSAGE", user.Mention, guild.Name, reason, config.ToSChannelId);
 
                 await dmChannel.SendMessageAsync(message);
                 await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_REPRIMANDED", user.Mention, reason, message));
@@ -166,7 +166,7 @@ namespace RachelBot.Commands
 
                 if (config.PointBasedWarns)
                 {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, warn.Value, warn.Reason,
+                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, guild.Name, warn.Value, warn.Reason,
                                                        accounts.GetWarningsCount(account), accounts.GetWarningsPower(account), config.ToSChannelId);
 
                     await dmChannel.SendMessageAsync(message);
@@ -174,7 +174,7 @@ namespace RachelBot.Commands
                 }
                 else
                 {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, warn.Reason,
+                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, guild.Name, warn.Reason,
                                                        accounts.GetWarningsCount(account), config.ToSChannelId);
 
                     await dmChannel.SendMessageAsync(message);
