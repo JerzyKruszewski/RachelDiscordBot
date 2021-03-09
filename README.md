@@ -140,6 +140,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.5.1
+	- Fixed bug with warning system
 - Version 1.5.0
 	- Added Remove Praise command
 	- Added Remove Achievement command
