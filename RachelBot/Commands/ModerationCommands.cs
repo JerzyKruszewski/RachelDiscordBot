@@ -237,6 +237,23 @@ namespace RachelBot.Commands
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_ACHIEVEMENT", user.Mention, achievement));
         }
 
+        [Command("Remove Achievement")]
+        [Alias("Usuń Osiągnięcie")]
+        [RequireStaff]
+        public async Task RemoveAchievement(SocketGuildUser user, int id)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+
+            UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
+
+            accounts.RemoveAchievement(accounts.GetUserAccount(user.Id), id);
+
+            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("ACHIEVEMENT_REMOVED", id, user.Mention));
+        }
+
         [Command("Unlock Channel")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.ManageChannels)]

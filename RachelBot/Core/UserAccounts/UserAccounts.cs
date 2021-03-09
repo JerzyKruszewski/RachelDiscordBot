@@ -174,6 +174,19 @@ namespace RachelBot.Core.UserAccounts
             Save();
         }
 
+        public void RemoveAchievement(UserAccount account, int id)
+        {
+            Achievement achievement = account.Achievements.SingleOrDefault(a => a.Id == id);
+
+            if (achievement == null)
+            {
+                return;
+            }
+
+            account.Achievements.Remove(achievement);
+            Save();
+        }
+
         public int GetAchievementsTotalPoints(UserAccount account)
         {
             int points = 0;
