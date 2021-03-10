@@ -1,13 +1,10 @@
-﻿using Discord;
+﻿using System;
+using System.Linq;
+using Discord;
 using Discord.WebSocket;
 using RachelBot.Core.UserAccounts;
 using RachelBot.Services.Storage;
 using RachelBot.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RachelBot.Core.LevelingSystem
 {

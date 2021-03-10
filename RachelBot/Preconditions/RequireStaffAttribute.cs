@@ -1,13 +1,11 @@
-﻿using Discord.Commands;
-using RachelBot.Core.Configs;
-using RachelBot.Services.Storage;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Discord.WebSocket;
+using Discord.Commands;
+using RachelBot.Core.Configs;
+using RachelBot.Services.Storage;
 
 namespace RachelBot.Preconditions
 {

@@ -1,11 +1,8 @@
-﻿using Discord;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Discord;
 using Discord.WebSocket;
 using RachelBot.Core.Configs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RachelBot.Utils
 {

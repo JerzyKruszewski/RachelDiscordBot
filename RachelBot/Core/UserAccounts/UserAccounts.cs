@@ -1,10 +1,8 @@
-﻿using RachelBot.Core.Configs;
-using RachelBot.Services.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RachelBot.Core.Configs;
+using RachelBot.Services.Storage;
 
 namespace RachelBot.Core.UserAccounts
 {

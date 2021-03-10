@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Discord.Rest;
 using Discord.Addons.Interactive;
 using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
-using RachelBot.Preconditions;
 using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
-using Discord.Rest;
 
 namespace RachelBot.Commands
 {
