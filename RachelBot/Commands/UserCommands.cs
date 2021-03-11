@@ -234,6 +234,7 @@ namespace RachelBot.Commands
 
         [Command("Poll", RunMode = RunMode.Async)]
         [Alias("Ankieta")]
+        [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Poll([Remainder] string msg)
         {
             await Context.Message.DeleteAsync();
