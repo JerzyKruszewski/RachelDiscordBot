@@ -40,6 +40,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Kick")]
+        [Alias("Wyrzuć", "Wyrzuc")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.KickMembers)]
         public async Task KickUser(SocketGuildUser user, [Remainder]string reason)
@@ -78,7 +79,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Remove Praise")]
-        [Alias("Usuń pochwałę")]
+        [Alias("Usuń pochwałę", "Usun pochwale")]
         [RequireStaff]
         public async Task RemovePraise(SocketGuildUser user, int id)
         {
@@ -121,7 +122,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Warn", RunMode = RunMode.Async)]
-        [Alias("Ostrzeżenie")]
+        [Alias("Ostrzeżenie", "Ostrzezenia")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.BanMembers | GuildPermission.ManageRoles)]
         public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
@@ -186,7 +187,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Remove Warn", RunMode = RunMode.Async)]
-        [Alias("Usuń Ostrzeżenie")]
+        [Alias("Usuń Ostrzeżenie", "Usun Ostrzezenie")]
         [RequireStaff]
         public async Task WarnUser(SocketGuildUser user, int warnId)
         {
@@ -213,7 +214,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Achievement")]
-        [Alias("Osiągnięcie")]
+        [Alias("Osiągnięcie", "Osiagniecie")]
         [RequireStaff]
         public async Task Achievement(SocketGuildUser user, int value, [Remainder]string achievement)
         {
@@ -236,7 +237,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Remove Achievement")]
-        [Alias("Usuń Osiągnięcie")]
+        [Alias("Usuń Osiągnięcie", "Usun Osiagniecie")]
         [RequireStaff]
         public async Task RemoveAchievement(SocketGuildUser user, int id)
         {
@@ -253,6 +254,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Unlock Channel")]
+        [Alias("Odblokuj Kanał", "Odblokuj Kanal")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.ManageChannels)]
         public async Task UnlockChannels(IRole role, params IGuildChannel[] channels)
@@ -274,6 +276,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Lock Channel")]
+        [Alias("Zablokuj Kanał", "Zablokuj Kanal")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.ManageChannels)]
         public async Task LockChannels(IRole role, params IGuildChannel[] channels)
@@ -295,6 +298,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Add Level Role")]
+        [Alias("Dodaj Rolę Za Level", "Dodaj Role Za Level")]
         [RequireStaff]
         [RequireBotPermission(GuildPermission.ManageRoles)]
         public async Task AddLevelRole(IRole role, uint level)
@@ -310,6 +314,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Remove Level Role")]
+        [Alias("Usuń Rolę Za Level", "Usun Role Za Level")]
         [RequireStaff]
         public async Task RemoveLevelRole(IRole role)
         {

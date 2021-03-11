@@ -34,6 +34,9 @@
     <None Update="Images\smiling.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Lang\pl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Lang\en.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -56,6 +56,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Warns")]
+        [Alias("Ostrzeżenia", "Ostrzezenia")]
         public async Task CheckWarns(SocketGuildUser user = null)
         {
             if (user == null)
@@ -94,6 +95,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Praises")]
+        [Alias("Pochwały", "Pochwaly")]
         public async Task CheckPraises(SocketGuildUser user = null)
         {
             if (user == null)
@@ -117,6 +119,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Achievements")]
+        [Alias("Osiągnięcia", "Osiagniecia")]
         public async Task CheckAchievements(SocketGuildUser user = null)
         {
             if (user == null)
@@ -141,6 +144,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Socials")]
+        [Alias("Social Media")]
         public async Task GetSocials()
         {
             SocketGuild guild = Context.Guild;
@@ -159,6 +163,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Credits")]
+        [Alias("Twórcy", "Tworcy")]
         public async Task GetCredits()
         {
             SocketGuild guild = Context.Guild;
@@ -177,6 +182,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Help")]
+        [Alias("Pomoc")]
         public async Task GetHelp()
         {
             SocketGuild guild = Context.Guild;
@@ -195,6 +201,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Show Level Roles", RunMode = RunMode.Async)]
+        [Alias("Pokaż Role Za Level", "Pokaz Role Za Level")]
         public async Task ShowLevelRoles()
         {
             SocketGuild guild = Context.Guild;
@@ -324,8 +331,8 @@ namespace RachelBot.Commands
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
-        [Command("avatar")]
-        [Alias("awatar")]
+        [Command("Avatar")]
+        [Alias("Awatar")]
         public async Task GetAvatar(SocketUser user = null)
         {
             if (user == null)

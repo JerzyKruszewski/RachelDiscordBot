@@ -92,39 +92,39 @@ There are no hard requirements but some commands won't work properly without add
 ### Moderator commands
 **All moderation commands require user to have one of staff roles and some Rachel to have additional privileges (Banning members, kicking members, managing roles and channels).**
 
-| Command | Parameters | Outcome | Example |
-| --- | --- | --- | --- |
-| Ban | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason |
-| Kick | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason |
-| Praise | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
-| Remove Praise | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 |
-| Reprimand | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
-| Warn | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
-| Remove Warn | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
-| Achievement | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
-| Remove Achievement | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 |
-| Unlock Channel | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
-| Lock Channel | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
-| Add Level Role | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
-| Remove Level Role | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
+| Command | Aliases | Parameters | Outcome | Example |
+| --- | --- | --- | --- | --- |
+| Ban | --- | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason |
+| Kick | Wyrzuć, Wyrzuc | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason |
+| Praise | Pochwal | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
+| Remove Praise | Usuń pochwałę, Usun pochwale | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 |
+| Reprimand | Upomnienie | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
+| Warn | Ostrzeżenie, Ostrzezenia | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
+| Remove Warn | Usuń Ostrzeżenie, Usun Ostrzezenie | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
+| Achievement | Osiągnięcie, Osiagniecie | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
+| Remove Achievement | Usuń Osiągnięcie, Usun Osiagniecie | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 |
+| Unlock Channel | Odblokuj Kanał, Odblokuj Kanal | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
+| Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
+| Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
+| Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
 
 ### User commands
 
-| Command | Parameters | Outcome | Example |
-| --- | --- | --- | --- |
-| Status | Optional user object | Will return basic information about user warns, praises and achievements | $status |
-| Warns | Optional user object | Will return more detailed information about user warns | $warns @Jurij98 |
-| Praises | Optional user object | Will return more detailed information about user praises | $praises |
-| Achievements | Optional user object | Will return more detailed information about user achievements | $achievements |
-| Socials | --- | Will return Rachel's socials | $socials |
-| Credits | --- | Will return Rachel's credits | $credits |
-| Help | --- | Will show basic information about how to get support | $help |
-| Show Level Roles | --- | Will show all role rewards | $show level roles |
-| Vote | String representing vote content | Will add few reactions under message to simulate voting system | $Vote something to vote |
-| Poll | String representing poll question and possible answers. Poll question and each answer divided with \| character | Will create message with poll | $Poll Cats or Dogs?\|Cats\|Dogs |
-| Leaderboard | Optional integer representing how many users need to be in leaderboard and optional character representing type of leaderboard (a, p or x) | Will show server leaderboard | $Leaderboard 15 x |
-| Quote | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
-| Avatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
+| Command | Aliases | Parameters | Outcome | Example |
+| --- | --- | --- | --- | --- |
+| Status | --- | Optional user object | Will return basic information about user warns, praises and achievements | $status |
+| Warns | Ostrzeżenia, Ostrzezenia | Optional user object | Will return more detailed information about user warns | $warns @Jurij98 |
+| Praises | Pochwały, Pochwaly | Optional user object | Will return more detailed information about user praises | $praises |
+| Achievements | Osiągnięcia, Osiagniecia | Optional user object | Will return more detailed information about user achievements | $achievements |
+| Socials | Social Media | --- | Will return Rachel's socials | $socials |
+| Credits | Twórcy, Tworcy | --- | Will return Rachel's credits | $credits |
+| Help | Pomoc | --- | Will show basic information about how to get support | $help |
+| Show Level Roles | Pokaż Role Za Level, Pokaz Role Za Level | --- | Will show all role rewards | $show level roles |
+| Vote | Głosowanie, Glosowanie, Propozycja | String representing vote content | Will add few reactions under message to simulate voting system | $Vote something to vote |
+| Poll | Ankieta | String representing poll question and possible answers. Poll question and each answer divided with \| character | Will create message with poll | $Poll Cats or Dogs?\|Cats\|Dogs |
+| Leaderboard | Ranking | Optional integer representing how many users need to be in leaderboard and optional character representing type of leaderboard (a, p or x) | Will show server leaderboard | $Leaderboard 15 x |
+| Quote | Zacytuj, Cytuj | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
+| Avatar | Awatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
 
 ***
 ## User join/leave messages placeholders
@@ -136,6 +136,7 @@ There are no hard requirements but some commands won't work properly without add
 ***
 ## Currently supported languages
 - English
+- Polski (Polish)
 
 ***
 ## Support us
@@ -156,6 +157,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.6.0
+	- Added Polish language
 - Version 1.5.2
 	- Added missing permission
 - Version 1.5.1
