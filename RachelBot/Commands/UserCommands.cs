@@ -12,6 +12,7 @@ using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
+using System;
 
 namespace RachelBot.Commands
 {
@@ -295,7 +296,9 @@ namespace RachelBot.Commands
 
             string msg = "";
 
-            for (int i = 0; i < places; i++)
+            int usersInLeaderboard = Math.Min(places, userAccounts.Count); 
+
+            for (int i = 0; i < usersInLeaderboard; i++)
             {
                 msg += $"{i + 1}. <@{userAccounts[i].Id}>\n";
             }

@@ -159,6 +159,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 ## Changelog
 - Version 1.6.0
 	- Added Polish language
+	- Fixed bug with leaderboard
 - Version 1.5.2
 	- Added missing permission
 - Version 1.5.1
