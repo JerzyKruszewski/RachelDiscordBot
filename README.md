@@ -23,8 +23,6 @@
 - [Changelog][Changelog]
 - [What I have learned working on this project][WhatIHaveLearned]
 
-[Back to top][BackToTop]
-
 ***
 ## Feature list
 - Banning and kicking users
@@ -241,7 +239,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 [Back to top][BackToTop]
 
-[BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#rachel-discord-bot
+[BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#table-of-contents
 [FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
 [Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
 [AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
