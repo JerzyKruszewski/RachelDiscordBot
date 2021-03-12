@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
@@ -12,7 +13,6 @@ using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
-using System;
 
 namespace RachelBot.Commands
 {
@@ -242,10 +242,9 @@ namespace RachelBot.Commands
 
         [Command("Poll", RunMode = RunMode.Async)]
         [Alias("Ankieta")]
-        [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Poll([Remainder] string msg)
         {
-            await Context.Message.DeleteAsync();
+            PermissionUtils.TryRemoveMessageAsync(Context);
 
             string[] possibleAnswers = msg.Split('|');
             IEmote[] emotes = new IEmote[possibleAnswers.Length - 1];

@@ -124,7 +124,6 @@ namespace RachelBot.Commands
         [Command("Warn", RunMode = RunMode.Async)]
         [Alias("Ostrzeżenie", "Ostrzezenia")]
         [RequireStaff]
-        [RequireBotPermission(GuildPermission.BanMembers | GuildPermission.ManageRoles)]
         public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
         {
             SocketGuild guild = Context.Guild;
@@ -142,19 +141,25 @@ namespace RachelBot.Commands
             if ((account.Warnings.Count >= config.WarnCountTillBan && config.WarnCountTillBan > 0) ||
                 (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillBan && config.WarnPointsTillBan > 0))
             {
-                await user.BanAsync(0, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason));
+                if (PermissionUtils.CanBanMembers(Context))
+                {
+                    await user.BanAsync(0, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason));
 
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED", user.Username, user.Id, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED", user.Username, user.Id, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
 
-                return;
+                    return;
+                }
             }
             else if ((account.Warnings.Count >= config.WarnCountTillPunishment && config.WarnCountTillPunishment > 0) ||
                      (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillPunishment && config.WarnPointsTillPunishment > 0))
             {
-                await user.AddRoleAsync(Utility.GetRoleById(Context.Guild, config.PunishmentRoleId));
+                if (PermissionUtils.CanGiveRoles(Context))
+                {
+                    await user.AddRoleAsync(Utility.GetRoleById(Context.Guild, config.PunishmentRoleId));
 
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_PUNISHMENT_ROLE", user.Mention, config.PunishmentRoleId, 
-                                                                           alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_PUNISHMENT_ROLE", user.Mention, config.PunishmentRoleId,
+                                                                               alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
+                }
             }
 
             string message;

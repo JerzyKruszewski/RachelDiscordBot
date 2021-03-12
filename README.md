@@ -47,23 +47,23 @@ There are no hard requirements but some commands won't work properly without add
 		- Kick members
 		- Manage roles
 		- Manage channels
-		- Manage messages
+		- Manage messages *(all features will work without it)*
 - Your server should have rules channel.
 
 ### Why Rachel need these permissions and how she use them
 - Ban members
 	- **$ban** command obviously won't work
-	- **$warn** command won't work because after reaching configurable threshold of warns Rachel will automatically ban user
+	- **$warn** command will work but auto banning feature after reaching configurable threshold won't
 - Kick members
 	- **$kick** command obviously won't work
 - Manage roles
-	- **$warn** command won't work because after reaching configurable threshold of warns Rachel will automatically give user configurable punishment role
+	- **$warn** command will work but auto giving punishment role feature after reaching configurable threshold won't
 	- **$add level role** command won't work because after reaching by user certain level Rachel would give user reward role
 - Manage channels
 	- **$unlock channel** command won't work because Rachel will modify role permissions to channels
 	- **$lock channel** command won't work because Rachel will modify role permissions to channels
 - Manage messages
-	- **$poll** command won't work because Rachel will remove message with command
+	- **$poll** command will work, but Rachel won't remove user message with poll content
 	
 [Back to top][BackToTop]
 
@@ -195,6 +195,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.6.1
+	- Removed unnecessary permission requirements
 - Version 1.6.0
 	- Added Polish language
 	- Fixed bug with leaderboard
@@ -264,7 +266,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [DiscordInvite]: https://discord.gg/TjCDEQU
 
 [InviteRachelAdmin]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=8&scope=bot
-[InviteRachelBasic]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=268561430&scope=bot
+[InviteRachelBasic]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=268454998&scope=bot
 [InviteRachelPermless]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=0&scope=bot
 
 [RachelNormal]: ./RachelBot/Images/normal.png
