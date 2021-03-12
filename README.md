@@ -5,6 +5,25 @@
 ![Rachel by aster_atheris][RachelNormal]
 
 ## Table of Contents
+- [Feature list][FeatureList]
+- [Requirements][Requirements]
+	- [Additional "requirements"][AdditionalRequirements]
+	- [Why Rachel need these permissions and how she use them][PermissionsUsage]
+- [Getting Started][GettingStarted]
+	- [Basic Configuration][BasicConfiguration]
+- [Command List][CommandList]
+	- [Configuration Commands][ConfigurationCommands]
+	- [Moderator commands][ModeratorCommands]
+	- [User commands][UserCommands]
+- [User join/leave messages placeholders][UserJoinLeavePlaceholders]
+- [Currently supported languages][SupportedLanguages]
+- [Support us][SupportUs]
+- [Credits][Credits]
+- [License][License]
+- [Changelog][Changelog]
+- [What I have learned working on this project][WhatIHaveLearned]
+
+[Back to top][BackToTop]
 
 ***
 ## Feature list
@@ -16,6 +35,8 @@
 - Customizable guild (server) wise command prefix (default $)
 - Customizable guild (server) wise user join and left message
 - Simple user leveling system
+
+[Back to top][BackToTop]
 
 ***
 ## Requirements
@@ -45,6 +66,8 @@ There are no hard requirements but some commands won't work properly without add
 	- **$lock channel** command won't work because Rachel will modify role permissions to channels
 - Manage messages
 	- **$poll** command won't work because Rachel will remove message with command
+	
+[Back to top][BackToTop]
 
 ***
 ## Getting Started
@@ -53,12 +76,12 @@ There are no hard requirements but some commands won't work properly without add
 1. Make sure your server meets Rachel requirements.
 2. [Invite Rachel with administrator privileges][InviteRachelAdmin] or [invite her with only required permissions][InviteRachelBasic] or, if you want full control over Rachel permissions, [invite her without any permissions][InviteRachelPermless].
 3. Make sure Rachel role is as high as possible in role hierarchy.
-4. Call 4 commands:
+4. Call 2 commands:
 	- $ChangeToSChannel **Required**
-	- $ChangeModerationChannel *Optional*
-	- $ChangeUsersJoiningChannel *Optional*
-	- $ChangeUsersLeftChannel *Optional*
+	- $AddStaffRoles **Required**
 5. Enjoy!
+
+[Back to top][BackToTop]
 
 ***
 ![Smiling Rachel by aster_atheris][RachelSmiling]
@@ -74,7 +97,7 @@ There are no hard requirements but some commands won't work properly without add
 | --- | --- | --- | --- |
 | ChangeGuildPrefix | string representing new command prefix | Change guild command prefix | $ChangeGuildPrefix 12 |
 | ChangeGuildLanguage | string representing [language ISO code][ISOCodes] | Change guild language | $ChangeGuildLanguage pl |
-| AddStaffRoles | at least one SocketRole object (discord role) | Adds roles to staff roles | $AddStaffRoles @Owner @Admin @Moderator |
+| **AddStaffRoles** | at least one SocketRole object (discord role) | Adds roles to staff roles | $AddStaffRoles @Owner @Admin @Moderator |
 | ChangeStaffRoles | at least one SocketRole object (discord role) | Clears staff roles and adds specified roles to staff roles | $ChangeStaffRoles @Owner @Admin @Moderator |
 | ChangeModerationChannel | Text channel object | Change where to log moderation commands output | $ChangeModerationChannel #server-staff |
 | ChangeUsersJoiningChannel | Text channel object | Change where to welcome users | $ChangeUsersJoiningChannel #welcome-channel |
@@ -91,6 +114,8 @@ There are no hard requirements but some commands won't work properly without add
 | ChangeWarnPointsTillPunishment | Non-negative integer | Change after how many points of active warns user will get punishment role (0 will disable this feature) | $ChangePointsCountTillPunishment 50 |
 | ChangeAnnouncementChannel | Text channel object | Change channel for announcements | $ChangeAnnouncementChannel #announcements |
 | **ChangeToSChannel** | Text channel object | Change channel with server rules | $ChangeToSChannel #server-rules |
+
+[Back to top][BackToTop]
 
 ### Moderator commands
 **All moderation commands require user to have one of staff roles and some Rachel to have additional privileges (Banning members, kicking members, managing roles and channels).**
@@ -111,6 +136,8 @@ There are no hard requirements but some commands won't work properly without add
 | Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
 | Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
 
+[Back to top][BackToTop]
+
 ### User commands
 
 | Command | Aliases | Parameters | Outcome | Example |
@@ -129,6 +156,8 @@ There are no hard requirements but some commands won't work properly without add
 | Quote | Zacytuj, Cytuj | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
 | Avatar | Awatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
 
+[Back to top][BackToTop]
+
 ***
 ## User join/leave messages placeholders
 - {0} - user mention
@@ -136,10 +165,14 @@ There are no hard requirements but some commands won't work properly without add
 - {2} - user id
 - {3} - guild (server) name
 
+[Back to top][BackToTop]
+
 ***
 ## Currently supported languages
 - English
 - Polski (Polish)
+
+[Back to top][BackToTop]
 
 ***
 ## Support us
@@ -152,11 +185,15 @@ Idea and realization: Jerzy Kruszewski
 
 Avatars: aster_atheris ([artist instagram page][ArtistInstagram])
 
+[Back to top][BackToTop]
+
 ***
 ## License
 Code: MIT License
 
 Images: All rights reserved. They are intellectual properties of respective artist. 
+
+[Back to top][BackToTop]
 
 ***
 ## Changelog
@@ -202,16 +239,39 @@ Images: All rights reserved. They are intellectual properties of respective arti
 ## What I have learned working on this project
 - How to utilize power of Dependency Injections
 
+[Back to top][BackToTop]
+
 [BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#rachel-discord-bot
+[FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
+[Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
+[AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
+[PermissionsUsage]: https://github.com/JerzyKruszewski/RachelDiscordBot#why-rachel-need-these-permissions-and-how-she-use-them
+[GettingStarted]: https://github.com/JerzyKruszewski/RachelDiscordBot#getting-started
+[BasicConfiguration]: https://github.com/JerzyKruszewski/RachelDiscordBot#basic-configuration
+[CommandList]: https://github.com/JerzyKruszewski/RachelDiscordBot#command-list
+[ConfigurationCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#configuration-commands
+[ModeratorCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#moderator-commands
+[UserCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#user-commands
+[UserJoinLeavePlaceholders]: https://github.com/JerzyKruszewski/RachelDiscordBot#user-joinleave-messages-placeholders
+[SupportedLanguages]: https://github.com/JerzyKruszewski/RachelDiscordBot#currently-supported-languages
+[SupportUs]: https://github.com/JerzyKruszewski/RachelDiscordBot#support-us
+[Credits]: https://github.com/JerzyKruszewski/RachelDiscordBot#credits
+[License]: https://github.com/JerzyKruszewski/RachelDiscordBot#license
+[Changelog]: https://github.com/JerzyKruszewski/RachelDiscordBot#changelog
+[WhatIHaveLearned]: https://github.com/JerzyKruszewski/RachelDiscordBot#what-i-have-learned-working-on-this-project
+
 [CodeFactorBadge]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot/badge
 [CodeFactorRepository]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot
 [DiscordIcon]: https://img.shields.io/discord/591914197219016707.svg?color=7289da&label=BajarzDevelopment&logo=discord&style=flat-square
 [DiscordInvite]: https://discord.gg/TjCDEQU
+
 [InviteRachelAdmin]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=8&scope=bot
 [InviteRachelBasic]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=268561430&scope=bot
 [InviteRachelPermless]: https://discord.com/api/oauth2/authorize?client_id=810093575500726302&permissions=0&scope=bot
+
 [RachelNormal]: ./RachelBot/Images/normal.png
 [RachelSmiling]: ./RachelBot/Images/smiling.png
 [RachelAffectionate]: ./RachelBot/Images/affectionate.png
+
 [ISOCodes]: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 [ArtistInstagram]: https://www.instagram.com/aster_atheris/
