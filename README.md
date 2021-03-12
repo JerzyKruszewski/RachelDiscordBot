@@ -202,7 +202,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 ## What I have learned working on this project
 - How to utilize power of Dependency Injections
 
-[BackToTop]: ./#rachel-discord-bot
+[BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#rachel-discord-bot
 [CodeFactorBadge]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot/badge
 [CodeFactorRepository]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot
 [DiscordIcon]: https://img.shields.io/discord/591914197219016707.svg?color=7289da&label=BajarzDevelopment&logo=discord&style=flat-square
