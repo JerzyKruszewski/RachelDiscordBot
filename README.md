@@ -229,7 +229,7 @@ There are no hard requirements but some commands won't work properly without add
 | Praise | Pochwal | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
 | Remove Praise | Usuń pochwałę, Usun pochwale | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 |
 | Reprimand | Upomnienie | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
-| Warn | Ostrzeżenie, Ostrzezenia | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
+| Warn | Ostrzeżenie, Ostrzezenie | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
 | Remove Warn | Usuń Ostrzeżenie, Usun Ostrzezenie | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
 | Achievement | Osiągnięcie, Osiagniecie | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
 | Remove Achievement | Usuń Osiągnięcie, Usun Osiagniecie | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 |
@@ -291,6 +291,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.7.1
+	- Fixed typo
 - Version 1.7.0
 	- Added TicTacToe command
 - Version 1.6.1

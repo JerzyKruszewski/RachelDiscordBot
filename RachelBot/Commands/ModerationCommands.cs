@@ -122,7 +122,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Warn", RunMode = RunMode.Async)]
-        [Alias("Ostrzeżenie", "Ostrzezenia")]
+        [Alias("Ostrzeżenie", "Ostrzezenie")]
         [RequireStaff]
         public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
         {
