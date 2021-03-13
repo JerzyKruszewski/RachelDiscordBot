@@ -6,6 +6,13 @@
 
 ## Table of Contents
 - [Feature list][FeatureList]
+	- [Banning and kicking users][BansAndKicks]
+	- [Two warning systems (quantity- and point-based)][WarningSystems]
+	- [Praise system][PraiseSystem]
+	- [Point-based, XBOX-like  achievement system][AchievementSystem]
+	- [Customizable guild (server) wise command prefix (default $)][CustomizableCommandPrefix]
+	- [Customizable guild (server) wise user join and left message][UserJoinLeftMessage]
+	- [Simple user leveling system][LevelingSystem]
 - [Requirements][Requirements]
 	- [Additional "requirements"][AdditionalRequirements]
 	- [Why Rachel need these permissions and how she use them][PermissionsUsage]
@@ -15,7 +22,6 @@
 	- [Configuration Commands][ConfigurationCommands]
 	- [Moderator commands][ModeratorCommands]
 	- [User commands][UserCommands]
-- [User join/leave messages placeholders][UserJoinLeavePlaceholders]
 - [Currently supported languages][SupportedLanguages]
 - [Support us][SupportUs]
 - [Credits][Credits]
@@ -25,14 +31,81 @@
 
 ***
 ## Feature list
-- Banning and kicking users
-- Two warning systems (quantity- and point-based)
-- Praise system
-- Point-based, XBOX-like  achievement system
-- Mention command prefix
-- Customizable guild (server) wise command prefix (default $)
-- Customizable guild (server) wise user join and left message
-- Simple user leveling system
+### Banning and kicking users
+To ban user every staff member can use $ban command. They will need to ping user and reason of ban.
+Rachel won't remove any messages of that user.
+
+To kick user every staff member can use $kick command. They will need to ping user and reason of kick.
+
+### Two warning systems (quantity- and point-based)
+**Pre-Configuration:**
+To fully utilize warning system you will need to have:
+- Configured staff roles
+- Configured ToS channel
+- Configured punishment role
+
+To configure staff roles server administrator will need to call `$ChangeStaffRoles {ping of roles}` or `$AddStaffRoles {ping of roles}` command.
+To configure ToS channel server administrator will need to call `$ChangeToSChannel {ping of channel}` command.
+To configure punishment role server administrator will need to call `$ChangePunishmentRole {ping of role}` command.
+
+**Point-based system:**
+To use this system server administrator will need to call `$TogglePointSystemWarns true` command.
+To add autobanning feature after certain point threshold server administrator will need to call `$ChangeWarnPointsTillBan {how many points required to get banned. 0 - will disable this feature.}` command.
+This feature is disabled by default.
+To add auto giving punishment role feature after certain point threshold server administrator will need to call `$ChangeWarnPointsTillPunishment {how many points required to get punishment role. 0 - will disable this feature.}` command.
+This feature is disabled by default.
+
+Every staff member will be able to warn users with `$Warn {user ping} {warn power (number)} {warn reason}` command. 
+
+**Quantity-based system:**
+Default system.
+To use this system server administrator could need to call `$TogglePointSystemWarns false` command.
+To add autobanning feature after certain quantity threshold server administrator will need to call `$ChangeWarnCountTillBan {how many warnings are required to get banned. 0 - will disable this feature.}` command.
+This feature is disabled by default.
+To add auto giving punishment role feature after certain quantity threshold server administrator will need to call `$ChangeWarnCountTillPunishment {how many warnings are required to get punishment role. 0 - will disable this feature.}` command.
+This feature is disabled by default.
+
+Every staff member will be able to warn users with `$Warn {user ping} {warn reason}` command.
+
+Every warn given in quantity based system has 20 points so it's easly convertable to point-based one.
+
+**Relevant for both systems:**
+To change warn duration (default 30 days) server administrator will need to call `$ChangeWarnDuration {new warn duration in days. 0 will disable warning system completely}`.
+Every user can check each other warns using `$warns {optional user ping}`.
+Every staff member can remove warning before it expires using `$remove warn {user ping} {warn id}` command (to get `{warn id}` staff member will need to call `$warns {user ping}` command and check leftmost number of warning to remove).
+If staff members decides that warning would be too extreme punishment, he could use `$reprimand {user ping} {reprimand reason}`. It will send a DM message to user and will not have any more consequences.
+In every warn and reprimand DM send to user will be direct link to server ToS channel. Make sure you have it configured, because if it's not configured correctly user will get a message that ends with: "Please read rules on #deleted-channel".
+
+### Praise system
+Every staff member will be able to praise users with `$Praise {user ping} {praise reason}` command.
+Every user can check each other praises using `$praises {optional user ping}`.
+Every staff member can remove praise using `$remove praise {user ping} {praise id}` command (to get `{praise id}` staff member will need to call `$praises {user ping}` command and check leftmost number of praise to remove).
+
+### Point-based, XBOX-like  achievement system
+Every staff member will be able to give user achievement with `$Achievement {user ping} {achievement points} {achievement text}` command.
+Every user can check each other achievements using `$achievements {optional user ping}`.
+Every staff member can remove achievement using `$remove achievement {user ping} {achievement id}` command (to get `{achievement id}` staff member will need to call `$achievements {user ping}` command and check leftmost number of achievement to remove).
+
+### Customizable guild (server) wise command prefix (default $)
+Server administrator can call `$ChangeGuildPrefix {new prefix}` command to change command prefix for this server.
+
+### Customizable guild (server) wise user join and left message
+Rachel has own user join and left messages.
+Server administrator will need to call `$ChangeUsersJoiningChannel {ping of channel}` to enable welcome messages and `$ChangeUsersLeftChannel {ping of channel}` for user left notifications.
+In order to change messages content administrator will need to call `$ChangeWelcomeMessage {new message content}` and `$ChangeUserLeftMessage {new message content}`.
+User join/leave messages placeholders
+- {0} - user mention
+- {1} - user username
+- {2} - user id
+- {3} - guild (server) name
+
+Example:
+Message `User {1}({2}) left our server!` will be shown as `User Jurij98(331026920269414410) left our server!`
+
+### Simple user leveling system
+Every time user sends message he will get 50xp.
+After user level up it is possible to give user role reward.
+Every staff member will be able to add and remove role rewards using `$Add Level Role {role ping} {required lvl}` and `$Remove Level Role {role ping}` commands.
 
 [Back to top][BackToTop]
 
@@ -157,15 +230,6 @@ There are no hard requirements but some commands won't work properly without add
 [Back to top][BackToTop]
 
 ***
-## User join/leave messages placeholders
-- {0} - user mention
-- {1} - user username
-- {2} - user id
-- {3} - guild (server) name
-
-[Back to top][BackToTop]
-
-***
 ## Currently supported languages
 - English
 - Polski (Polish)
@@ -243,6 +307,13 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 [BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#table-of-contents
 [FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
+[BansAndKicks]:
+[WarningSystems]:
+[PraiseSystem]:
+[AchievementSystem]:
+[CustomizableCommandPrefix]:
+[UserJoinLeftMessage]:
+[LevelingSystem]:
 [Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
 [AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
 [PermissionsUsage]: https://github.com/JerzyKruszewski/RachelDiscordBot#why-rachel-need-these-permissions-and-how-she-use-them
@@ -252,7 +323,6 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [ConfigurationCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#configuration-commands
 [ModeratorCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#moderator-commands
 [UserCommands]: https://github.com/JerzyKruszewski/RachelDiscordBot#user-commands
-[UserJoinLeavePlaceholders]: https://github.com/JerzyKruszewski/RachelDiscordBot#user-joinleave-messages-placeholders
 [SupportedLanguages]: https://github.com/JerzyKruszewski/RachelDiscordBot#currently-supported-languages
 [SupportUs]: https://github.com/JerzyKruszewski/RachelDiscordBot#support-us
 [Credits]: https://github.com/JerzyKruszewski/RachelDiscordBot#credits
