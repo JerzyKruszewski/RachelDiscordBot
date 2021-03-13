@@ -257,6 +257,7 @@ There are no hard requirements but some commands won't work properly without add
 | Leaderboard | Ranking | Optional integer representing how many users need to be in leaderboard and optional character representing type of leaderboard (a, p or x) | Will show server leaderboard | $Leaderboard 15 x |
 | Quote | Zacytuj, Cytuj | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
 | Avatar | Awatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
+| TicTacToe | --- | Optional user object | Will create TicTacToe game | $TicTacToe @Jurij98 |
 
 [Back to top][BackToTop]
 
@@ -290,6 +291,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.7.0
+	- Added TicTacToe command
 - Version 1.6.1
 	- Removed unnecessary permission requirements
 - Version 1.6.0

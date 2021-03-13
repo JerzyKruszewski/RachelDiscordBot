@@ -44,5 +44,12 @@
   "HELP_TITLE": "Potrzebujesz pomocy?",
   "HELP": "Pełna lista komend dostępna [tutaj]({0}).\nJeśli dalej masz problemy dołącz na nasz [serwer discord]({1}) i otrzymaj bezpośrednie wsparcie.",
   "LEADERBOARD_TITLE": "Ranking {0}",
-  "LEADERBOARD": "{0}\n\nTy jesteś {1}."
+  "LEADERBOARD": "{0}\n\nTy jesteś {1}.",
+  "TICTACTOE_NO_OPPONENT": "Zawsze możesz zagrać ze mną",
+  "TICTACTOE_PLAY_WITH_RACHEL": "Chcesz zagrać ze mną? Grajmy!",
+  "TICTACTOE_PLAY_WITH_BOT": "Chcesz grać z innym botem? Wiesz, że nie będzie z Tobą grał? Ale nie martw się, ja chętnie z Tobą zagram.",
+  "TICTACTOE_GAVE_UP": "Poddajesz się {0}? Myślałam, że stać się na więcej.",
+  "TICTACTOE_WIN": "Koniec gry! Wygrał: {0}",
+  "TICTACTOE_DRAW": "Remis",
+  "TICTACTOE_WRONG_INPUT": "Błędny numer pola!"
 }

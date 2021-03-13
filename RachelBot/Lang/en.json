@@ -44,5 +44,12 @@
   "HELP_TITLE": "Need help?",
   "HELP": "Commands list available [here]({0}).\nIf you still have problems join our [discord server]({1}) and get direct support.",
   "LEADERBOARD_TITLE": "{0} Leaderboard",
-  "LEADERBOARD": "{0}\n\nYou are {1}."
+  "LEADERBOARD": "{0}\n\nYou are {1}.",
+  "TICTACTOE_NO_OPPONENT": "You can always play with me.",
+  "TICTACTOE_PLAY_WITH_RACHEL": "Oh you want to play with me? Ok, let's do it!",
+  "TICTACTOE_PLAY_WITH_BOT": "You want to play with another bot? You know that it won't play with you? But don't worry, I will happily play with you.",
+  "TICTACTOE_GAVE_UP": "You gave up {0}? I expected more from you.",
+  "TICTACTOE_WIN": "Game Over! Winner: {0}",
+  "TICTACTOE_DRAW": "Draw",
+  "TICTACTOE_WRONG_INPUT": "Wrong input!"
 }

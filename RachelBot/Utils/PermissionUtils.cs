@@ -49,5 +49,15 @@ namespace RachelBot.Utils
                 await context.Message.DeleteAsync();
             }
         }
+
+        public static async void TryRemoveMessageAsync(SocketCommandContext context, SocketMessage message)
+        {
+            GuildPermissions permissions = context.Guild.CurrentUser.GuildPermissions;
+
+            if (permissions.ManageMessages || permissions.Administrator)
+            {
+                await message.DeleteAsync();
+            }
+        }
     }
 }
