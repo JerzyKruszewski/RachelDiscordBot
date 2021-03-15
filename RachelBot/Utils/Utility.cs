@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Discord;
 using Discord.WebSocket;
@@ -15,6 +16,8 @@ namespace RachelBot.Utils
         public const string GitHubPage = @"https://github.com/JerzyKruszewski/RachelDiscordBot";
 
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
+
+        public static readonly Random random = new Random();
 
         public static IEnumerable<Emoji> AnswersEmojis { get; } = new List<Emoji>()
         {

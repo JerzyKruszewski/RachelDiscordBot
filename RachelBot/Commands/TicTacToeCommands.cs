@@ -72,23 +72,10 @@ namespace RachelBot.Commands
                 {
                     await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
 
-                    if (i >= 5)
+                    if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
                     {
-                        if (game.CheckScore())
-                        {
-                            await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", secondPlayer.Character));
-                            return;
-                        }
-                    }
-                    if (i == 9)
-                    {
-                        await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                        await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_DRAW"));
                         return;
                     }
-
-                    string character = firstPlayer.Character;
 
                     SocketMessage message = await NextMessageAsync();
 
@@ -98,7 +85,7 @@ namespace RachelBot.Commands
                         return;
                     }
 
-                    var cords = firstPlayer.GetCords(message.Content);
+                    var cords = Player.GetCords(message.Content);
                     await Task.Delay(1000);
 
                     PermissionUtils.TryRemoveMessageAsync(Context, message);
@@ -110,24 +97,13 @@ namespace RachelBot.Commands
                         continue;
                     }
 
-                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, character);
+                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, firstPlayer.Character);
                     game.ChangePlayer();
                 }
                 else
                 {
-                    if (i >= 5)
+                    if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
                     {
-                        if (game.CheckScore())
-                        {
-                            await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", firstPlayer.Character));
-                            return;
-                        }
-                    }
-                    if (i == 9)
-                    {
-                        await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                        await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_DRAW"));
                         return;
                     }
 
@@ -152,23 +128,10 @@ namespace RachelBot.Commands
                 {
                     await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
 
-                    if (i >= 5)
+                    if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
                     {
-                        if (game.CheckScore())
-                        {
-                            await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", secondPlayer.Character));
-                            return;
-                        }
-                    }
-                    if (i == 9)
-                    {
-                        await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                        await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_DRAW"));
                         return;
                     }
-
-                    string character = firstPlayer.Character;
 
                     SocketMessage message = await NextMessageAsync();
 
@@ -178,7 +141,7 @@ namespace RachelBot.Commands
                         return;
                     }
 
-                    var cords = firstPlayer.GetCords(message.Content);
+                    var cords = Player.GetCords(message.Content);
                     await Task.Delay(1000);
 
                     PermissionUtils.TryRemoveMessageAsync(Context, message);
@@ -190,32 +153,19 @@ namespace RachelBot.Commands
                         continue;
                     }
 
-                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, character);
+                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, firstPlayer.Character);
                     game.ChangePlayer();
                 }
                 else
                 {
                     await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
 
-                    if (i >= 5)
+                    if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
                     {
-                        if (game.CheckScore())
-                        {
-                            await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", firstPlayer.Character));
-                            return;
-                        }
-                    }
-                    if (i == 9)
-                    {
-                        await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                        await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_DRAW"));
                         return;
                     }
 
-                    string character = secondPlayer.Character;
-
-                    var criterion = new Criteria<SocketMessage>();
+                    Criteria<SocketMessage> criterion = new Criteria<SocketMessage>();
 
                     criterion.AddCriterion(new EnsureFromUserCriterion(secondPlayer.Id));
                     criterion.AddCriterion(new EnsureSourceChannelCriterion());
@@ -228,7 +178,7 @@ namespace RachelBot.Commands
                         return;
                     }
 
-                    var cords = firstPlayer.GetCords(message.Content);
+                    var cords = Player.GetCords(message.Content);
                     await Task.Delay(1000);
 
                     PermissionUtils.TryRemoveMessageAsync(Context, message);
@@ -240,10 +190,31 @@ namespace RachelBot.Commands
                         continue;
                     }
 
-                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, character);
+                    game.ChangeTableElement(cords.Value.Key, cords.Value.Value, secondPlayer.Character);
                     game.ChangePlayer();
                 }
             }
+        }
+
+        private async Task<bool> CheckIfGameEnded(Game game, Player firstPlayer, Player secondPlayer, AlertsHandler alerts, int moveCount, RestUserMessage boardMessage)
+        {
+            if (moveCount >= 5)
+            {
+                if (game.CheckScore())
+                {
+                    await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
+                    await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", firstPlayer.Character));
+                    return true;
+                }
+            }
+            if (moveCount == 9)
+            {
+                await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
+                await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_DRAW"));
+                return true;
+            }
+
+            return false;
         }
     }
 }
