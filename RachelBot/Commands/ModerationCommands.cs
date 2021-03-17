@@ -12,6 +12,8 @@ using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
+using Discord.Rest;
+using RachelBot.Core.ModerationAnnouncements;
 
 namespace RachelBot.Commands
 {
@@ -340,6 +342,101 @@ namespace RachelBot.Commands
             new LevelRoleRewards(Context.Guild.Id, _storage).RemoveLevelRoleReward(role.Id);
 
             await modChannel.SendMessageAsync(alerts.GetFormattedAlert("LEVEL_ROLE_REMOVED", role.Id));
+        }
+
+        [Command("Create Announcement", RunMode = RunMode.Async)]
+        [RequireStaff]
+        public async Task CreateAnnouncement(ITextChannel channel, [Remainder]string content)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            Announcements announcements = new Announcements(guild.Id, _storage);
+
+            Tuple<string, string> titleAndContent = SplitAnnouncement(content);
+            string title = titleAndContent.Item1;
+            content = titleAndContent.Item2;
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = title,
+                Description = content,
+                Color = new Color(1, 69, 44)
+            };
+
+            embed.WithAuthor(Context.User);
+
+            IUserMessage message = await channel.SendMessageAsync(embed: embed.Build());
+
+            announcements.CreateAnnouncement(message.Id, channel.Id, content);
+
+            await Task.Delay(500);
+
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+        }
+
+        [Command("Update Announcement")]
+        [RequireStaff]
+        public async Task UpdateAnnouncement(ulong messageId, [Remainder] string content)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            Announcements announcements = new Announcements(guild.Id, _storage);
+
+            Announcement announcement = announcements.UpdateAnnouncement(messageId, content);
+
+            if (announcement == null)
+            {
+                await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("NO_ANNOUNCEMENT", messageId));
+                return;
+            }
+
+            Tuple<string, string> titleAndContent = SplitAnnouncement(content);
+            string title = titleAndContent.Item1;
+            content = titleAndContent.Item2;
+
+            IMessage message = await Utility.GetMessageChannelById(guild, announcement.ChannelId).GetMessageAsync(messageId);
+
+            if (message == null)
+            {
+                await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("NO_ANNOUNCEMENT", messageId));
+                return;
+            }
+
+            await (message as RestUserMessage).ModifyAsync(m => 
+            {
+                EmbedBuilder embed = new EmbedBuilder()
+                {
+                    Title = title,
+                    Description = content,
+                    Color = new Color(1, 69, 44)
+                };
+
+                embed.WithAuthor(Context.User);
+
+                m.Embed = embed.Build();
+            });
+
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+        }
+
+        private static Tuple<string, string> SplitAnnouncement(string content)
+        {
+            string[] split = content.Split('|');
+
+            string title = split[0];
+
+            content = "";
+
+            for (int i = 1; i < split.Length; i++)
+            {
+                content += $"{split[i]}|";
+            }
+
+            content = content.Remove(content.Length - 2, 1);
+
+            return Tuple.Create(title, content);
         }
     }
 }

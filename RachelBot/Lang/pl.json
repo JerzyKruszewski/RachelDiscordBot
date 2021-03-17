@@ -27,6 +27,7 @@
   "LEVEL_ROLE_REMOVED": "Usunięto rolę za level <@&{0}>",
   "LEVEL_ROLE_LIST_TEMPLATE": "Role za level:",
   "LEVEL_ROLE_LIST_ITEM": "{0} - <@&{1}> (min lvl: {2})\n",
+  "NO_ANNOUNCEMENT": "Nie znaleziono ogłoszenia z id: {0}",
   "STATUS_MESSAGE_POINT": "{0} ma {1} lvl, {2} xp.\nZostał pochwalony {3} razy i ma {4} osiągnięć.\nOtrzymał {5} (**{6}**) aktywnych ostrzeżeń.",
   "STATUS_MESSAGE": "{0} ma {1} lvl, {2} xp.\nZostał pochwalony {3} razy i ma {4} osiągnięć.\nOtrzymał {5} aktywnych ostrzeżeń.",
   "CHECK_WARNINGS_TEMPLATE_POINT": "{0} ma {1} (**{2}**) aktywnych ostrzeżeń.\n{3}",
