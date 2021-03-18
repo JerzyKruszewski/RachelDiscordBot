@@ -69,6 +69,11 @@ namespace RachelBot.Core.RaffleSystem
 
         public bool AddTickets(Raffle raffle, ulong userId, int tickets, bool byUser)
         {
+            if (byUser && !raffle.UsersCanEnter)
+            {
+                return false;
+            }
+
             if (byUser)
             {
                 if (raffle.EnteredUsers.Contains(userId))

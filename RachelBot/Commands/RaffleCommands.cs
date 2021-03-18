@@ -37,7 +37,7 @@ namespace RachelBot.Commands
 
             raffles.CreateRaffle(reward, canUsersJoin);
 
-            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("RAFFLE_CREATED"));
         }
 
         [Command("Add Tickets To User")]
@@ -52,7 +52,7 @@ namespace RachelBot.Commands
 
             raffles.AddTickets(raffle, user.Id, amount, byUser: false);
 
-            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("ADDED_TICKET_TO_USER", amount, user.Username));
         }
 
         [Command("Add Tickets To Role", RunMode = RunMode.Async)]
@@ -75,7 +75,7 @@ namespace RachelBot.Commands
                 }
             }
 
-            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("ADDED_TICKET_TO_ROLE", amount, role.Name));
         }
 
         [Command("Roll Raffle")]
@@ -89,7 +89,7 @@ namespace RachelBot.Commands
 
             Raffle raffle = raffles.Roll(raffles.GetRaffle(id));
 
-            await Context.Channel.SendMessageAsync($"Winner of {raffle.Reward} is <@{raffle.Winner}>");
+            await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_WINNER", raffle.Reward, raffle.Winner));
         }
 
         [Command("Join Raffle")]
@@ -102,11 +102,11 @@ namespace RachelBot.Commands
 
             if (raffles.AddTickets(raffles.GetRaffle(id), Context.User.Id, tickets: 1, byUser: true))
             {
-                await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+                await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESSFULLY_JOINED_RAFFLE"));
                 return;
             }
 
-            await Context.Channel.SendMessageAsync(alerts.GetAlert("FAILURE"));
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("RAFFLE_JOIN_FAIL"));
         }
 
         [Command("Show Raffle")]
@@ -127,8 +127,8 @@ namespace RachelBot.Commands
 
             EmbedBuilder embed = new EmbedBuilder()
             {
-                Title = $"Raffle #{raffle.Id} for {raffle.Reward}",
-                Description = $"Raffle participants:{participants}",
+                Title = alerts.GetFormattedAlert("RAFFLE_TITLE", raffle.Id, raffle.Reward),
+                Description = alerts.GetFormattedAlert("RAFFLE", participants),
                 Color = new Color(1, 69, 44)
             };
 
@@ -159,7 +159,7 @@ namespace RachelBot.Commands
 
             EmbedBuilder embed = new EmbedBuilder()
             {
-                Title = $"Raffles",
+                Title = alerts.GetAlert("RAFFLES"),
                 Description = message,
                 Color = new Color(1, 69, 44)
             };
