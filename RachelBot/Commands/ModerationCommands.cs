@@ -126,68 +126,77 @@ namespace RachelBot.Commands
         [RequireStaff]
         public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
         {
-            SocketGuild guild = Context.Guild;
-            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
-            AlertsHandler alerts = new AlertsHandler(config);
-            ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
-            UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
-            UserAccount account = accounts.GetUserAccount(user.Id);
-
-            accounts.DeleteExpiredWarnings(account);
-            Warning warn = accounts.AddWarning(account, reason, config);
-
-            reason = Utility.ParseReason(reason, config);
-
-            if ((account.Warnings.Count >= config.WarnCountTillBan && config.WarnCountTillBan > 0) ||
-                (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillBan && config.WarnPointsTillBan > 0))
-            {
-                if (PermissionUtils.CanBanMembers(Context))
-                {
-                    await user.BanAsync(0, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason));
-
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED", user.Username, user.Id, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
-
-                    return;
-                }
-            }
-            else if ((account.Warnings.Count >= config.WarnCountTillPunishment && config.WarnCountTillPunishment > 0) ||
-                     (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillPunishment && config.WarnPointsTillPunishment > 0))
-            {
-                if (PermissionUtils.CanGiveRoles(Context))
-                {
-                    await user.AddRoleAsync(Utility.GetRoleById(Context.Guild, config.PunishmentRoleId));
-
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_PUNISHMENT_ROLE", user.Mention, config.PunishmentRoleId,
-                                                                               alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
-                }
-            }
-
-            string message;
-
             try
             {
-                IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+                SocketGuild guild = Context.Guild;
+                GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+                AlertsHandler alerts = new AlertsHandler(config);
+                ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
+                UserAccounts accounts = new UserAccounts(Context.Guild.Id, _storage);
+                UserAccount account = accounts.GetUserAccount(user.Id);
 
-                if (config.PointBasedWarns)
+                accounts.DeleteExpiredWarnings(account);
+                Warning warn = accounts.AddWarning(account, reason, config);
+
+                reason = Utility.ParseReason(reason, config);
+
+                if ((account.Warnings.Count >= config.WarnCountTillBan && config.WarnCountTillBan > 0) ||
+                    (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillBan && config.WarnPointsTillBan > 0))
                 {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, guild.Name, warn.Value, warn.Reason,
-                                                       accounts.GetWarningsCount(account), accounts.GetWarningsPower(account), config.ToSChannelId);
+                    if (PermissionUtils.CanBanMembers(Context))
+                    {
+                        await user.BanAsync(0, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason));
 
-                    await dmChannel.SendMessageAsync(message);
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, message));
+                        await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED", user.Username, user.Id, alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
+
+                        return;
+                    }
                 }
-                else
+                else if ((account.Warnings.Count >= config.WarnCountTillPunishment && config.WarnCountTillPunishment > 0) ||
+                         (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillPunishment && config.WarnPointsTillPunishment > 0))
                 {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, guild.Name, warn.Reason,
-                                                       accounts.GetWarningsCount(account), config.ToSChannelId);
+                    if (PermissionUtils.CanGiveRoles(Context))
+                    {
+                        await user.AddRoleAsync(Utility.GetRoleById(Context.Guild, config.PunishmentRoleId));
 
-                    await dmChannel.SendMessageAsync(message);
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, message));
+                        await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_GOT_PUNISHMENT_ROLE", user.Mention, config.PunishmentRoleId,
+                                                                                   alerts.GetFormattedAlert("TOO_MANY_WARNS", reason)));
+                    }
+                }
+
+                string message;
+
+                try
+                {
+                    IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+
+                    if (config.PointBasedWarns)
+                    {
+                        message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, guild.Name, warn.Value, warn.Reason,
+                                                           accounts.GetWarningsCount(account), accounts.GetWarningsPower(account), config.ToSChannelId);
+
+                        await dmChannel.SendMessageAsync(message);
+                        await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, message));
+                    }
+                    else
+                    {
+                        message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, guild.Name, warn.Reason,
+                                                           accounts.GetWarningsCount(account), config.ToSChannelId);
+
+                        await dmChannel.SendMessageAsync(message);
+                        await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, message));
+                    }
+                }
+                catch (Exception)
+                {
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS_WARN", user.Mention));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS_WARN", user.Mention));
+                Console.WriteLine(ex);
+                Program.LogToFile($"{ex.Message}\n{ex.StackTrace}");
+                throw;
             }
         }
 
