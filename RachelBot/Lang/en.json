@@ -27,6 +27,7 @@
   "LEVEL_ROLE_REMOVED": "Removed level role for role <@&{0}>",
   "LEVEL_ROLE_LIST_TEMPLATE": "Level roles:",
   "LEVEL_ROLE_LIST_ITEM": "{0} - <@&{1}> (min lvl: {2})\n",
+  "NO_ANNOUNCEMENT": "No announcement with message id: {0}",
   "STATUS_MESSAGE_POINT": "{0} has {1} lvl, {2} xp.\nWas prised {3} times and has {4} achievements.\nHas {5} (**{6}**) active warns.",
   "STATUS_MESSAGE": "{0} has {1} lvl, {2} xp.\nWas prised {3} times and has {4} achievements.\nHas {5} active warns.",
   "CHECK_WARNINGS_TEMPLATE_POINT": "{0} has {1} (**{2}**) active warns.\n{3}",
