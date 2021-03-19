@@ -345,6 +345,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Create Announcement", RunMode = RunMode.Async)]
+        [Alias("Nowe Ogłoszenie", "Nowe Ogloszenie")]
         [RequireStaff]
         public async Task CreateAnnouncement(ITextChannel channel, [Remainder]string content)
         {
@@ -376,6 +377,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Update Announcement")]
+        [Alias("Zaktualizuj Ogłoszenie", "Zaktualizuj Ogloszenie")]
         [RequireStaff]
         public async Task UpdateAnnouncement(ulong messageId, [Remainder] string content)
         {
