@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RachelBot.Utils;
 
 namespace RachelBot.Core.Games.TicTacToe.AI
 {
@@ -9,7 +10,20 @@ namespace RachelBot.Core.Games.TicTacToe.AI
             int input;
             List<int> empty = game.GetAllEmptyElements(player, ai);
 
-            #region Win
+            input = Win(game, ai, empty);
+
+            if (input != 0)
+            {
+                return input;
+            }
+
+            input = Block(game, player, empty);
+            
+            return (input != 0) ? input : empty[Utility.random.Next(0, empty.Count)];
+        }
+
+        private static int Win(Game game, Player ai, List<int> empty)
+        {
             if (((game.Board[0, 1] == ai.Character && game.Board[0, 2] == ai.Character) ||
                  (game.Board[1, 0] == ai.Character && game.Board[2, 0] == ai.Character) ||
                  (game.Board[2, 2] == ai.Character && game.Board[1, 1] == ai.Character)) && empty.Contains(1))
@@ -69,9 +83,12 @@ namespace RachelBot.Core.Games.TicTacToe.AI
             {
                 return 9;
             }
-            #endregion
 
-            #region Block
+            return 0;
+        }
+
+        private static int Block(Game game, Player player, List<int> empty)
+        {
             if (((game.Board[0, 1] == player.Character && game.Board[0, 2] == player.Character) ||
                  (game.Board[1, 0] == player.Character && game.Board[2, 0] == player.Character) ||
                  (game.Board[2, 2] == player.Character && game.Board[1, 1] == player.Character)) && empty.Contains(1))
@@ -131,12 +148,8 @@ namespace RachelBot.Core.Games.TicTacToe.AI
             {
                 return 9;
             }
-            #endregion
 
-            //Random move
-            input = empty[RandomAI.random.Next(0, empty.Count)];
-
-            return input;
+            return 0;
         }
     }
 }
