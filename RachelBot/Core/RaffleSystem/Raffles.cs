@@ -109,14 +109,13 @@ namespace RachelBot.Core.RaffleSystem
 
         private ulong GetWinner(Raffle raffle)
         {
-            Random random = new Random();
             List<double> cumulativeDistribution = new List<double>()
             {
                 0.0
             };
 
             double sumOfTickets = raffle.Tickets.Values.Sum();
-            double randomNumber = random.NextDouble();
+            double randomNumber = Utility.random.NextDouble();
 
             foreach (int value in raffle.Tickets.Values)
             {

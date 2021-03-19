@@ -27,6 +27,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Create Raffle")]
+        [Alias("Stwórz Loterię", "Stworz Loterie")]
         [RequireStaff]
         public async Task CreateRaffle(bool canUsersJoin, [Remainder]string reward)
         {
@@ -41,6 +42,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Add Tickets To User")]
+        [Alias("Dodaj Bilety Do Użytkownika", "Dodaj Bilety Do Uzytkownika")]
         [RequireStaff]
         public async Task AddTickets(int id, SocketUser user, int amount)
         {
@@ -56,6 +58,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Add Tickets To Role", RunMode = RunMode.Async)]
+        [Alias("Dodaj Bilety Do Roli")]
         [RequireStaff]
         public async Task AddTickets(int id, SocketRole role, int amount)
         {
@@ -79,6 +82,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Roll Raffle")]
+        [Alias("Losuj")]
         [RequireStaff]
         public async Task RollRaffle(int id)
         {
@@ -93,6 +97,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Join Raffle")]
+        [Alias("Dołącz Do Loterii", "Dolacz Do Loterii")]
         public async Task JoinRaffle(int id)
         {
             SocketGuild guild = Context.Guild;
@@ -110,6 +115,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Show Raffle")]
+        [Alias("Loteria")]
         public async Task ShowRaffle(int id)
         {
             SocketGuild guild = Context.Guild;
@@ -136,6 +142,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Show Raffles")]
+        [Alias("Loterie")]
         public async Task ShowRaffles()
         {
             SocketGuild guild = Context.Guild;
