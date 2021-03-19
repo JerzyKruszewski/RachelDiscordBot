@@ -31,7 +31,7 @@ namespace RachelBot.Core.Games.TicTacToe
             }
         }
 
-        public KeyValuePair<int, int>? GetCords(string input)
+        public static KeyValuePair<int, int>? GetCords(string input)
         {
             if (!ValidateInput(input))
             {
@@ -45,23 +45,13 @@ namespace RachelBot.Core.Games.TicTacToe
             return new KeyValuePair<int, int>(row, column);
         }
 
-        private bool ValidateInput(string input)
+        private static bool ValidateInput(string input)
         {
-            switch (input)
+            return input switch
             {
-                case "1":
-                case "2":
-                case "3":
-                case "4":
-                case "5":
-                case "6":
-                case "7":
-                case "8":
-                case "9":
-                    return true;
-                default:
-                    return false;
-            }
+                "1" or "2" or "3" or "4" or "5" or "6" or "7" or "8" or "9" => true,
+                _ => false,
+            };
         }
     }
 }
