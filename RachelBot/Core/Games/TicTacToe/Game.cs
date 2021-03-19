@@ -34,19 +34,27 @@ namespace RachelBot.Core.Games.TicTacToe
 
         public bool CheckScore()
         {
-            if ((_table[0, 0] == _table[0, 1] && _table[0, 1] == _table[0, 2]) || //0. rzad
-                (_table[1, 0] == _table[1, 1] && _table[1, 1] == _table[1, 2]) || //1. rzad
-                (_table[2, 0] == _table[2, 1] && _table[2, 1] == _table[2, 2]) || //2. rzad
-                (_table[0, 0] == _table[1, 0] && _table[1, 0] == _table[2, 0]) || //0. kolumna
-                (_table[0, 1] == _table[1, 1] && _table[1, 1] == _table[2, 1]) || //1. kolumna
-                (_table[0, 2] == _table[1, 2] && _table[1, 2] == _table[2, 2]) || //2. kolumna
-                (_table[0, 0] == _table[1, 1] && _table[1, 1] == _table[2, 2]) || //ukos
-                (_table[0, 2] == _table[1, 1] && _table[1, 1] == _table[2, 0]))   //ukos
-            {
-                return true;
-            }
+            return (CheckRows() || CheckColumns() || CheckDiagnals());
+        }
 
-            return false;
+        private bool CheckRows()
+        {
+            return ((_table[0, 0] == _table[0, 1] && _table[0, 1] == _table[0, 2]) ||
+                    (_table[1, 0] == _table[1, 1] && _table[1, 1] == _table[1, 2]) ||
+                    (_table[2, 0] == _table[2, 1] && _table[2, 1] == _table[2, 2]));
+        }
+
+        private bool CheckColumns()
+        {
+            return ((_table[0, 0] == _table[1, 0] && _table[1, 0] == _table[2, 0]) ||
+                    (_table[0, 1] == _table[1, 1] && _table[1, 1] == _table[2, 1]) ||
+                    (_table[0, 2] == _table[1, 2] && _table[1, 2] == _table[2, 2]));
+        }
+
+        private bool CheckDiagnals()
+        {
+            return ((_table[0, 0] == _table[1, 1] && _table[1, 1] == _table[2, 2]) ||
+                    (_table[0, 2] == _table[1, 1] && _table[1, 1] == _table[2, 0]));
         }
 
         public Player CheckWinner(Player player, Player ai)
@@ -107,7 +115,7 @@ namespace RachelBot.Core.Games.TicTacToe
                 {
                     if (_table[i, j] != firstPlayer.Character && _table[i, j] != secondPlayer.Character)
                     {
-                        empty.Add(i * 3 + j + 1);
+                        empty.Add((i * 3) + j + 1);
                     }
                 }
             }
