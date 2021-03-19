@@ -13,6 +13,7 @@
 	- [Customizable guild (server) wise command prefix (default $)][CustomizableCommandPrefix]
 	- [Customizable guild (server) wise user join and left message][UserJoinLeftMessage]
 	- [Simple user leveling system][LevelingSystem]
+	- [Moderation announcement system][ModerationAnnouncement]
 - [Requirements][Requirements]
 	- [Additional "requirements"][AdditionalRequirements]
 	- [Why Rachel need these permissions and how she use them][PermissionsUsage]
@@ -138,6 +139,19 @@ After user level up it is possible to give user role reward.
 
 Every staff member will be able to add and remove role rewards using `$Add Level Role {role ping} {required lvl}` and `$Remove Level Role {role ping}` commands.
 
+### Moderation announcement system
+Moderation announcements are special messages that can be modified by any staff member.
+
+To add new moderation announcement every staff member can use `$Create Announcement {channel where put announcement} {title of announcement}|{content of announcement}` command.
+It is very important that first | character is end of title, so no spoilers in title (in content they are possible).
+
+To update already existing announcement staff member will need to have discord message id of edited announcement.
+In order to do that every staff member will need to enable "Developer Mode" in Discord Appearance settings, then right click on announcement message and "Copy ID".
+Once staff member has message id he can use `$Update Announcement {message id} {new title}|{new content}` command.
+Just like in announcement creation: First | character is end of title.
+
+Announcement author will be changed to staff member who edited announcement most recently.
+
 [Back to top][BackToTop]
 
 ***
@@ -237,6 +251,8 @@ There are no hard requirements but some commands won't work properly without add
 | Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
 | Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
+| Create Announcement | Nowe Ogłoszenie, Nowe Ogloszenie | Channel object and announcement title and content divided by \| character | Will send a message with title and content on specified channel. | $Create Announcement #example-channel Lorem Ipsum|dolor sit amet. |
+| Update Announcement | Zaktualizuj Ogłoszenie, Zaktualizuj Ogloszenie | Announcement message id and new announcement title and content divided by \| character | Will update announcement with new title and content. | $Update Announcement 803662621169418290 Lorem Ipsum|Lorem ipsum dolor sit amet. |
 
 [Back to top][BackToTop]
 
@@ -350,6 +366,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [CustomizableCommandPrefix]: https://github.com/JerzyKruszewski/RachelDiscordBot#customizable-guild-server-wise-command-prefix-default-
 [UserJoinLeftMessage]: https://github.com/JerzyKruszewski/RachelDiscordBot#customizable-guild-server-wise-user-join-and-left-message
 [LevelingSystem]: https://github.com/JerzyKruszewski/RachelDiscordBot#simple-user-leveling-system
+[ModerationAnnouncement]: https://github.com/JerzyKruszewski/RachelDiscordBot#moderation-announcement-system
 [Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
 [AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
 [PermissionsUsage]: https://github.com/JerzyKruszewski/RachelDiscordBot#why-rachel-need-these-permissions-and-how-she-use-them
