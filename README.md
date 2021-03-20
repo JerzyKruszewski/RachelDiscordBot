@@ -199,6 +199,7 @@ There are no hard requirements but some commands won't work properly without add
 	- **$lock channel** command won't work because Rachel will modify role permissions to channels
 - Manage messages
 	- **$poll** command will work, but Rachel won't remove user message with poll content
+	- **$tictactoe** command will work, but Rachel won't remove user message with square choice
 	
 [Back to top][BackToTop]
 
@@ -298,6 +299,7 @@ There are no hard requirements but some commands won't work properly without add
 | Join Raffle | Dołącz Do Loterii, Dolacz Do Loterii | Raffle id | Will try to join raffle with one ticket | $Join Raffle 1 |
 | Show Raffle | Loteria | Raffle id | Will show raffle informations | $Show Raffle 1 |
 | Show Raffles | Loterie | --- | Will show raffle list | $Show Raffles |
+| Support Us | Wesprzyj Nas | --- | Will show message with ways to support project | $Support Us |
 
 [Back to top][BackToTop]
 
@@ -332,6 +334,10 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.8.0
+	- Added moderation announcements
+	- Added raffles
+	- Added support us command
 - Version 1.7.1
 	- Fixed typo
 - Version 1.7.0

@@ -9,7 +9,7 @@ namespace RachelBot.Utils
 {
     public class Utility
     {
-        public const string Version = "1.7.1";
+        public const string Version = "1.8.0";
 
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 

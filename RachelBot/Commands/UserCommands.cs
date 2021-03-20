@@ -346,7 +346,7 @@ namespace RachelBot.Commands
         }
 
         [Command("Support Us")]
-        [Alias("Wesprzyj nas")]
+        [Alias("Wesprzyj Nas")]
         public async Task SupportUs()
         {
             SocketGuild guild = Context.Guild;
