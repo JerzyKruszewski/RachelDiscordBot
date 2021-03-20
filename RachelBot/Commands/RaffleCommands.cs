@@ -178,7 +178,7 @@ namespace RachelBot.Commands
 
             EmbedBuilder embed = new EmbedBuilder()
             {
-                Title = alerts.GetAlert("RAFFLES"),
+                Title = alerts.GetAlert("RAFFLES_TITLE"),
                 Description = message,
                 Color = new Color(1, 69, 44)
             };
