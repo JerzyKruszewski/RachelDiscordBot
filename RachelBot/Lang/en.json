@@ -52,5 +52,14 @@
   "TICTACTOE_GAVE_UP": "You gave up {0}? I expected more from you.",
   "TICTACTOE_WIN": "Game Over! Winner: {0}",
   "TICTACTOE_DRAW": "Draw",
-  "TICTACTOE_WRONG_INPUT": "Wrong input!"
+  "TICTACTOE_WRONG_INPUT": "Wrong input!",
+  "RAFFLE_CREATED": "Raffle created.",
+  "ADDED_TICKET_TO_USER": "Added {0} ticket to user {1}.",
+  "ADDED_TICKET_TO_ROLE": "Added {0} ticket to role {1}.",
+  "CHECK_WINNER": "Winner of {0} is <@{1}>",
+  "SUCCESSFULLY_JOINED_RAFFLE": "Successfully joined raffle.",
+  "RAFFLE_JOIN_FAIL": "Couldn't join this raffle. This raffle cannot be entered by user, or you already enter once.'",
+  "RAFFLE_TITLE": "Raffle #{0} for {1}",
+  "RAFFLE": "Raffle participants:{0}",
+  "RAFFLES_TITLE": "Raffles"
 }

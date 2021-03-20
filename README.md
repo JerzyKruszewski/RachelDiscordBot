@@ -14,6 +14,7 @@
 	- [Customizable guild (server) wise user join and left message][UserJoinLeftMessage]
 	- [Simple user leveling system][LevelingSystem]
 	- [Moderation announcement system][ModerationAnnouncement]
+	- [Raffle system][RaffleSystem]
 - [Requirements][Requirements]
 	- [Additional "requirements"][AdditionalRequirements]
 	- [Why Rachel need these permissions and how she use them][PermissionsUsage]
@@ -152,6 +153,22 @@ Just like in announcement creation: First | character is end of title.
 
 Announcement author will be changed to staff member who edited announcement most recently.
 
+### Raffle system
+In order to create new raffle every staff member can use `$Create Raffle {true - if you want users to enter raffle by themselfs, false - if you want full control over raffle} {raffle reward}`.
+
+To add tickets to user every staff member can use `$Add Tickets To User {raffle id} {user ping} {tickets amount}` command that
+will add specified ticket amount to user. Every staff member can use `$Add Tickets To Role {raffle id} {role ping} {tickets amount}` 
+command that will add specified ticket amount to all users with role.
+
+To roll winner of raffle every staff member can use `$Roll Raffle {raffle id}`.
+
+Every user can try to enter a raffle using `$Join Raffle {raffle id}` command.
+This command will add one ticket to raffle only if user didn't already enter it and staff member set raffle to open for all users.
+
+To check raffles every user can use `$Show Raffles` command, that will show all raffles (ended ones will be crossed out).
+
+To check specific raffle every user can use `$Show Raffle {raffle id}` command.
+
 [Back to top][BackToTop]
 
 ***
@@ -253,6 +270,10 @@ There are no hard requirements but some commands won't work properly without add
 | Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
 | Create Announcement | Nowe Ogłoszenie, Nowe Ogloszenie | Channel object and announcement title and content divided by \| character | Will send a message with title and content on specified channel. | $Create Announcement #example-channel Lorem Ipsum|dolor sit amet. |
 | Update Announcement | Zaktualizuj Ogłoszenie, Zaktualizuj Ogloszenie | Announcement message id and new announcement title and content divided by \| character | Will update announcement with new title and content. | $Update Announcement 803662621169418290 Lorem Ipsum|Lorem ipsum dolor sit amet. |
+| Create Raffle | Stwórz Loterię, Stworz Loterie | true or false if you want users to join raffle by themselfs, string representing reward | Will create raffle for specified reward | $Create Raffle true rally awesome reward |
+| Add Tickets To User | Dodaj Bilety Do Użytkownika, Dodaj Bilety Do Uzytkownika | Raffle id, user object and ticket amount | Will add specified amount of tickets to user for specified raffle | $Add Tickets To User 1 @Jurij98 100 |
+| Add Tickets To Role | Dodaj Bilety Do Roli | Raffle id, role object and ticket amount | Will add specified amount of tickets to all users with role for specified raffle | $Add Tickets To Role 1 @ExampleRole 100 |
+| Roll Raffle | Losuj | Raffle id | Will roll raffle winner | $Roll Raffle 1 |
 
 [Back to top][BackToTop]
 
@@ -274,6 +295,9 @@ There are no hard requirements but some commands won't work properly without add
 | Quote | Zacytuj, Cytuj | Non-negative integer representing message id and optional text channel object | Will quote user message | $Quote 744688869567627264 #channel |
 | Avatar | Awatar | Optional user object | Will show user avatar | $Avatar @Jurij98 |
 | TicTacToe | --- | Optional user object | Will create TicTacToe game | $TicTacToe @Jurij98 |
+| Join Raffle | Dołącz Do Loterii, Dolacz Do Loterii | Raffle id | Will try to join raffle with one ticket | $Join Raffle 1 |
+| Show Raffle | Loteria | Raffle id | Will show raffle informations | $Show Raffle 1 |
+| Show Raffles | Loterie | --- | Will show raffle list | $Show Raffles |
 
 [Back to top][BackToTop]
 
@@ -367,6 +391,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [UserJoinLeftMessage]: https://github.com/JerzyKruszewski/RachelDiscordBot#customizable-guild-server-wise-user-join-and-left-message
 [LevelingSystem]: https://github.com/JerzyKruszewski/RachelDiscordBot#simple-user-leveling-system
 [ModerationAnnouncement]: https://github.com/JerzyKruszewski/RachelDiscordBot#moderation-announcement-system
+[RaffleSystem]: https://github.com/JerzyKruszewski/RachelDiscordBot#raffle-system
 [Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
 [AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
 [PermissionsUsage]: https://github.com/JerzyKruszewski/RachelDiscordBot#why-rachel-need-these-permissions-and-how-she-use-them
