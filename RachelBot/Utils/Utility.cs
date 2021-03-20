@@ -9,7 +9,7 @@ namespace RachelBot.Utils
 {
     public class Utility
     {
-        public const string Version = "1.8.0";
+        public const string Version = "1.8.1";
 
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 
@@ -24,6 +24,8 @@ namespace RachelBot.Utils
         public const string OwnerSignature = @"Kind regards
 Jerzy Kruszewski (@Jurij98#2750)
 Creator of ℜ𝔞𝔠𝔥𝔢𝔩";
+
+        public const int MessageLengthBuffer = 1950;
 
         public static readonly Random random = new Random();
 

@@ -129,6 +129,12 @@ namespace RachelBot.Commands
             foreach (KeyValuePair<ulong, int> participant in raffle.Tickets)
             {
                 participants += $"\n<@{participant.Key}> - {participant.Value}";
+
+                if (participants.Length > Utility.MessageLengthBuffer)
+                {
+                    participants += "...";
+                    break;
+                }
             }
 
             EmbedBuilder embed = new EmbedBuilder()
@@ -152,15 +158,21 @@ namespace RachelBot.Commands
 
             string message = "";
 
-            foreach (Raffle raffle in raffles.GetRaffles())
+            foreach (Raffle raffle in raffles.GetRaffles().OrderByDescending(r => r.Id))
             {
                 if (raffle.IsEnded)
                 {
-                    message += $"~~{raffle.Id} - {raffle.Reward} ({raffle.Tickets.Count})~~\n";
+                    message += $"~~{raffle.Id} - {raffle.Reward} Winner: <@{raffle.Winner}>~~\n";
                 }
                 else
                 {
                     message += $"{raffle.Id} - {raffle.Reward} ({raffle.Tickets.Count})\n";
+                }
+
+                if (message.Length > Utility.MessageLengthBuffer)
+                {
+                    message += "...";
+                    break;
                 }
             }
 

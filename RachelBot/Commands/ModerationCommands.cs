@@ -436,7 +436,7 @@ namespace RachelBot.Commands
                 content += $"{split[i]}|";
             }
 
-            content = content.Remove(content.Length - 2, 1);
+            content = content.Remove(content.Length - 1);
 
             return Tuple.Create(title, content);
         }

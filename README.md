@@ -334,6 +334,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.8.1
+	- Various bugfixes
 - Version 1.8.0
 	- Added moderation announcements
 	- Added raffles

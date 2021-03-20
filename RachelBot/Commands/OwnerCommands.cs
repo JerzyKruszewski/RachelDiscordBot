@@ -61,7 +61,7 @@ namespace RachelBot.Commands
 
             foreach (KeyValuePair<ulong, int> ownership in ownerships)
             {
-                message += $"{ownership.Key}:{ownership.Value}";
+                message += $"{ownership.Key}:{ownership.Value}\n";
             }
 
             await Context.Channel.SendMessageAsync(message);
