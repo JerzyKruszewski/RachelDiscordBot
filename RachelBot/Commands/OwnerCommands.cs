@@ -75,7 +75,7 @@ namespace RachelBot.Commands
             await channel.SendFileAsync($"./Guilds/{Context.Guild.Id}/Config.json");
         }
 
-        [Command("CommunicateWithOwners")]
+        [Command("CommunicateWithOwners", RunMode = RunMode.Async)]
         [RequireOwner]
         public async Task CommunicateWithOwners([Remainder]string message)
         {
@@ -94,6 +94,8 @@ namespace RachelBot.Commands
                     continue;
                 }
             }
+
+            await Context.Channel.SendMessageAsync("Done");
         }
     }
 }
