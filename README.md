@@ -310,7 +310,8 @@ There are no hard requirements but some commands won't work properly without add
 
 ***
 ## Support us
-If you like Rachel bot consider giving us a GitHub star and we invite you to our [Discord server][DiscordInvite].
+If you like Rachel bot consider giving us a GitHub star, joining our [Discord server][DiscordInvite] 
+and becoming our [Patreon][PatreonPage].
 ![Affectionate Rachel by aster_atheris][RachelAffectionate]
 
 ***
@@ -423,3 +424,4 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 [ISOCodes]: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 [ArtistInstagram]: https://www.instagram.com/aster_atheris/
+[PatreonPage]: https://www.patreon.com/bajarzdevelopment?fan_landing=true

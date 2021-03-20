@@ -155,7 +155,7 @@ namespace RachelBot.Commands
             EmbedBuilder embed = new EmbedBuilder()
             {
                 Title = alerts.GetAlert("SOCIALS_TITLE"),
-                Description = alerts.GetFormattedAlert("SOCIALS", Utility.DiscordInviteLink),
+                Description = alerts.GetFormattedAlert("SOCIALS", Utility.DiscordInviteLink, Utility.TopGGPage, Utility.PatreonPage),
                 ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
                 Color = new Color(1, 69, 44)
             };
@@ -343,6 +343,25 @@ namespace RachelBot.Commands
             }
 
             await Context.Channel.SendMessageAsync(user.GetAvatarUrl(ImageFormat.Auto, 2048));
+        }
+
+        [Command("Support Us")]
+        [Alias("Wesprzyj nas")]
+        public async Task SupportUs()
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            EmbedBuilder embed = new EmbedBuilder()
+            {
+                Title = alerts.GetAlert("SUPPORT_US_TITLE"),
+                Description = alerts.GetFormattedAlert("SUPPORT_US", Utility.DiscordInviteLink, Utility.TopGGPage, Utility.PatreonPage),
+                ThumbnailUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                Color = new Color(1, 69, 44)
+            };
+
+            await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
     }
 }

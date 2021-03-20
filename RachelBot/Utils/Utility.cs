@@ -15,6 +15,10 @@ namespace RachelBot.Utils
 
         public const string GitHubPage = @"https://github.com/JerzyKruszewski/RachelDiscordBot";
 
+        public const string TopGGPage = @"https://top.gg/bot/810093575500726302";
+
+        public const string PatreonPage = @"https://www.patreon.com/bajarzdevelopment?fan_landing=true";
+
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
 
         public const string OwnerSignature = @"Kind regards
