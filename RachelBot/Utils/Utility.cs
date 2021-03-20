@@ -17,6 +17,10 @@ namespace RachelBot.Utils
 
         public const string SaraArtistInstagram = @"https://www.instagram.com/aster_atheris/";
 
+        public const string OwnerSignature = @"Kind regards
+Jerzy Kruszewski (@Jurij98#2750)
+Creator of ℜ𝔞𝔠𝔥𝔢𝔩";
+
         public static readonly Random random = new Random();
 
         public static IEnumerable<Emoji> AnswersEmojis { get; } = new List<Emoji>()
