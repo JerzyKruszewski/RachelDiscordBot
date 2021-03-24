@@ -133,6 +133,8 @@ Example:
 
 Message `User {1}({2}) left our server!` will be shown as `User Jurij98(331026920269414410) left our server!`
 
+**USER JOIN AND LEFT MESSAGES SHOULD NOT EXCEED 256 CHARACTERS**
+
 ### Simple user leveling system
 Every time user sends message he will get 50xp.
 
