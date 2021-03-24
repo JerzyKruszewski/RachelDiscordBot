@@ -57,7 +57,7 @@ namespace RachelBot
 
                 EmbedBuilder embed = new EmbedBuilder()
                 {
-                    Title = string.Format(config.LeftMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                    Description = string.Format(config.LeftMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
                     Color = new Color(255, 0, 0),
                     ThumbnailUrl = arg.GetAvatarUrl()
                 };
@@ -73,6 +73,7 @@ namespace RachelBot
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"ERROR: {ex.Message}\n{ex.StackTrace}");
                 Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
             }
         }
@@ -86,7 +87,7 @@ namespace RachelBot
 
                 EmbedBuilder embed = new EmbedBuilder()
                 {
-                    Title = string.Format(config.WelcomeMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
+                    Description = string.Format(config.WelcomeMessage, arg.Mention, arg.Username, arg.Id, guild.Name),
                     Color = new Color(0, 255, 0),
                     ThumbnailUrl = arg.GetAvatarUrl()
                 };
@@ -102,6 +103,7 @@ namespace RachelBot
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"ERROR: {ex.Message}\n{ex.StackTrace}");
                 Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
             }
         }
