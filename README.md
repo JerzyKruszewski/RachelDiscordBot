@@ -194,9 +194,12 @@ There are no hard requirements but some commands won't work properly without add
 - Manage roles
 	- **$warn** command will work but auto giving punishment role feature after reaching configurable threshold won't
 	- **$add level role** command won't work because after reaching by user certain level Rachel would give user reward role
+	- **$give role** command won't work because won't have permission to add role to user
+	- **$remove role** command won't work because won't have permission to remove role from user
 - Manage channels
 	- **$unlock channel** command won't work because Rachel will modify role permissions to channels
 	- **$lock channel** command won't work because Rachel will modify role permissions to channels
+	- **$slowmode** command won't work because Rachel will modify channel slowmode duration
 - Manage messages
 	- **$poll** command will work, but Rachel won't remove user message with poll content
 	- **$tictactoe** command will work, but Rachel won't remove user message with square choice
@@ -265,8 +268,8 @@ There are no hard requirements but some commands won't work properly without add
 | Remove Warn | Usuń Ostrzeżenie, Usun Ostrzezenie | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
 | Achievement | Osiągnięcie, Osiagniecie | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
 | Remove Achievement | Usuń Osiągnięcie, Usun Osiagniecie | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 |
-| Unlock Channel | Odblokuj Kanał, Odblokuj Kanal | Role and at least one channel objects | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
-| Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel objects | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
+| Unlock Channel | Odblokuj Kanał, Odblokuj Kanal | Role and at least one channel object | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
+| Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel object | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
 | Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
 | Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
 | Create Announcement | Nowe Ogłoszenie, Nowe Ogloszenie | Channel object and announcement title and content divided by \| character | Will send a message with title and content on specified channel. | $Create Announcement #example-channel Lorem Ipsum|dolor sit amet. |
@@ -275,10 +278,15 @@ There are no hard requirements but some commands won't work properly without add
 | Add Tickets To User | Dodaj Bilety Do Użytkownika, Dodaj Bilety Do Uzytkownika | Raffle id, user object and ticket amount | Will add specified amount of tickets to user for specified raffle | $Add Tickets To User 1 @Jurij98 100 |
 | Add Tickets To Role | Dodaj Bilety Do Roli | Raffle id, role object and ticket amount | Will add specified amount of tickets to all users with role for specified raffle | $Add Tickets To Role 1 @ExampleRole 100 |
 | Roll Raffle | Losuj | Raffle id | Will roll raffle winner | $Roll Raffle 1 |
+| Slowmode | --- | Integer representing slowmode interval in seconds and list at least one channel object | Will add slowmode with specified interval to channels | %slowmode 1 #🥂general-discussion🥂 #😂memes😂 #🛰bot-channel🛰 |
+| Give Role | Daj Rolę, Daj Role | Role object and optional user ping | Will add role to user | $give role @exampleRole @Jurij98 |
+| Remove Role | Usuń Rolę, Usun Role | Role object and optional user ping | Will remove role from user | $remove role @exampleRole @Jurij98 |
 
 [Back to top][BackToTop]
 
 ### User commands
+Bolded commands are **special commands** available only for members of our [Discord server][DiscordInvite].
+**Special commands** will be available only in English language.
 
 | Command | Aliases | Parameters | Outcome | Example |
 | --- | --- | --- | --- | --- |
@@ -300,13 +308,14 @@ There are no hard requirements but some commands won't work properly without add
 | Show Raffle | Loteria | Raffle id | Will show raffle informations | $Show Raffle 1 |
 | Show Raffles | Loterie | --- | Will show raffle list | $Show Raffles |
 | Support Us | Wesprzyj Nas | --- | Will show message with ways to support project | $Support Us |
+| **Any thoughts** | --- | --- | Will show one of Rachel responses | $Any thoughts |
 
 [Back to top][BackToTop]
 
 ***
 ## Currently supported languages
 - English
-- Polski (Polish)
+- Polski (Polish) *except special commands*
 
 [Back to top][BackToTop]
 
@@ -334,6 +343,11 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.9.0
+	- Added simple dialogue system
+	- Added channel slowmode manipulation
+	- Added give and remove role commands
+	- Fixed TicTacToe winner message
 - Version 1.8.2
 	- Fixed bug with user join/left messages
 - Version 1.8.1
