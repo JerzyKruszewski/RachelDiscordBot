@@ -203,7 +203,7 @@ namespace RachelBot.Commands
                 if (game.CheckScore())
                 {
                     await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-                    await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", firstPlayer.Character));
+                    await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_WIN", (moveCount % 2 == 1) ? firstPlayer.Character : secondPlayer.Character));
                     return true;
                 }
             }
