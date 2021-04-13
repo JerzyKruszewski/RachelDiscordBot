@@ -462,5 +462,45 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
         }
+
+        [Command("Give Role")]
+        [Alias("Daj Rolę", "Daj Role")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        public async Task GiveRole(SocketRole role, SocketGuildUser user = null)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            if (user == null)
+            {
+                user = Context.User as SocketGuildUser;
+            }
+
+            await user.AddRoleAsync(role);
+
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+        }
+
+        [Command("Remove Role")]
+        [Alias("Usuń Rolę", "Usun Role")]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        public async Task RemoveRole(SocketRole role, SocketGuildUser user = null)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+
+            if (user == null)
+            {
+                user = Context.User as SocketGuildUser;
+            }
+
+            await user.RemoveRoleAsync(role);
+
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+        }
     }
 }
