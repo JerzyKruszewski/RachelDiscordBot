@@ -11,8 +11,10 @@ using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Core.UserAccounts;
 using RachelBot.Utils;
+using RachelBot.Preconditions;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
+using RachelBot.Core.Dialogues;
 
 namespace RachelBot.Commands
 {
@@ -362,6 +364,14 @@ namespace RachelBot.Commands
             };
 
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
+        }
+
+        [Command("Any thoughts")]
+        [RequireMotherServerMember]
+        public async Task AnyThoughts()
+        {
+            string msg = Dialogue.GetRandomResponse(Context);
+            await Context.Channel.SendMessageAsync(msg);
         }
     }
 }

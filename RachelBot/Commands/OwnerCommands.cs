@@ -5,11 +5,28 @@ using Discord.WebSocket;
 using Discord.Addons.Interactive;
 using System.Collections.Generic;
 using RachelBot.Utils;
+using RachelBot.Preconditions;
+using RachelBot.Core.Dialogues;
 
 namespace RachelBot.Commands
 {
     public class OwnerCommands : InteractiveBase<SocketCommandContext>
     {
+        [Command("test")]
+        [RequireOwner]
+        [RequireMotherServerMember]
+        public async Task Test()
+        {
+            string msg = "";
+
+            foreach (string item in Dialogue.FilterDialogues(Context))
+            {
+                msg += $"{item}\n";
+            }
+
+            await Context.Channel.SendMessageAsync(msg);
+        }
+
         [Command("Guilds")]
         [RequireOwner]
         public async Task GetGuilds()

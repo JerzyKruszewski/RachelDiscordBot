@@ -11,6 +11,8 @@ namespace RachelBot.Utils
     {
         public const string Version = "1.8.2";
 
+        public const ulong MotherServerId = 701156872698462299;
+
         public const string DiscordInviteLink = @"https://discord.gg/TjCDEQU";
 
         public const string GitHubPage = @"https://github.com/JerzyKruszewski/RachelDiscordBot";
