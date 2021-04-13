@@ -46,10 +46,42 @@ namespace RachelBot.Core.Dialogues
                     {
                         new DialogueCriterion()
                         {
+                            IsNSFW = false,
+                            Id = 3
+                        }.ToString(),
+                        "Hello 👋"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            Id = 4
+                        }.ToString(),
+                        "👋"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            Id = 5
+                        }.ToString(),
+                        "I was wondering how many people will join my server..."
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
                             IsNSFW = true,
                             Id = 1
                         }.ToString(),
                         "I was wondering what will happen if your parents caught you watching this channel?"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = true,
+                            Id = 2
+                        }.ToString(),
+                        "*Umm! Watching NSFW channels we are.* - Yoda"
                     },
                     {
                         new DialogueCriterion()
@@ -59,6 +91,15 @@ namespace RachelBot.Core.Dialogues
                             Id = 1
                         }.ToString(),
                         "Oh! Staff member! It's an honor! I hope you are happy with my work here."
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            StaffOnly = true,
+                            Id = 2
+                        }.ToString(),
+                        "Have you tried my raffles?"
                     },
                     {
                         new DialogueCriterion()
@@ -78,7 +119,37 @@ namespace RachelBot.Core.Dialogues
                             EndHour = 11,
                             Id = 1
                         }.ToString(),
-                        "Good Morning!"
+                        "Good Morning guys!"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            StartHour = 12,
+                            EndHour = 16,
+                            Id = 1
+                        }.ToString(),
+                        "Time for lunch break!"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            StartHour = 12,
+                            EndHour = 17,
+                            Id = 1
+                        }.ToString(),
+                        "Good Afternoon!"
+                    },
+                    {
+                        new DialogueCriterion()
+                        {
+                            IsNSFW = false,
+                            StartHour = 18,
+                            EndHour = 22,
+                            Id = 2
+                        }.ToString(),
+                        "Good Evening!"
                     }
                 };
                 Save();
