@@ -440,5 +440,27 @@ namespace RachelBot.Commands
 
             return Tuple.Create(title, content);
         }
+
+        [Command("Slowmode", RunMode = RunMode.Async)]
+        [RequireStaff]
+        [RequireBotPermission(GuildPermission.ManageChannels)]
+        public async Task Slowmode(int interval, params SocketTextChannel[] channels)
+        {
+            SocketGuild guild = Context.Guild;
+            GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+            AlertsHandler alerts = new AlertsHandler(config);
+            
+            foreach (SocketTextChannel channel in channels)
+            {
+                await channel.ModifyAsync(c =>
+                {
+                    c.SlowModeInterval = interval;
+                });
+
+                await Task.Delay(250);
+            }
+
+            await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+        }
     }
 }
