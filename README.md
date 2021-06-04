@@ -1,6 +1,9 @@
 # Rachel Discord Bot
 
-[![CodeFactor][CodeFactorBadge]][CodeFactorRepository] [![Support Server][DiscordIcon]][DiscordInvite]
+[![CodeFactor][CodeFactorBadge]][CodeFactorRepository] 
+[![Support Server][DiscordIcon]][DiscordInvite]
+![Made with](https://img.shields.io/badge/Made%20with-Love%20%E2%9D%A4%EF%B8%8F-red)
+[![Avatars by](https://img.shields.io/badge/Avatars%20by-aster__atheris-orange)][ArtistInstagram]
 ***
 ![Rachel by aster_atheris][RachelNormal]
 
