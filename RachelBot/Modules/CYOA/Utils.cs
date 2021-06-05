@@ -8,10 +8,6 @@ namespace RachelBot.Modules.CYOA
     {
         public static string PerParsePageContent(string pageContent, Adventure adventure, PlayedStory story)
         {
-            pageContent = pageContent.Replace("\r\n", @"
-
-");
-
             pageContent = ParseMCGenderSpecificWords(pageContent, adventure.IsMCFemale ?? story.IsMCFemale); //Default male
 
             pageContent = ParseMCName(pageContent, string.IsNullOrWhiteSpace(adventure.MCName) ? story.MCName : adventure.MCName);

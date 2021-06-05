@@ -10,10 +10,11 @@ using RachelBot.Core.Dialogues;
 
 namespace RachelBot.Commands
 {
+    [RequireOwner]
+    [RequirePublicChannel]
     public class OwnerCommands : InteractiveBase<SocketCommandContext>
     {
         [Command("test")]
-        [RequireOwner]
         [RequireMotherServerMember]
         public async Task Test()
         {
@@ -28,14 +29,12 @@ namespace RachelBot.Commands
         }
 
         [Command("Guilds")]
-        [RequireOwner]
         public async Task GetGuilds()
         {
             await Context.Channel.SendMessageAsync($"Guilds: {Context.Client.Guilds.Count}");
         }
 
         [Command("BotStatus", RunMode = RunMode.Async)]
-        [RequireOwner]
         public async Task GetStatus()
         {
             List<ulong> userList = new List<ulong>();
@@ -57,7 +56,6 @@ namespace RachelBot.Commands
         }
 
         [Command("CheckOwnerships")]
-        [RequireOwner]
         public async Task CheckOwnerships()
         {
             Dictionary<ulong, int> ownerships = new Dictionary<ulong, int>();
@@ -85,7 +83,6 @@ namespace RachelBot.Commands
         }
 
         [Command("DebugGuildConfig")]
-        [RequireOwner]
         public async Task DebugConfig()
         {
             IDMChannel channel = await Context.User.GetOrCreateDMChannelAsync();
@@ -93,7 +90,6 @@ namespace RachelBot.Commands
         }
 
         [Command("CommunicateWithOwners", RunMode = RunMode.Async)]
-        [RequireOwner]
         public async Task CommunicateWithOwners([Remainder]string message)
         {
             IDMChannel channel;

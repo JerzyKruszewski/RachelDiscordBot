@@ -17,6 +17,7 @@ using RachelBot.Core.ModerationAnnouncements;
 
 namespace RachelBot.Commands
 {
+    [RequirePublicChannel]
     public class ModerationCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;

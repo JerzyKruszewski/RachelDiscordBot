@@ -17,6 +17,7 @@ using System.Collections.Generic;
 
 namespace RachelBot.Commands
 {
+    [RequirePublicChannel]
     public class RaffleCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;

@@ -7,9 +7,11 @@ using Discord.Addons.Interactive;
 using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Lang;
+using RachelBot.Preconditions;
 
 namespace RachelBot.Commands
 {
+    [RequirePublicChannel]
     public class ConfigurationCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;

@@ -91,13 +91,13 @@ namespace RachelBot.Modules.CYOA.Commands
 
             if (page.AreChoicesRandom)
             {
-                message += $"1 - {page.RandomChoiceContent}";
+                message += $"*1 - {page.RandomChoiceContent}*";
             }
             else
             {
                 foreach (Choice choice in page.Choices)
                 {
-                    message += $"{choice.Id} - {choice.Content}\n";
+                    message += $"*{choice.Id} - {choice.Content}*\n";
                 }
             }
 

@@ -9,9 +9,11 @@ using RachelBot.Core.Games.TicTacToe;
 using RachelBot.Lang;
 using RachelBot.Services.Storage;
 using RachelBot.Utils;
+using RachelBot.Preconditions;
 
 namespace RachelBot.Commands
 {
+    [RequirePublicChannel]
     public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;

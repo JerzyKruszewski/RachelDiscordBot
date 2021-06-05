@@ -18,6 +18,7 @@
 	- [Simple user leveling system][LevelingSystem]
 	- [Moderation announcement system][ModerationAnnouncement]
 	- [Raffle system][RaffleSystem]
+	- [CYOA Player][CYOAPlayer]
 - [Requirements][Requirements]
 	- [Additional "requirements"][AdditionalRequirements]
 	- [Why Rachel need these permissions and how she use them][PermissionsUsage]
@@ -172,6 +173,32 @@ To check raffles every user can use `$Show Raffles` command, that will show all 
 
 To check specific raffle every user can use `$Show Raffle {raffle id}` command.
 
+### CYOA Player
+(In order for this feature to work you need to join our [Discord server][DiscordInvite])
+
+To check list of available adventures every user need to use `$cyoa list` command. This command will return adventure code, it's language and minimal recommended age.
+
+To choose adventure user want to play every user need to use `$cyoa choose adventure {adventure code (from $cyoa list)}`.
+
+To play adventure every user need to use `$cyoa play`. It is recommended to use this in private channels (Rachel's prefix in private channels is $).
+
+To make choices every user need to use `$cyoa make choice {choice id (from $cyoa play)`. It is recommended to use this in private channels.
+
+To change MC gender and name (not every adventure supports this feature) every user could use `$cyoa change profile {true - if female|false - if male} {MC name}`.
+
+To check their current adventure and MC each user can use `$cyoa profile`.
+
+*If you want to create own stories:*
+- *Download latest version of [our tool][CYOATool]*
+	- *When creating new adventure make sure you put `2` as first character in `Created for app version` field.*
+	- *During creation process please use discord markdown syntax, even if it is not supported via app. And don't use sounds.*
+- *Once you finish*
+	- *Go to `{CYOA tool}/Resources/Stories` path*
+	- *Compress your entire story folder into .zip or .rar*
+	- *Send us your compressed story folder via*
+		- *E-mail: BajarzDevelopment@Gmail.com*
+		- *Discord: DM to Jurij98#2750*
+
 [Back to top][BackToTop]
 
 ***
@@ -312,6 +339,12 @@ Bolded commands are **special commands** available only for members of our [Disc
 | Show Raffles | Loterie | --- | Will show raffle list | $Show Raffles |
 | Support Us | Wesprzyj Nas | --- | Will show message with ways to support project | $Support Us |
 | **Any thoughts** | --- | --- | Will show one of Rachel responses | $Any thoughts |
+| **CYOA List** | --- | --- | Will show list of available adventures | $CYOA List |
+| **CYOA Profile** | --- | --- | Will show information about current user's adventure and MC | $CYOA Profile |
+| **CYOA Change Profile** | --- | Boolean representing MC gender (true - if you want to play as female character, false - as male character) and string representing MC name | Will change MC gender and name | CYOA Change Profile true Rachel |
+| **CYOA Choose Adventure** | --- | String representing adventure code | Will change/reset current adventure | $CYOA Choose Adventure 5_Rachel_Origins_Jurij |
+| **CYOA Play** | --- | --- | Will show current page of an adventure | $CYOA Play |
+| **CYOA Make Choice** | --- | Integer representing choice id | Will progress the story | $CYOA Make Choice 1 |
 
 [Back to top][BackToTop]
 
@@ -346,6 +379,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 1.10.0
+	- Added CYOA Player with 2 stories
 - Version 1.9.0
 	- Added simple dialogue system
 	- Added channel slowmode manipulation
@@ -420,6 +455,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [LevelingSystem]: https://github.com/JerzyKruszewski/RachelDiscordBot#simple-user-leveling-system
 [ModerationAnnouncement]: https://github.com/JerzyKruszewski/RachelDiscordBot#moderation-announcement-system
 [RaffleSystem]: https://github.com/JerzyKruszewski/RachelDiscordBot#raffle-system
+[CYOAPlayer]: https://github.com/JerzyKruszewski/RachelDiscordBot#cyoa-player
 [Requirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#requirements
 [AdditionalRequirements]: https://github.com/JerzyKruszewski/RachelDiscordBot#additional-requirements
 [PermissionsUsage]: https://github.com/JerzyKruszewski/RachelDiscordBot#why-rachel-need-these-permissions-and-how-she-use-them
@@ -450,5 +486,6 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [RachelAffectionate]: ./RachelBot/Images/affectionate.png
 
 [ISOCodes]: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+[CYOATool]: https://bitbucket.org/JurijK/chooseyourownadventure/downloads/
 [ArtistInstagram]: https://www.instagram.com/aster_atheris/
 [PatreonPage]: https://www.patreon.com/bajarzdevelopment?fan_landing=true

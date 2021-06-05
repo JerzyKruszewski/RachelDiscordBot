@@ -112,25 +112,25 @@ namespace RachelBot
         {
             try
             {
-                if (arg.Channel is IPrivateChannel)
-                {
-                    return;
-                }
-
                 if (arg is not SocketUserMessage msg) return;
+
+                GuildConfig config = null;
 
                 SocketCommandContext context = new SocketCommandContext(_client, msg);
 
-                GuildConfig config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
+                if (context.Channel is not IPrivateChannel)
+                {
+                    config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
 
-                try
-                {
-                    new LevelingHandler(_storage).UserSendMessage(context.User, context.Guild);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"ERROR with Leveling System: {ex}");
-                    Program.LogToFile($"ERROR with Leveling System: {ex}");
+                    try
+                    {
+                        new LevelingHandler(_storage).UserSendMessage(context.User, context.Guild);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"ERROR with Leveling System: {ex}");
+                        Program.LogToFile($"ERROR with Leveling System: {ex}");
+                    }
                 }
 
                 int argPos = 0;

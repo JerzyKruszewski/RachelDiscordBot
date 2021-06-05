@@ -18,6 +18,7 @@ using RachelBot.Core.Dialogues;
 
 namespace RachelBot.Commands
 {
+    [RequirePublicChannel]
     public class UserCommands : InteractiveBase<SocketCommandContext>
     {
         private readonly IStorageService _storage;

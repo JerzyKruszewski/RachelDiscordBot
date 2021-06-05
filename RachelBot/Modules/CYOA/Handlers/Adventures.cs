@@ -17,7 +17,7 @@ namespace RachelBot.Modules.CYOA.Handlers
         {
             _storage = new JsonStorageService();
 
-            _folderPath = "./CYOA/Resources/Stories";
+            _folderPath = "./Modules/CYOA/Stories";
 
             if (!Directory.Exists(_folderPath))
             {
