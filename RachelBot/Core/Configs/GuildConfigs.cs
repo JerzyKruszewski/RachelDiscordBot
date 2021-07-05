@@ -231,5 +231,14 @@ namespace RachelBot.Core.Configs
 
             return _config;
         }
+
+        public GuildConfig ToggleReactionToBotMessages(bool toggle)
+        {
+            _config.ReactToBotMessages = toggle;
+
+            Save();
+
+            return _config;
+        }
     }
 }

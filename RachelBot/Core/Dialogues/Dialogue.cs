@@ -226,7 +226,7 @@ namespace RachelBot.Core.Dialogues
 
             foreach (ulong roleId in config.StaffRoleIds)
             {
-                if (user.Roles.SingleOrDefault(r => r.Id == roleId) != null)
+                if (user.Roles.SingleOrDefault(r => r.Id == roleId) is not null)
                 {
                     return true;
                 }

@@ -52,6 +52,8 @@ namespace RachelBot.Core.Configs
         public ulong AnnouncementChannelId { get; set; } = 0;
 
         public ulong ToSChannelId { get; set; } = 0;
+
+        public bool ReactToBotMessages { get; set; } = false;
         #endregion
     }
 }

@@ -28,7 +28,7 @@ namespace RachelBot.Modules.CYOA.Handlers
                                     bool randomChoices = false,
                                     string randomChoiceContent = "")
         {
-            if (newCode != null && page.DevelopmentCode != newCode)
+            if (newCode is not null && page.DevelopmentCode != newCode)
             {
                 page = ChangeDevelopmentCode(adventure, page, newCode);
             }
@@ -94,7 +94,7 @@ namespace RachelBot.Modules.CYOA.Handlers
 
         private static bool ValidateDevelopmentCode(Adventure adventure, string developmentCode)
         {
-            return adventure.Pages.SingleOrDefault(p => p.DevelopmentCode == developmentCode) != null;
+            return adventure.Pages.SingleOrDefault(p => p.DevelopmentCode == developmentCode) is not null;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace RachelBot.Core.LevelingSystem
         {
             LevelRoleReward reward = _roleRewards.SingleOrDefault(r => r.RoleId == id);
 
-            if (reward == null)
+            if (reward is null)
             {
                 reward = new LevelRoleReward()
                 {
@@ -74,7 +74,7 @@ namespace RachelBot.Core.LevelingSystem
         {
             LevelRoleReward reward = _roleRewards.SingleOrDefault(r => r.RoleId == id);
 
-            if (reward == null)
+            if (reward is null)
             {
                 return;
             }

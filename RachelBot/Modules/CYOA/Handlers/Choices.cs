@@ -43,7 +43,7 @@ namespace RachelBot.Modules.CYOA.Handlers
 
         public static Choice CreateChoice(Adventure adventure, Page page, string content, int pointsToPageWithId, int weight = 10)
         {
-            if (adventure.Pages.SingleOrDefault(p => p.Id == pointsToPageWithId) == null)
+            if (adventure.Pages.SingleOrDefault(p => p.Id == pointsToPageWithId) is null)
             {
                 throw new ArgumentNullException($"Couldn't find page with id {pointsToPageWithId}.");
             }

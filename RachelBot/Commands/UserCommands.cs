@@ -31,7 +31,7 @@ namespace RachelBot.Commands
         [Command("Status")]
         public async Task CheckStatus(SocketGuildUser user = null)
         {
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }
@@ -63,7 +63,7 @@ namespace RachelBot.Commands
         [Alias("Ostrzeżenia", "Ostrzezenia")]
         public async Task CheckWarns(SocketGuildUser user = null)
         {
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }
@@ -102,7 +102,7 @@ namespace RachelBot.Commands
         [Alias("Pochwały", "Pochwaly")]
         public async Task CheckPraises(SocketGuildUser user = null)
         {
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }
@@ -126,7 +126,7 @@ namespace RachelBot.Commands
         [Alias("Osiągnięcia", "Osiagniecia")]
         public async Task CheckAchievements(SocketGuildUser user = null)
         {
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }
@@ -319,7 +319,7 @@ namespace RachelBot.Commands
         [Alias("Zacytuj", "Cytuj")]
         public async Task Quote(ulong msgId, ISocketMessageChannel channel = null)
         {
-            if (channel == null)
+            if (channel is null)
             {
                 channel = Context.Channel;
             }
@@ -340,7 +340,7 @@ namespace RachelBot.Commands
         [Alias("Awatar")]
         public async Task GetAvatar(SocketUser user = null)
         {
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User;
             }

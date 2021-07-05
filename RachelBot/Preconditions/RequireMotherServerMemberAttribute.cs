@@ -19,7 +19,7 @@ namespace RachelBot.Preconditions
 
             await guild.DownloadUsersAsync();
 
-            if ((await guild.GetUserAsync(user.Id)) != null)
+            if ((await guild.GetUserAsync(user.Id)) is not null)
             {
                 return PreconditionResult.FromSuccess();
             }

@@ -389,7 +389,7 @@ namespace RachelBot.Commands
 
             Announcement announcement = announcements.UpdateAnnouncement(messageId, content);
 
-            if (announcement == null)
+            if (announcement is null)
             {
                 await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("NO_ANNOUNCEMENT", messageId));
                 return;
@@ -401,7 +401,7 @@ namespace RachelBot.Commands
 
             IMessage message = await Utility.GetMessageChannelById(guild, announcement.ChannelId).GetMessageAsync(messageId);
 
-            if (message == null)
+            if (message is null)
             {
                 await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("NO_ANNOUNCEMENT", messageId));
                 return;
@@ -474,7 +474,7 @@ namespace RachelBot.Commands
             GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
             AlertsHandler alerts = new AlertsHandler(config);
 
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }
@@ -494,7 +494,7 @@ namespace RachelBot.Commands
             GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
             AlertsHandler alerts = new AlertsHandler(config);
 
-            if (user == null)
+            if (user is null)
             {
                 user = Context.User as SocketGuildUser;
             }

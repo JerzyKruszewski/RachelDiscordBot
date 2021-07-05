@@ -32,7 +32,7 @@ namespace RachelBot.Commands
             Game game = new Game();
             Player player = new Player(Context.User.Id, "❌");
 
-            if (user == null)
+            if (user is null)
             {
                 Player ai = new Player(Context.Client.CurrentUser.Id, "⭕");
 
@@ -81,7 +81,7 @@ namespace RachelBot.Commands
 
                     SocketMessage message = await NextMessageAsync();
 
-                    if (message == null)
+                    if (message is null)
                     {
                         await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_GAVE_UP", Context.User.Username));
                         return;
@@ -137,7 +137,7 @@ namespace RachelBot.Commands
 
                     SocketMessage message = await NextMessageAsync();
 
-                    if (message == null)
+                    if (message is null)
                     {
                         await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_GAVE_UP", Context.User.Username));
                         return;
@@ -174,7 +174,7 @@ namespace RachelBot.Commands
 
                     SocketMessage message = await NextMessageAsync(criterion);
 
-                    if (message == null)
+                    if (message is null)
                     {
                         await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_GAVE_UP", Context.Guild.Users.Single(u => u.Id == secondPlayer.Id).Username));
                         return;

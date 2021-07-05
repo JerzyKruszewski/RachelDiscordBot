@@ -243,5 +243,16 @@ namespace RachelBot.Commands
 
             await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
         }
+
+        [Command("ToggleReactionToBotMessages")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task ToggleReactionToBotMessages(bool toggle)
+        {
+            GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
+
+            configs.ToggleReactionToBotMessages(toggle);
+
+            await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
+        }
     }
 }

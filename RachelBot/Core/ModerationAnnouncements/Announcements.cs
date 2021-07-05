@@ -58,7 +58,7 @@ namespace RachelBot.Core.ModerationAnnouncements
         {
             Announcement announcement = GetAnnouncement(messageId);
 
-            if (announcement == null)
+            if (announcement is null)
             {
                 return null;
             }

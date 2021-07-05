@@ -47,7 +47,7 @@ namespace RachelBot.Core.UserAccounts
         {
             UserAccount account = _accounts.SingleOrDefault(u => u.Id == id);
 
-            if (account == null)
+            if (account is null)
             {
                 return CreateAccount(id);
             }
@@ -84,7 +84,7 @@ namespace RachelBot.Core.UserAccounts
         {
             Praise praise = account.Praises.SingleOrDefault(p => p.Id == id);
 
-            if (praise == null)
+            if (praise is null)
             {
                 return;
             }
@@ -176,7 +176,7 @@ namespace RachelBot.Core.UserAccounts
         {
             Achievement achievement = account.Achievements.SingleOrDefault(a => a.Id == id);
 
-            if (achievement == null)
+            if (achievement is null)
             {
                 return;
             }

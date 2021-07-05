@@ -64,7 +64,7 @@ namespace RachelBot
 
                 ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.OutChannelId);
 
-                if (channel == null)
+                if (channel is null)
                 {
                     return;
                 }
@@ -94,7 +94,7 @@ namespace RachelBot
 
                 ISocketMessageChannel channel = Utility.GetMessageChannelById(guild, config.InChannelId);
 
-                if (channel == null)
+                if (channel is null)
                 {
                     return;
                 }
@@ -122,6 +122,11 @@ namespace RachelBot
                 {
                     config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
 
+                    if (!config.ReactToBotMessages && context.User.IsBot)
+                    {
+                        return;
+                    }
+
                     try
                     {
                         new LevelingHandler(_storage).UserSendMessage(context.User, context.Guild);
@@ -135,7 +140,7 @@ namespace RachelBot
 
                 int argPos = 0;
                 bool hasPrefix;
-                if (config == null)
+                if (config is null)
                 {
                     hasPrefix = (msg.HasStringPrefix(ConfigurationManager.AppSettings["Prefix"], ref argPos)
                     || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));

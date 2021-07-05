@@ -62,7 +62,7 @@ namespace RachelBot.Modules.CYOA.Handlers
         public static Adventure CreateAdventure(string author, string name, string language, int minimalAge,
                                                 string mcName = "", bool? isMCFemale = null)
         {
-            if (_adventures.FirstOrDefault(a => a.Author == author && a.Name == name) != null)
+            if (_adventures.FirstOrDefault(a => a.Author == author && a.Name == name) is not null)
             {
                 throw new ArgumentException($"There already is adventure named: {name}");
             }

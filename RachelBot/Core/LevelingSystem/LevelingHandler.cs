@@ -29,7 +29,7 @@ namespace RachelBot.Core.LevelingSystem
 
             SocketGuildUser socketGuildUser = Utility.GetGuildUserById(guild, user.Id);
 
-            if (socketGuildUser == null)
+            if (socketGuildUser is null)
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace RachelBot.Core.LevelingSystem
 
                 IRole role = Utility.GetRoleById(socketGuildUser.Guild, reward.RoleId);
 
-                if (role == null)
+                if (role is null)
                 {
                     continue;
                 }

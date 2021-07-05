@@ -24,7 +24,7 @@ namespace RachelBot.Preconditions
 
             foreach (ulong roleId in config.StaffRoleIds)
             {
-                if (user.Roles.SingleOrDefault(r => r.Id == roleId) != null)
+                if (user.Roles.SingleOrDefault(r => r.Id == roleId) is not null)
                 {
                     return Task.FromResult(PreconditionResult.FromSuccess());
                 }
