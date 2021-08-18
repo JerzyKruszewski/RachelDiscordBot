@@ -40,7 +40,7 @@ namespace RachelBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ERROR: {ex.Message}");
+                Console.WriteLine($"ERROR: {ex.Message}\n{ex.StackTrace}");
                 LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
             }
         }

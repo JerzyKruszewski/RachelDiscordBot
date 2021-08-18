@@ -41,7 +41,8 @@ namespace RachelBot.Commands
 
             foreach (SocketGuild guild in Context.Client.Guilds)
             {
-                await guild.DownloadUsersAsync();
+                //This is blocking code from execution
+                //await guild.DownloadUsersAsync();
 
                 foreach (SocketGuildUser user in guild.Users)
                 {
@@ -85,7 +86,7 @@ namespace RachelBot.Commands
         [Command("DebugGuildConfig")]
         public async Task DebugConfig()
         {
-            IDMChannel channel = await Context.User.GetOrCreateDMChannelAsync();
+            IDMChannel channel = await Context.User.CreateDMChannelAsync();
             await channel.SendFileAsync($"./Guilds/{Context.Guild.Id}/Config.json");
         }
 
@@ -98,7 +99,7 @@ namespace RachelBot.Commands
             {
                 try
                 {
-                    channel = await guild.Owner.GetOrCreateDMChannelAsync();
+                    channel = await guild.Owner.CreateDMChannelAsync();
                     await channel.SendMessageAsync($"{message}\n\n{Utility.OwnerSignature}");
                     await Task.Delay(1000);
                 }

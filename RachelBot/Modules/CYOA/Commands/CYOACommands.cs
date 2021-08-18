@@ -22,27 +22,38 @@ namespace RachelBot.Modules.CYOA.Commands
         [RequireMotherServerMember]
         public async Task GetAvailableStories()
         {
-            IList<Adventure> adventures = Adventures.GetAdventures();
-            string message = "";
-
-            foreach (Adventure adventure in adventures)
+            Console.WriteLine(1);
+            try
             {
-                message += $"- {adventure.Code} (Language: {adventure.Language} Minimal age: {adventure.MinimalAge})\n";
+                IList<Adventure> adventures = Adventures.GetAdventures();
+                string message = "";
 
-                if (message.Length >= 1950)
+                foreach (Adventure adventure in adventures)
                 {
-                    break;
+                    message += $"- {adventure.Code} (Language: {adventure.Language} Minimal age: {adventure.MinimalAge})\n";
+
+                    if (message.Length >= 1950)
+                    {
+                        break;
+                    }
                 }
+
+                Embed embed = new EmbedBuilder()
+                {
+                    Title = $"Available Stories ({adventures.Count} stories)",
+                    Description = message,
+                    Color = new Color(1, 69, 44)
+                }.Build();
+
+                Console.WriteLine(1);
+
+                await Context.Channel.SendMessageAsync("", embed: embed);
             }
-
-            Embed embed = new EmbedBuilder()
+            catch (Exception ex)
             {
-                Title = $"Available Stories ({adventures.Count} stories)",
-                Description = message,
-                Color = new Color(1, 69, 44)
-            }.Build();
-
-            await Context.Channel.SendMessageAsync("", embed: embed);
+                Console.WriteLine(ex);
+                throw;
+            }
         }
 
         [Command("Profile")]

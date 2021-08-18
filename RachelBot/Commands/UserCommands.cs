@@ -367,7 +367,7 @@ namespace RachelBot.Commands
             await Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
-        [Command("Any thoughts")]
+        [Command("Any thoughts")]//
         [RequireMotherServerMember]
         public async Task AnyThoughts()
         {

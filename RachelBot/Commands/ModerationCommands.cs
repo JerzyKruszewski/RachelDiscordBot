@@ -111,7 +111,7 @@ namespace RachelBot.Commands
 
             try
             {
-                IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+                IDMChannel dmChannel = await user.CreateDMChannelAsync();
 
                 message = alerts.GetFormattedAlert("USER_REPRIMANDED_MESSAGE", user.Mention, guild.Name, reason, config.ToSChannelId);
 
@@ -171,7 +171,7 @@ namespace RachelBot.Commands
 
                 try
                 {
-                    IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+                    IDMChannel dmChannel = await user.CreateDMChannelAsync();
 
                     if (config.PointBasedWarns)
                     {
@@ -281,8 +281,13 @@ namespace RachelBot.Commands
             AlertsHandler alerts = new AlertsHandler(config);
             ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
 
-            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Allow, sendMessages: PermValue.Allow, embedLinks: PermValue.Allow, 
-                attachFiles: PermValue.Allow, readMessageHistory: PermValue.Allow, mentionEveryone: PermValue.Deny, useExternalEmojis: PermValue.Allow);
+            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Allow,
+                                                                        sendMessages: PermValue.Allow,
+                                                                        embedLinks: PermValue.Allow,
+                                                                        attachFiles: PermValue.Allow,
+                                                                        readMessageHistory: PermValue.Allow,
+                                                                        mentionEveryone: PermValue.Deny,
+                                                                        useExternalEmojis: PermValue.Allow);
 
             foreach (IGuildChannel channel in channels)
             {
@@ -303,8 +308,13 @@ namespace RachelBot.Commands
             AlertsHandler alerts = new AlertsHandler(config);
             ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
 
-            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Deny, sendMessages: PermValue.Deny, embedLinks: PermValue.Deny, 
-                attachFiles: PermValue.Deny, readMessageHistory: PermValue.Deny, mentionEveryone: PermValue.Deny, useExternalEmojis: PermValue.Deny);
+            OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Deny,
+                                                                        sendMessages: PermValue.Deny,
+                                                                        embedLinks: PermValue.Deny,
+                                                                        attachFiles: PermValue.Deny,
+                                                                        readMessageHistory: PermValue.Deny,
+                                                                        mentionEveryone: PermValue.Deny,
+                                                                        useExternalEmojis: PermValue.Deny);
 
             foreach (IGuildChannel channel in channels)
             {

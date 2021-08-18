@@ -17,7 +17,8 @@ namespace RachelBot.Preconditions
             IUser user = context.User;
             IGuild guild = await context.Client.GetGuildAsync(Utility.MotherServerId);
 
-            await guild.DownloadUsersAsync();
+            //This is blocking code from execution
+            //await guild.DownloadUsersAsync();
 
             if ((await guild.GetUserAsync(user.Id)) is not null)
             {
