@@ -341,7 +341,7 @@ Bolded commands are **special commands** available only for members of our [Disc
 | **Any thoughts** | --- | --- | Will show one of Rachel responses | $Any thoughts |
 | **CYOA List** | --- | --- | Will show list of available adventures | $CYOA List |
 | **CYOA Profile** | --- | --- | Will show information about current user's adventure and MC | $CYOA Profile |
-| **CYOA Change Profile** | --- | Boolean representing MC gender (true - if you want to play as female character, false - as male character) and string representing MC name | Will change MC gender and name | CYOA Change Profile true Rachel |
+| **CYOA Change Profile** | --- | Boolean representing MC gender (true - if you want to play as female character, false - as male character) and string representing MC name | Will change MC gender and name | $CYOA Change Profile true Rachel |
 | **CYOA Choose Adventure** | --- | String representing adventure code | Will change/reset current adventure | $CYOA Choose Adventure 5_Rachel_Origins_Jurij |
 | **CYOA Play** | --- | --- | Will show current page of an adventure | $CYOA Play |
 | **CYOA Make Choice** | --- | Integer representing choice id | Will progress the story | $CYOA Make Choice 1 |
