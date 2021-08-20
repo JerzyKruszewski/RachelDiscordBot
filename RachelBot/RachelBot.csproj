@@ -16,10 +16,14 @@
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SharpLink" Version="1.0.0-beta-0005" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="application.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\affectionate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -45,6 +49,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Lang\en.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Lavalink.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Modules\CYOA\Stories\4_Rachel_Początki_Jurij.json">

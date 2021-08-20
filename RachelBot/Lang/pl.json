@@ -63,5 +63,15 @@
   "RAFFLE_JOIN_FAIL": "Nie można dołączyć do loterii. Ta loteria nie jest dostępna dla użytkowników, lub już do niej dołączyłeś.'",
   "RAFFLE_TITLE": "Loteria #{0} o {1}",
   "RAFFLE": "Uczestnicy loterii:{0}",
-  "RAFFLES_TITLE": "Loterie"
+  "RAFFLES_TITLE": "Loterie",
+  "UNKNOWN_TRACK": "Nieznana piosenka",
+  "UNKNOWN_CHANNEL": "Nieznany kanał",
+  "NEXT_TRACK": "```yaml\nTeraz gra:\n{0} ({1})\n{2}```",
+  "TRACK_ADDED_TO_QUEUE": "Piosenka dodana do kolejki\n```yaml\n{0} ({1})\n{2}```",
+  "TRACK_SKIPPED": ":fast_forward: {0} pominięty",
+  "QUEUE": "Kolejka:\n",
+  "QUEUE_FULL_TIME": "Całość: {0}",
+  "QUEUE_IS_FULL": "Kolejka jest pełna (max utworów w kolejce: {0})",
+  "EMPTY_QUEUE": "Kolejka jest pusta",
+  "LEAVE_VOICECHANNEL": "PaPa"
 }

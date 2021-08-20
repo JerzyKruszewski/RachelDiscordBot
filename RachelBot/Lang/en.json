@@ -63,5 +63,15 @@
   "RAFFLE_JOIN_FAIL": "Couldn't join this raffle. This raffle cannot be entered by user, or you already enter once.'",
   "RAFFLE_TITLE": "Raffle #{0} for {1}",
   "RAFFLE": "Raffle participants:{0}",
-  "RAFFLES_TITLE": "Raffles"
+  "RAFFLES_TITLE": "Raffles",
+  "UNKNOWN_TRACK": "Unknown track",
+  "UNKNOWN_CHANNEL": "Unknown channel",
+  "NEXT_TRACK": "```yaml\nNow playing:\n{0} ({1})\n{2}```",
+  "TRACK_ADDED_TO_QUEUE": "Track added to queue\n```yaml\n{0} ({1})\n{2}```",
+  "TRACK_SKIPPED": ":fast_forward: {0} skipped",
+  "QUEUE": "Queue:\n",
+  "QUEUE_FULL_TIME": "Total: {0}",
+  "QUEUE_IS_FULL": "Queue is full (max tracks in queue: {0})",
+  "EMPTY_QUEUE": "Queue is empty",
+  "LEAVE_VOICECHANNEL": "Bye Bye"
 }

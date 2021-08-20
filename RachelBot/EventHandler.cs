@@ -11,6 +11,9 @@ using RachelBot.Services.Storage;
 using RachelBot.Core.Configs;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
+using RachelBot.Modules.Audio.Services;
+using SharpLink;
+using RachelBot.Modules.Audio;
 
 namespace RachelBot
 {
@@ -32,6 +35,7 @@ namespace RachelBot
                 .AddSingleton(_storage)
                 .AddSingleton(_client)
                 .AddSingleton(new InteractiveService(_client))
+                .AddTransient<AudioService>()
                 .BuildServiceProvider();
 
             var cmdConfig = new CommandServiceConfig
@@ -39,9 +43,27 @@ namespace RachelBot
                 DefaultRunMode = RunMode.Async
             };
 
+            AudioService.lavalinkManager = new LavalinkManager(_client, new LavalinkManagerConfig()
+            {
+                RESTHost = "localhost",
+                RESTPort = 9000,
+                WebSocketHost = "localhost",
+                WebSocketPort = 9000,
+                Authorization = "youshallnotpass",
+                TotalShards = 1,
+                LogSeverity = LogSeverity.Verbose
+            });
+
             (_commands as IDisposable)?.Dispose();
             _commands = new CommandService(cmdConfig);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _service);
+
+            _client.Ready += async () =>
+            {
+                await AudioService.lavalinkManager.StartAsync();
+            };
+
+            AudioService.lavalinkManager.TrackEnd += AudioQueuesManagment.LavalinkManager_TrackEnd;
 
             _client.MessageReceived += HandleCommandAsync;
             _client.UserJoined += HandleUserJoinAsync;
