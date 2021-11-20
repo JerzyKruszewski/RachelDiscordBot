@@ -1,74 +1,71 @@
-﻿using System;
-using System.Linq;
-using Discord;
+﻿using Discord;
 using Discord.WebSocket;
 using RachelBot.Core.UserAccounts;
 using RachelBot.Services.Storage;
 using RachelBot.Utils;
 
-namespace RachelBot.Core.LevelingSystem
+namespace RachelBot.Core.LevelingSystem;
+
+public class LevelingHandler
 {
-    public class LevelingHandler
+    private readonly IStorageService _storage;
+
+    public LevelingHandler(IStorageService storage)
     {
-        private readonly IStorageService _storage;
+        _storage = storage;
+    }
 
-        public LevelingHandler(IStorageService storage)
+    public void UserSendMessage(SocketUser user, SocketGuild guild)
+    {
+        UserAccounts.UserAccounts accounts = new UserAccounts.UserAccounts(guild.Id, _storage);
+
+        UserAccount account = accounts.GetUserAccount(user.Id);
+
+        uint oldLevel = account.LevelNumber;
+
+        accounts.AddXP(account, 50UL);
+
+        SocketGuildUser socketGuildUser = Utility.GetGuildUserById(guild, user.Id);
+
+        if (socketGuildUser is null)
         {
-            _storage = storage;
+            return;
         }
 
-        public void UserSendMessage(SocketUser user, SocketGuild guild)
+        uint newLevel = account.LevelNumber;
+
+        if (newLevel > oldLevel)
         {
-            UserAccounts.UserAccounts accounts = new UserAccounts.UserAccounts(guild.Id, _storage);
-
-            UserAccount account = accounts.GetUserAccount(user.Id);
-
-            uint oldLevel = account.LevelNumber;
-
-            accounts.AddXP(account, 50UL);
-
-            SocketGuildUser socketGuildUser = Utility.GetGuildUserById(guild, user.Id);
-
-            if (socketGuildUser is null)
-            {
-                return;
-            }
-
-            uint newLevel = account.LevelNumber;
-
-            if (newLevel > oldLevel)
-            {
-                HandleRewards(socketGuildUser, account);
-            }
+            HandleRewards(socketGuildUser, account);
         }
+    }
 
-        private async void HandleRewards(SocketGuildUser socketGuildUser, UserAccount account)
+    private async void HandleRewards(SocketGuildUser socketGuildUser, UserAccount account)
+    {
+        foreach (LevelRoleReward reward in new LevelRoleRewards(socketGuildUser.Guild.Id, _storage).GetLevelRoleRewards())
         {
-            foreach (LevelRoleReward reward in new LevelRoleRewards(socketGuildUser.Guild.Id, _storage).GetLevelRoleRewards())
+            if (account.LevelNumber < reward.RequiredLevel)
             {
-                if (account.LevelNumber < reward.RequiredLevel)
+                continue;
+            }
+
+            IRole role = Utility.GetRoleById(socketGuildUser.Guild, reward.RoleId);
+
+            if (role is null)
+            {
+                continue;
+            }
+
+            if (!socketGuildUser.Roles.Contains(role))
+            {
+                try
                 {
-                    continue;
+                    await socketGuildUser.AddRoleAsync(role);
                 }
-
-                IRole role = Utility.GetRoleById(socketGuildUser.Guild, reward.RoleId);
-
-                if (role is null)
+                catch (Exception ex)
                 {
-                    continue;
-                }
-
-                if (!socketGuildUser.Roles.Contains(role))
-                {
-                    try
-                    {
-                        await socketGuildUser.AddRoleAsync(role);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                        Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
-                    }
+                    Console.WriteLine(ex);
+                    Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
                 }
             }
         }

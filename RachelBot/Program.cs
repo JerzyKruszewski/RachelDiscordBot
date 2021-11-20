@@ -1,91 +1,88 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace RachelBot
+namespace RachelBot;
+
+internal class Program
 {
-    internal class Program
+    private const string LogFilePath = "./Log.txt";
+
+    private DiscordSocketClient _client;
+    private EventHandler _handler;
+
+    private static void Main() => new Program().RunBotAsync().GetAwaiter().GetResult();
+
+    private async Task RunBotAsync()
     {
-        private DiscordSocketClient _client;
-        private EventHandler _handler;
-        private const string LogFilePath = "./Log.txt";
-
-        private static void Main() => new Program().RunBotAsync().GetAwaiter().GetResult();
-
-        private async Task RunBotAsync()
+        try
         {
-            try
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["Token"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["Token"]))
-                {
-                    return;
-                }
-
-                _client?.Dispose();
-                _client = new DiscordSocketClient(new DiscordSocketConfig
-                {
-                    LogLevel = LogSeverity.Verbose,
-                    MessageCacheSize = 0, 
-                    AlwaysDownloadUsers = true
-                });
-
-                await InitializationClient();
-                await InitializationLogs();
-
-                await Task.Delay(-1);
+                return;
             }
-            catch (Exception ex)
+
+            _client?.Dispose();
+            _client = new DiscordSocketClient(new DiscordSocketConfig
             {
-                Console.WriteLine($"ERROR: {ex.Message}");
-                LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
-            }
-        }
+                LogLevel = LogSeverity.Verbose,
+                MessageCacheSize = 0, 
+                AlwaysDownloadUsers = true
+            });
 
-        private async Task InitializationClient()
+            await InitializationClient();
+            await InitializationLogs();
+
+            await Task.Delay(-1);
+        }
+        catch (Exception ex)
         {
-            await _client.SetGameAsync(ConfigurationManager.AppSettings["Game"]);
-            await LoginAsync();
-            await HandlerInitialize();
+            Console.WriteLine($"ERROR: {ex.Message}");
+            LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
         }
+    }
 
-        private async Task LoginAsync()
-        {
-            await _client.LoginAsync(TokenType.Bot, ConfigurationManager.AppSettings["Token"]);
-            await _client.StartAsync();
-        }
+    private async Task InitializationClient()
+    {
+        await _client.SetGameAsync(ConfigurationManager.AppSettings["Game"]);
+        await LoginAsync();
+        await HandlerInitialize();
+    }
 
-        private async Task HandlerInitialize()
-        {
-            _handler = new EventHandler();
-            await _handler.InitializeAsync(_client);
-        }
+    private async Task LoginAsync()
+    {
+        await _client.LoginAsync(TokenType.Bot, ConfigurationManager.AppSettings["Token"]);
+        await _client.StartAsync();
+    }
 
-        private Task InitializationLogs()
-        {
-            _client.Log += BotLog;
+    private async Task HandlerInitialize()
+    {
+        _handler = new EventHandler();
+        await _handler.InitializeAsync(_client);
+    }
 
-            return Task.CompletedTask;
-        }
+    private Task InitializationLogs()
+    {
+        _client.Log += BotLog;
 
-        private Task BotLog(LogMessage msg)
-        {
-            Console.WriteLine(msg.Message);
+        return Task.CompletedTask;
+    }
 
-            LogToFile(msg.Message);
+    private Task BotLog(LogMessage msg)
+    {
+        Console.WriteLine(msg.Message);
 
-            return Task.CompletedTask;
-        }
+        LogToFile(msg.Message);
 
-        public static void LogToFile(string message)
-        {
-            using (StreamWriter writer = new StreamWriter(LogFilePath, true, Encoding.UTF8))
-            {
-                writer.WriteLine(message);
-            }
-        }
+        return Task.CompletedTask;
+    }
+
+    public static void LogToFile(string message)
+    {
+        using StreamWriter writer = new StreamWriter(LogFilePath, true, Encoding.UTF8);
+
+        writer.WriteLine(message);
     }
 }

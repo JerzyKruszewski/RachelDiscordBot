@@ -1,34 +1,33 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace RachelBot.Services.Storage
+namespace RachelBot.Services.Storage;
+
+public class JsonStorageService : IStorageService
 {
-    public class JsonStorageService : IStorageService
+    public void EnsureDirectoryExist(string folderPath)
     {
-        public void EnsureDirectoryExist(string folderPath)
+        if (!Directory.Exists(folderPath))
         {
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-            }
+            Directory.CreateDirectory(folderPath);
         }
+    }
+    
+    public bool FileExist(string filepath)
+    {
+        return File.Exists(filepath);
+    }
 
-        public bool FileExist(string filepath)
-        {
-            return File.Exists(filepath);
-        }
+    public T RestoreObject<T>(string filepath)
+    {
+        string json = File.ReadAllText(filepath);
+        return JsonConvert.DeserializeObject<T>(json);
+    }
 
-        public T RestoreObject<T>(string filepath)
-        {
-            string json = File.ReadAllText(filepath);
-            return JsonConvert.DeserializeObject<T>(json);
-        }
+    public void StoreObject(object obj, string filepath)
+    {
+        string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
 
-        public void StoreObject(object obj, string filepath)
-        {
-            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-
-            File.WriteAllText(filepath, json);
-        }
+        File.WriteAllText(filepath, json);
     }
 }
