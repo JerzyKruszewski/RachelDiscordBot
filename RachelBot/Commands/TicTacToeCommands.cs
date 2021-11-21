@@ -8,6 +8,7 @@ using RachelBot.Lang;
 using RachelBot.Services.Storage;
 using RachelBot.Utils;
 using RachelBot.Preconditions;
+using RachelBot.Core.Games.TicTacToe.AI;
 
 namespace RachelBot.Commands;
 
@@ -37,29 +38,33 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
             await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_NO_OPPONENT"));
 
             PlayGameSP(game, player, ai, alerts);
+
+            return;
         }
-        else if (user.Id == Context.Client.CurrentUser.Id)
+        if (user.Id == Context.Client.CurrentUser.Id)
         {
             Player ai = new Player(Context.Client.CurrentUser.Id, "⭕");
 
             await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_PLAY_WITH_RACHEL"));
 
             PlayGameSP(game, player, ai, alerts);
+
+            return;
         }
-        else if (user.IsBot)
+        if (user.IsBot)
         {
             Player ai = new Player(Context.Client.CurrentUser.Id, "⭕");
 
             await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_PLAY_WITH_BOT"));
 
             PlayGameSP(game, player, ai, alerts);
-        }
-        else
-        {
-            Player opponent = new Player(user.Id, "⭕");
 
-            PlayGameMP(game, player, opponent, alerts);
+            return;
         }
+
+        Player opponent = new Player(user.Id, "⭕");
+
+        PlayGameMP(game, player, opponent, alerts);
     }
 
     private async void PlayGameSP(Game game, Player firstPlayer, Player secondPlayer, AlertsHandler alerts)
@@ -99,27 +104,29 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
 
                 game.ChangeTableElement(cords.Value.Key, cords.Value.Value, firstPlayer.Character);
                 game.ChangePlayer();
+
+                return;
             }
-            else
+
+            if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
             {
-                if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
-                {
-                    return;
-                }
-
-                int input = Core.Games.TicTacToe.AI.HardCodedAI.MakeMove(game, firstPlayer, secondPlayer);
-
-                int row = (input - 1) / 3;
-                int column = (input - 1) % 3;
-
-                game.ChangeTableElement(row, column, secondPlayer.Character);
-                game.ChangePlayer();
+                return;
             }
+
+            int input = HardCodedAI.MakeMove(game, firstPlayer, secondPlayer);
+
+            int row = (input - 1) / 3;
+            int column = (input - 1) % 3;
+
+            game.ChangeTableElement(row, column, secondPlayer.Character);
+            game.ChangePlayer();
         }
     }
 
     private async void PlayGameMP(Game game, Player firstPlayer, Player secondPlayer, AlertsHandler alerts)
     {
+        SocketMessage message;
+        KeyValuePair<int, int>? cords;
         RestUserMessage boardMessage = await Context.Channel.SendMessageAsync($"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
 
         for (int i = 0; i < 11; i++)
@@ -133,7 +140,7 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
                     return;
                 }
 
-                SocketMessage message = await NextMessageAsync();
+                message = await NextMessageAsync();
 
                 if (message is null)
                 {
@@ -141,7 +148,7 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
                     return;
                 }
 
-                KeyValuePair<int, int>? cords = Player.GetCords(message.Content);
+                cords = Player.GetCords(message.Content);
                 await Task.Delay(1000);
 
                 PermissionUtils.TryRemoveMessageAsync(Context, message);
@@ -155,44 +162,44 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
 
                 game.ChangeTableElement(cords.Value.Key, cords.Value.Value, firstPlayer.Character);
                 game.ChangePlayer();
+
+                return;
             }
-            else
+
+            await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
+
+            if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
             {
-                await boardMessage.ModifyAsync(m => m.Content = $"<@{firstPlayer.Id}> vs <@{secondPlayer.Id}>\n\n{game.ShowTable()}");
-
-                if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))
-                {
-                    return;
-                }
-
-                Criteria<SocketMessage> criterion = new Criteria<SocketMessage>();
-
-                criterion.AddCriterion(new EnsureFromUserCriterion(secondPlayer.Id));
-                criterion.AddCriterion(new EnsureSourceChannelCriterion());
-
-                SocketMessage message = await NextMessageAsync(criterion);
-
-                if (message is null)
-                {
-                    await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_GAVE_UP", Context.Guild.Users.Single(u => u.Id == secondPlayer.Id).Username));
-                    return;
-                }
-
-                KeyValuePair<int, int>? cords = Player.GetCords(message.Content);
-                await Task.Delay(1000);
-
-                PermissionUtils.TryRemoveMessageAsync(Context, message);
-
-                if (!cords.HasValue)
-                {
-                    i--;
-                    await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_WRONG_INPUT"));
-                    continue;
-                }
-
-                game.ChangeTableElement(cords.Value.Key, cords.Value.Value, secondPlayer.Character);
-                game.ChangePlayer();
+                return;
             }
+
+            Criteria<SocketMessage> criterion = new Criteria<SocketMessage>();
+
+            criterion.AddCriterion(new EnsureFromUserCriterion(secondPlayer.Id));
+            criterion.AddCriterion(new EnsureSourceChannelCriterion());
+
+            message = await NextMessageAsync(criterion);
+
+            if (message is null)
+            {
+                await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("TICTACTOE_GAVE_UP", Context.Guild.Users.Single(u => u.Id == secondPlayer.Id).Username));
+                return;
+            }
+
+            cords = Player.GetCords(message.Content);
+            await Task.Delay(1000);
+
+            PermissionUtils.TryRemoveMessageAsync(Context, message);
+
+            if (!cords.HasValue)
+            {
+                i--;
+                await Context.Channel.SendMessageAsync(alerts.GetAlert("TICTACTOE_WRONG_INPUT"));
+                continue;
+            }
+
+            game.ChangeTableElement(cords.Value.Key, cords.Value.Value, secondPlayer.Character);
+            game.ChangePlayer();
         }
     }
 

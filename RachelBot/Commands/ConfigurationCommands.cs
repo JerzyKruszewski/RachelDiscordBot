@@ -6,6 +6,7 @@ using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Lang;
 using RachelBot.Preconditions;
+using System.Text.RegularExpressions;
 
 namespace RachelBot.Commands;
 
@@ -24,6 +25,12 @@ public class ConfigurationCommands : InteractiveBase<SocketCommandContext>
     public async Task ChangeGuildPrefix([Remainder]string prefix)
     {
         GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
+
+        if (Regex.IsMatch(prefix, @"<@[0-9&!]+>")) //User or role ping
+        {
+            await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("FAILURE"));
+            return;
+        }
 
         configs.ChangeGuildPrefix(prefix);
 

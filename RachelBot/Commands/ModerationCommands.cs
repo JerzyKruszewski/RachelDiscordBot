@@ -300,8 +300,13 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
         AlertsHandler alerts = new AlertsHandler(config);
         ISocketMessageChannel modChannel = Utility.GetMessageChannelById(guild, config.ModeratorChannelId) ?? Context.Channel;
 
-        OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Deny, sendMessages: PermValue.Deny, embedLinks: PermValue.Deny, 
-            attachFiles: PermValue.Deny, readMessageHistory: PermValue.Deny, mentionEveryone: PermValue.Deny, useExternalEmojis: PermValue.Deny);
+        OverwritePermissions permissions = new OverwritePermissions(viewChannel: PermValue.Deny,
+                                                                    sendMessages: PermValue.Deny,
+                                                                    embedLinks: PermValue.Deny,
+                                                                    attachFiles: PermValue.Deny,
+                                                                    readMessageHistory: PermValue.Deny,
+                                                                    mentionEveryone: PermValue.Deny,
+                                                                    useExternalEmojis: PermValue.Deny);
 
         foreach (IGuildChannel channel in channels)
         {

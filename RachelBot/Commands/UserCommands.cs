@@ -39,18 +39,7 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
 
         accounts.DeleteExpiredWarnings(account);
 
-        string message;
-
-        if (config.PointBasedWarns)
-        {
-            message = alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
-                                                                        account.Warnings.Count, UserAccounts.GetWarningsPower(account));
-        }
-        else
-        {
-            message = alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
-                                                                    account.Warnings.Count);
-        }
+        string message = GetStatusMessage(user, config, alerts, account);
 
         await Context.Channel.SendMessageAsync(message);
     }
@@ -70,26 +59,7 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
         UserAccount account = accounts.GetUserAccount(user.Id);
 
         accounts.DeleteExpiredWarnings(account);
-
-        string message;
-        string warnList = "";
-
-        if (config.PointBasedWarns)
-        {
-            foreach (Warning warn in account.Warnings)
-            {
-                warnList += alerts.GetFormattedAlert("PARSE_WARN_POINT", warn.Id, warn.Value, warn.Reason, warn.ExpireDate.ToString(@"dd\/MM\/yyyy HH:mm"));
-            }
-            message = alerts.GetFormattedAlert("CHECK_WARNINGS_TEMPLATE_POINT", user.Username, account.Warnings.Count, UserAccounts.GetWarningsPower(account), warnList);
-        }
-        else
-        {
-            foreach (Warning warn in account.Warnings)
-            {
-                warnList += alerts.GetFormattedAlert("PARSE_WARN", warn.Id, warn.Reason, warn.ExpireDate.ToString(@"dd\/MM\/yyyy HH:mm"));
-            }
-            message = alerts.GetFormattedAlert("CHECK_WARNINGS_TEMPLATE", user.Username, account.Warnings.Count, warnList);
-        }
+        string message = GetUserWarningsMessage(user, config, alerts, account);
 
         await Context.Channel.SendMessageAsync(message);
     }
@@ -108,14 +78,14 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
         UserAccounts accounts = new UserAccounts(guild.Id, _storage);
         UserAccount account = accounts.GetUserAccount(user.Id);
 
-        string praiseList = "";
+        StringBuilder praiseList = new StringBuilder();
 
         foreach (Praise praise in account.Praises)
         {
-            praiseList += alerts.GetFormattedAlert("PARSE_PRAISE", praise.Id, praise.Reason, praise.GivenAt.ToString(@"dd\/MM\/yyyy HH:mm"));
+            praiseList.Append(alerts.GetFormattedAlert("PARSE_PRAISE", praise.Id, praise.Reason, praise.GivenAt.ToString(@"dd\/MM\/yyyy HH:mm")));
         }
             
-        await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_PRAISES_TEMPLATE", user.Username, account.Praises.Count, praiseList));
+        await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_PRAISES_TEMPLATE", user.Username, account.Praises.Count, praiseList.ToString()));
     }
 
     [Command("Achievements")]
@@ -132,15 +102,15 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
         UserAccounts accounts = new UserAccounts(guild.Id, _storage);
         UserAccount account = accounts.GetUserAccount(user.Id);
 
-        string archievementsList = "";
+        StringBuilder archievementsList = new StringBuilder();
 
         foreach (Achievement achievement in account.Achievements)
         {
-            archievementsList += alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", achievement.Id, achievement.Value, achievement.Content);
+            archievementsList.Append(alerts.GetFormattedAlert("PARSE_ACHIEVEMENT", achievement.Id, achievement.Value, achievement.Content));
         }
 
         await Context.Channel.SendMessageAsync(alerts.GetFormattedAlert("CHECK_ACHIEVEMENTS_TEMPLATE", user.Username, account.Achievements.Count,
-                                                                        UserAccounts.GetAchievementsTotalPoints(account), archievementsList));
+                                                                        UserAccounts.GetAchievementsTotalPoints(account), archievementsList.ToString()));
     }
 
     [Command("Socials")]
@@ -209,17 +179,17 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
         AlertsHandler alerts = new AlertsHandler(config);
 
         IList<LevelRoleReward> roleRewards = new LevelRoleRewards(guild.Id, _storage).GetLevelRoleRewards();
-        string description = "";
+        StringBuilder description = new StringBuilder();
 
         for (int i = 0; i < roleRewards.Count; i++)
         {
-            description += alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i + 1, roleRewards[i].RoleId, roleRewards[i].RequiredLevel);
+            description.Append(alerts.GetFormattedAlert("LEVEL_ROLE_LIST_ITEM", i + 1, roleRewards[i].RoleId, roleRewards[i].RequiredLevel));
         }
 
         EmbedBuilder embed = new EmbedBuilder()
         {
             Title = alerts.GetAlert("LEVEL_ROLE_LIST_TEMPLATE"),
-            Description = description,
+            Description = description.ToString(),
             Color = new Color(1, 69, 44)
         };
 
@@ -285,19 +255,19 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
 
         int index = userAccounts.IndexOf(account) + 1;
 
-        string msg = "";
+        StringBuilder msg = new StringBuilder();
 
         int usersInLeaderboard = Math.Min(places, userAccounts.Count); 
 
         for (int i = 0; i < usersInLeaderboard; i++)
         {
-            msg += $"{i + 1}. <@{userAccounts[i].Id}>\n";
+            msg.Append($"{i + 1}. <@{userAccounts[i].Id}>\n");
         }
 
         EmbedBuilder embed = new EmbedBuilder()
         {
             Title = alerts.GetFormattedAlert("LEADERBOARD_TITLE", guild.Name),
-            Description = alerts.GetFormattedAlert("LEADERBOARD", msg, index),
+            Description = alerts.GetFormattedAlert("LEADERBOARD", msg.ToString(), index),
             Color = new Color(1, 69, 44)
         };
 
@@ -362,5 +332,39 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
     {
         string msg = Dialogue.GetRandomResponse(Context);
         await Context.Channel.SendMessageAsync(msg);
+    }
+
+    private static string GetStatusMessage(SocketGuildUser user, GuildConfig config, AlertsHandler alerts, UserAccount account)
+    {
+        if (config.PointBasedWarns)
+        {
+            return alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
+                                                                    account.Warnings.Count, UserAccounts.GetWarningsPower(account));
+        }
+
+        return alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
+                                                          account.Warnings.Count);
+    }
+
+    private static string GetUserWarningsMessage(SocketGuildUser user, GuildConfig config, AlertsHandler alerts, UserAccount account)
+    {
+        StringBuilder warnList = new StringBuilder();
+
+        if (config.PointBasedWarns)
+        {
+            foreach (Warning warn in account.Warnings)
+            {
+                warnList.Append(alerts.GetFormattedAlert("PARSE_WARN_POINT", warn.Id, warn.Value, warn.Reason, warn.ExpireDate.ToString(@"dd\/MM\/yyyy HH:mm")));
+            }
+
+            return alerts.GetFormattedAlert("CHECK_WARNINGS_TEMPLATE_POINT", user.Username, account.Warnings.Count, UserAccounts.GetWarningsPower(account), warnList.ToString());
+        }
+
+        foreach (Warning warn in account.Warnings)
+        {
+            warnList.Append(alerts.GetFormattedAlert("PARSE_WARN", warn.Id, warn.Reason, warn.ExpireDate.ToString(@"dd\/MM\/yyyy HH:mm")));
+        }
+
+        return alerts.GetFormattedAlert("CHECK_WARNINGS_TEMPLATE", user.Username, account.Warnings.Count, warnList.ToString());
     }
 }

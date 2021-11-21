@@ -140,19 +140,8 @@ public class EventHandler
             }
 
             int argPos = 0;
-            bool hasPrefix;
-            if (config is null)
-            {
-                hasPrefix = (msg.HasStringPrefix(ConfigurationManager.AppSettings["Prefix"], ref argPos)
-                            || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
-            }
-            else
-            {
-                hasPrefix = (msg.HasStringPrefix(config.GuildPrefix, ref argPos)
-                            || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
-            }
 
-            if (hasPrefix)
+            if (CheckIfMessageHasValidPrefix(msg, config, ref argPos))
             {
                 IResult result = await _commands.ExecuteAsync(context, argPos, _service);
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
@@ -168,5 +157,17 @@ public class EventHandler
             Console.WriteLine($"ERROR: {ex}");
             Program.LogToFile($"ERROR: {ex}");
         }
+    }
+
+    private bool CheckIfMessageHasValidPrefix(SocketUserMessage msg, GuildConfig config, ref int argPos)
+    {
+        if (config is null)
+        {
+            return (msg.HasStringPrefix(ConfigurationManager.AppSettings["Prefix"], ref argPos)
+                    || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
+        }
+
+        return (msg.HasStringPrefix(config.GuildPrefix, ref argPos)
+                || msg.HasMentionPrefix(_client.CurrentUser, ref argPos));
     }
 }

@@ -119,15 +119,15 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
         Raffles raffles = new Raffles(guild.Id, _storage);
         Raffle raffle = raffles.GetRaffle(id);
 
-        string participants = "";
+        StringBuilder participants = new StringBuilder();
 
         foreach (KeyValuePair<ulong, int> participant in raffle.Tickets)
         {
-            participants += $"\n<@{participant.Key}> - {participant.Value}";
+            participants.Append($"\n<@{participant.Key}> - {participant.Value}");
 
             if (participants.Length > Utility.MessageLengthBuffer)
             {
-                participants += "...";
+                participants.Append("...");
                 break;
             }
         }
@@ -135,7 +135,7 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
         EmbedBuilder embed = new EmbedBuilder()
         {
             Title = alerts.GetFormattedAlert("RAFFLE_TITLE", raffle.Id, raffle.Reward),
-            Description = alerts.GetFormattedAlert("RAFFLE", participants),
+            Description = alerts.GetFormattedAlert("RAFFLE", participants.ToString()),
             Color = new Color(1, 69, 44)
         };
 
@@ -151,22 +151,15 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
         AlertsHandler alerts = new AlertsHandler(config);
         Raffles raffles = new Raffles(guild.Id, _storage);
 
-        string message = "";
+        StringBuilder message = new StringBuilder();
 
         foreach (Raffle raffle in raffles.GetRaffles().OrderByDescending(r => r.Id))
         {
-            if (raffle.IsEnded)
-            {
-                message += $"~~{raffle.Id} - {raffle.Reward} Winner: <@{raffle.Winner}>~~\n";
-            }
-            else
-            {
-                message += $"{raffle.Id} - {raffle.Reward} ({raffle.Tickets.Count})\n";
-            }
+            AppendRaffleInfo(message, raffle);
 
             if (message.Length > Utility.MessageLengthBuffer)
             {
-                message += "...";
+                message.Append("...");
                 break;
             }
         }
@@ -174,10 +167,21 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
         EmbedBuilder embed = new EmbedBuilder()
         {
             Title = alerts.GetAlert("RAFFLES_TITLE"),
-            Description = message,
+            Description = message.ToString(),
             Color = new Color(1, 69, 44)
         };
 
         await Context.Channel.SendMessageAsync(embed: embed.Build());
+    }
+
+    private static void AppendRaffleInfo(StringBuilder message, Raffle raffle)
+    {
+        if (raffle.IsEnded)
+        {
+            message.Append($"~~{raffle.Id} - {raffle.Reward} Winner: <@{raffle.Winner}>~~\n");
+            return;
+        }
+
+        message.Append($"{raffle.Id} - {raffle.Reward} ({raffle.Tickets.Count})\n");
     }
 }
