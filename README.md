@@ -452,6 +452,8 @@ Rachel uses external libraries (found in Assemblies folder):
 to Discord.Net.Labs.
 
 [Back to top][BackToTop]
+***
+
 
 [BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#table-of-contents
 [FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
