@@ -21,12 +21,11 @@ public class LevelRoleRewards
         if (_storage.FileExist(_filePath))
         {
             _roleRewards = _storage.RestoreObject<List<LevelRoleReward>>(_filePath);
+            return;
         }
-        else
-        {
-            _roleRewards = new List<LevelRoleReward>();
-            Save();
-        }
+
+        _roleRewards = new List<LevelRoleReward>();
+        Save();
     }
 
     private void Save()
@@ -57,11 +56,13 @@ public class LevelRoleRewards
             };
 
             _roleRewards.Add(reward);
+
+            Save();
+
+            return reward;
         }
-        else
-        {
-            reward.RequiredLevel = level;
-        }
+
+        reward.RequiredLevel = level;
 
         Save();
 

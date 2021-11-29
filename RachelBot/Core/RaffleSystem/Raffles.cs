@@ -22,12 +22,11 @@ public class Raffles
         if (_storage.FileExist(_filePath))
         {
             _raffles = _storage.RestoreObject<List<Raffle>>(_filePath);
+            return;
         }
-        else
-        {
-            _raffles = new List<Raffle>();
-            Save();
-        }
+
+        _raffles = new List<Raffle>();
+        Save();
     }
 
     private void Save()
@@ -82,11 +81,13 @@ public class Raffles
         if (raffle.Tickets.ContainsKey(userId))
         {
             raffle.Tickets[userId] += tickets;
+
+            Save();
+
+            return true;
         }
-        else
-        {
-            raffle.Tickets.Add(userId, tickets);
-        }
+
+        raffle.Tickets.Add(userId, tickets);
             
         Save();
 

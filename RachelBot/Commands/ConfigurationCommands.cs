@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using System.Text.RegularExpressions;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Discord.Addons.Interactive;
@@ -6,7 +7,6 @@ using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Lang;
 using RachelBot.Preconditions;
-using System.Text.RegularExpressions;
 
 namespace RachelBot.Commands;
 

@@ -108,7 +108,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
         try
         {
-            IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
+            IDMChannel dmChannel = await user.CreateDMChannelAsync();
 
             message = alerts.GetFormattedAlert("USER_REPRIMANDED_MESSAGE", user.Mention, guild.Name, reason, config.ToSChannelId);
 
@@ -153,7 +153,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
                 }
             }
             else if ((account.Warnings.Count >= config.WarnCountTillPunishment && config.WarnCountTillPunishment > 0) ||
-                        (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillPunishment && config.WarnPointsTillPunishment > 0))
+                     (account.Warnings.Sum(w => w.Value) >= config.WarnPointsTillPunishment && config.WarnPointsTillPunishment > 0))
             {
                 if (PermissionUtils.CanGiveRoles(Context))
                 {
@@ -164,39 +164,51 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
                 }
             }
 
-            string message;
-
-            try
-            {
-                IDMChannel dmChannel = await user.GetOrCreateDMChannelAsync();
-
-                if (config.PointBasedWarns)
-                {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, guild.Name, warn.Value, warn.Reason,
-                                                        UserAccounts.GetWarningsCount(account), UserAccounts.GetWarningsPower(account), config.ToSChannelId);
-
-                    await dmChannel.SendMessageAsync(message);
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, message));
-                }
-                else
-                {
-                    message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, guild.Name, warn.Reason,
-                                                        UserAccounts.GetWarningsCount(account), config.ToSChannelId);
-
-                    await dmChannel.SendMessageAsync(message);
-                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, message));
-                }
-            }
-            catch (Exception)
-            {
-                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS_WARN", user.Mention));
-            }
+            await GetAndSendWarnNotification(user, reason, guild, config, alerts, modChannel, account, warn);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
             Program.LogToFile($"{ex.Message}\n{ex.StackTrace}");
             throw;
+        }
+    }
+
+    private static async Task GetAndSendWarnNotification(SocketGuildUser user,
+                                                         string reason,
+                                                         SocketGuild guild,
+                                                         GuildConfig config,
+                                                         AlertsHandler alerts,
+                                                         ISocketMessageChannel modChannel,
+                                                         UserAccount account,
+                                                         Warning warn)
+    {
+        string message;
+
+        try
+        {
+            IDMChannel dmChannel = await user.CreateDMChannelAsync();
+
+            if (config.PointBasedWarns)
+            {
+                message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE_POINT", user.Mention, guild.Name, warn.Value, warn.Reason,
+                                                    UserAccounts.GetWarningsCount(account), UserAccounts.GetWarningsPower(account), config.ToSChannelId);
+
+                await dmChannel.SendMessageAsync(message);
+                await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED_POINT", user.Mention, reason, warn.Value, message));
+
+                return;
+            }
+
+            message = alerts.GetFormattedAlert("USER_WARNED_MESSAGE", user.Mention, guild.Name, warn.Reason,
+                                               UserAccounts.GetWarningsCount(account), config.ToSChannelId);
+
+            await dmChannel.SendMessageAsync(message);
+            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_WARNED", user.Mention, reason, message));
+        }
+        catch (Exception)
+        {
+            await modChannel.SendMessageAsync(alerts.GetFormattedAlert("USER_HAS_CLOSED_DMS_WARN", user.Mention));
         }
     }
 

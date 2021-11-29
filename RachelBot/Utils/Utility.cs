@@ -82,4 +82,9 @@ Creator of ℜ𝔞𝔠𝔥𝔢𝔩";
 
         return reason;
     }
+
+    public static SocketGuild GetGuildFromSocketMessageComponent(DiscordSocketClient client, SocketMessageComponent messageComponent)
+    {
+        return client.Guilds.Single(g => g.TextChannels.Any(ch => ch.Id == messageComponent.Channel.Id));
+    }
 }

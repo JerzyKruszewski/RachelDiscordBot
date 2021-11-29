@@ -1,5 +1,4 @@
-﻿using System.IO;
-using RachelBot.Modules.CYOA.Objects;
+﻿using RachelBot.Modules.CYOA.Objects;
 using RachelBot.Services.Storage;
 
 namespace RachelBot.Modules.CYOA.Handlers;
@@ -24,14 +23,9 @@ public class PlayedStories
 
         _filePath = $"{_folderPath}/Stories.json";
 
-        if (_storage.FileExist(_filePath))
-        {
-            _stories = _storage.RestoreObject<List<PlayedStory>>(_filePath);
-        }
-        else
-        {
-            _stories = new List<PlayedStory>();
-        }
+        _stories = (_storage.FileExist(_filePath)) ?
+                    _storage.RestoreObject<List<PlayedStory>>(_filePath) :
+                    new List<PlayedStory>();
     }
 
     public static void Save()
@@ -72,12 +66,14 @@ public class PlayedStories
             };
 
             _stories.Add(story);
+
+            Save();
+
+            return story;
         }
-        else
-        {
-            story.AdventureCode = adventureCode;
-            story.PageId = pageId;
-        }
+
+        story.AdventureCode = adventureCode;
+        story.PageId = pageId;
 
         Save();
 
@@ -98,12 +94,14 @@ public class PlayedStories
             };
 
             _stories.Add(story);
+
+            Save();
+
+            return story;
         }
-        else
-        {
-            story.MCName = mcName;
-            story.IsMCFemale = isFemale;
-        }
+
+        story.MCName = mcName;
+        story.IsMCFemale = isFemale;
 
         Save();
 

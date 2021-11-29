@@ -17,138 +17,138 @@ public class Dialogue
         if (_storage.FileExist(_filePath))
         {
             _dialogues = _storage.RestoreObject<Dictionary<string, string>>(_filePath);
+
+            return;
         }
-        else
+
+        _dialogues = new Dictionary<string, string>()
         {
-            _dialogues = new Dictionary<string, string>()
             {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        Id = 1
-                    }.ToString(),
-                    "I'm feeling great! Thanks for asking!"
-                },
+                    IsNSFW = false,
+                    Id = 1
+                }.ToString(),
+                "I'm feeling great! Thanks for asking!"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        Id = 2
-                    }.ToString(),
-                    "Hello there"
-                },
+                    IsNSFW = false,
+                    Id = 2
+                }.ToString(),
+                "Hello there"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        Id = 3
-                    }.ToString(),
-                    "Hello 👋"
-                },
+                    IsNSFW = false,
+                    Id = 3
+                }.ToString(),
+                "Hello 👋"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        Id = 4
-                    }.ToString(),
-                    "👋"
-                },
+                    IsNSFW = false,
+                    Id = 4
+                }.ToString(),
+                "👋"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        Id = 5
-                    }.ToString(),
-                    "I was wondering how many people will join my server..."
-                },
+                    IsNSFW = false,
+                    Id = 5
+                }.ToString(),
+                "I was wondering how many people will join my server..."
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = true,
-                        Id = 1
-                    }.ToString(),
-                    "I was wondering what will happen if your parents caught you watching this channel?"
-                },
+                    IsNSFW = true,
+                    Id = 1
+                }.ToString(),
+                "I was wondering what will happen if your parents caught you watching this channel?"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = true,
-                        Id = 2
-                    }.ToString(),
-                    "*Umm! Watching NSFW channels we are.* - Yoda"
-                },
+                    IsNSFW = true,
+                    Id = 2
+                }.ToString(),
+                "*Umm! Watching NSFW channels we are.* - Yoda"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StaffOnly = true,
-                        Id = 1
-                    }.ToString(),
-                    "Oh! Staff member! It's an honor! I hope you are happy with my work here."
-                },
+                    IsNSFW = false,
+                    StaffOnly = true,
+                    Id = 1
+                }.ToString(),
+                "Oh! Staff member! It's an honor! I hope you are happy with my work here."
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StaffOnly = true,
-                        Id = 2
-                    }.ToString(),
-                    "Have you tried my raffles?"
-                },
+                    IsNSFW = false,
+                    StaffOnly = true,
+                    Id = 2
+                }.ToString(),
+                "Have you tried my raffles?"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StartHour = 23,
-                        EndHour = 5,
-                        Id = 1
-                    }.ToString(),
-                    "It's night for me... I should be asleep... What am I doing with my life?..."
-                },
+                    IsNSFW = false,
+                    StartHour = 23,
+                    EndHour = 5,
+                    Id = 1
+                }.ToString(),
+                "It's night for me... I should be asleep... What am I doing with my life?..."
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StartHour = 6,
-                        EndHour = 11,
-                        Id = 1
-                    }.ToString(),
-                    "Good Morning guys!"
-                },
+                    IsNSFW = false,
+                    StartHour = 6,
+                    EndHour = 11,
+                    Id = 1
+                }.ToString(),
+                "Good Morning guys!"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StartHour = 12,
-                        EndHour = 16,
-                        Id = 1
-                    }.ToString(),
-                    "Time for lunch break!"
-                },
+                    IsNSFW = false,
+                    StartHour = 12,
+                    EndHour = 16,
+                    Id = 1
+                }.ToString(),
+                "Time for lunch break!"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StartHour = 12,
-                        EndHour = 17,
-                        Id = 1
-                    }.ToString(),
-                    "Good Afternoon!"
-                },
+                    IsNSFW = false,
+                    StartHour = 12,
+                    EndHour = 17,
+                    Id = 1
+                }.ToString(),
+                "Good Afternoon!"
+            },
+            {
+                new DialogueCriterion()
                 {
-                    new DialogueCriterion()
-                    {
-                        IsNSFW = false,
-                        StartHour = 18,
-                        EndHour = 22,
-                        Id = 2
-                    }.ToString(),
-                    "Good Evening!"
-                }
-            };
-            Save();
-        }
+                    IsNSFW = false,
+                    StartHour = 18,
+                    EndHour = 22,
+                    Id = 2
+                }.ToString(),
+                "Good Evening!"
+            }
+        };
+        Save();
     }
 
     private static void Save()

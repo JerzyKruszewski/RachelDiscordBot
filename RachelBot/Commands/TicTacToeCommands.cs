@@ -105,7 +105,7 @@ public class TicTacToeCommands : InteractiveBase<SocketCommandContext>
                 game.ChangeTableElement(cords.Value.Key, cords.Value.Value, firstPlayer.Character);
                 game.ChangePlayer();
 
-                return;
+                continue;
             }
 
             if (await CheckIfGameEnded(game, firstPlayer, secondPlayer, alerts, i, boardMessage))

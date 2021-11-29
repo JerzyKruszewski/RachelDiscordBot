@@ -21,12 +21,11 @@ public class Announcements
         if (_storage.FileExist(_filePath))
         {
             _announcements = _storage.RestoreObject<List<Announcement>>(_filePath);
+            return;
         }
-        else
-        {
-            _announcements = new List<Announcement>();
-            Save();
-        }
+
+        _announcements = new List<Announcement>();
+        Save();
     }
 
     private void Save()

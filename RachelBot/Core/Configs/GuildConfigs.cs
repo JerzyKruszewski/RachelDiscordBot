@@ -22,19 +22,19 @@ public class GuildConfigs
         if (_storage.FileExist(_filePath))
         {
             _config = _storage.RestoreObject<GuildConfig>(_filePath);
-        }
-        else
-        {
-            _config = new GuildConfig()
-            {
-                GuildId = id,
-                GuildPrefix = ConfigurationManager.AppSettings["Prefix"],
-                WelcomeMessage = ConfigurationManager.AppSettings["UserJoinedMessage"],
-                LeftMessage = ConfigurationManager.AppSettings["UserLeftMessage"]
-            };
 
-            Save();
+            return;
         }
+
+        _config = new GuildConfig()
+        {
+            GuildId = id,
+            GuildPrefix = ConfigurationManager.AppSettings["Prefix"],
+            WelcomeMessage = ConfigurationManager.AppSettings["UserJoinedMessage"],
+            LeftMessage = ConfigurationManager.AppSettings["UserLeftMessage"]
+        };
+
+        Save();
     }
 
     private void Save()

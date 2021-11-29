@@ -83,7 +83,7 @@ public class OwnerCommands : InteractiveBase<SocketCommandContext>
     [Command("DebugGuildConfig")]
     public async Task DebugConfig()
     {
-        IDMChannel channel = await Context.User.GetOrCreateDMChannelAsync();
+        IDMChannel channel = await Context.User.CreateDMChannelAsync();
         await channel.SendFileAsync($"./Guilds/{Context.Guild.Id}/Config.json");
     }
 
@@ -96,7 +96,7 @@ public class OwnerCommands : InteractiveBase<SocketCommandContext>
         {
             try
             {
-                channel = await guild.Owner.GetOrCreateDMChannelAsync();
+                channel = await guild.Owner.CreateDMChannelAsync();
                 await channel.SendMessageAsync($"{message}\n\n{Utility.OwnerSignature}");
                 await Task.Delay(1000);
             }
@@ -107,5 +107,16 @@ public class OwnerCommands : InteractiveBase<SocketCommandContext>
         }
 
         await Context.Channel.SendMessageAsync("Done");
+    }
+
+    [Command("TestBtn")]
+    public async Task TestButtons()
+    {
+        ComponentBuilder builder = new ComponentBuilder();
+
+        builder.WithButton(label: "Lorem", customId: "LoremId", style: ButtonStyle.Success)
+               .WithButton(label: "Ipsum", customId: "IpsumId", style: ButtonStyle.Danger);
+
+        await ReplyAsync("Btn test:", component: builder.Build());
     }
 }

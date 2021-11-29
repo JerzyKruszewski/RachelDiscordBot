@@ -35,7 +35,7 @@ public class Player
             return null;
         }
 
-        int cords = Int32.Parse(input);
+        int cords = int.Parse(input);
         int row = (cords - 1) / 3;
         int column = (cords - 1) % 3;
 

@@ -15,11 +15,11 @@ public class CYOACommands : InteractiveBase<SocketCommandContext>
     public async Task GetAvailableStories()
     {
         IList<Adventure> adventures = Adventures.GetAdventures();
-        string message = "";
+        StringBuilder message = new StringBuilder();
 
         foreach (Adventure adventure in adventures)
         {
-            message += $"- {adventure.Code} (Language: {adventure.Language} Minimal age: {adventure.MinimalAge})\n";
+            message.Append($"- {adventure.Code} (Language: {adventure.Language} Minimal age: {adventure.MinimalAge})\n");
 
             if (message.Length >= 1950)
             {
@@ -30,7 +30,7 @@ public class CYOACommands : InteractiveBase<SocketCommandContext>
         Embed embed = new EmbedBuilder()
         {
             Title = $"Available Stories ({adventures.Count} stories)",
-            Description = message,
+            Description = message.ToString(),
             Color = new Color(1, 69, 44)
         }.Build();
 
@@ -79,24 +79,24 @@ public class CYOACommands : InteractiveBase<SocketCommandContext>
         PlayedStory story = PlayedStories.GetPlayedStory(Context.User.Id);
         Adventure adventure = Adventures.GetAdventure(story.AdventureCode);
         Page page = Pages.GetPage(adventure, story.PageId);
-        string message = $"{Utils.PerParsePageContent(page.Content, adventure, story)}\n\n";
+        StringBuilder message = new StringBuilder($"{Utils.PerParsePageContent(page.Content, adventure, story)}\n\n");
 
         if (page.AreChoicesRandom)
         {
-            message += $"*1 - {page.RandomChoiceContent}*";
+            message.Append($"*1 - {page.RandomChoiceContent}*");
         }
         else
         {
             foreach (Choice choice in page.Choices)
             {
-                message += $"*{choice.Id} - {choice.Content}*\n";
+                message.Append($"*{choice.Id} - {choice.Content}*\n");
             }
         }
 
         Embed embed = new EmbedBuilder()
         {
             Title = $"{adventure.Name}",
-            Description = message,
+            Description = message.ToString(),
             ImageUrl = page.ImageName,
             Color = new Color(1, 69, 44)
         }.Build();
@@ -112,14 +112,9 @@ public class CYOACommands : InteractiveBase<SocketCommandContext>
         Adventure adventure = Adventures.GetAdventure(story.AdventureCode);
         Page page = Pages.GetPage(adventure, story.PageId);
 
-        if (page.AreChoicesRandom)
-        {
-            story.PageId = Choices.GetRandomChoice(page).PointsToPageWithId;
-        }
-        else
-        {
-            story.PageId = page.Choices.SingleOrDefault(c => c.Id == id)?.PointsToPageWithId ?? story.PageId;
-        }
+        story.PageId = (page.AreChoicesRandom) ?
+                       Choices.GetRandomChoice(page).PointsToPageWithId :
+                       (page.Choices.SingleOrDefault(c => c.Id == id)?.PointsToPageWithId ?? story.PageId);
 
         PlayedStories.Save();
 

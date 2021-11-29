@@ -44,6 +44,56 @@ public class EventHandler
         _client.MessageReceived += HandleCommandAsync;
         _client.UserJoined += HandleUserJoinAsync;
         _client.UserLeft += HandleUserLeftAsync;
+        _client.ButtonExecuted += HandleButtonClicked;
+        _client.SelectMenuExecuted += HandleSelectMenuSelected;
+    }
+
+    private async Task HandleSelectMenuSelected(SocketMessageComponent arg)
+    {
+        try
+        {
+            SocketGuild guild = Utility.GetGuildFromSocketMessageComponent(_client, arg);
+
+            switch (arg.Data.CustomId)
+            {
+                default:
+                    //FollowUpAsync throwing an exception: Unknown webhook
+                    await arg.Channel.SendMessageAsync("Ok");
+                    break;
+            }
+
+            await arg.DeferAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}\n{ex.StackTrace}");
+            Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
+        }
+    }
+
+    private async Task HandleButtonClicked(SocketMessageComponent arg)
+    {
+        try
+        {
+            SocketGuild guild = Utility.GetGuildFromSocketMessageComponent(_client, arg);
+
+            switch (arg.Data.CustomId)
+            {
+                case "IpsumId":
+                    await arg.Channel.SendMessageAsync("NotOk");
+                    break;
+                default:
+                    await arg.Channel.SendMessageAsync(guild.Name);
+                    break;
+            }
+
+            await arg.DeferAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERROR: {ex.Message}\n{ex.StackTrace}");
+            Program.LogToFile($"ERROR: {ex.Message}\n{ex.StackTrace}");
+        }
     }
 
     private async Task HandleUserLeftAsync(SocketGuildUser arg)

@@ -22,12 +22,12 @@ public class UserAccounts
         if (_storage.FileExist(_filePath))
         {
             _accounts = _storage.RestoreObject<List<UserAccount>>(_filePath);
+
+            return;
         }
-        else
-        {
-            _accounts = new List<UserAccount>();
-            Save();
-        }
+
+        _accounts = new List<UserAccount>();
+        Save();
     }
 
     private void Save()
@@ -92,8 +92,16 @@ public class UserAccounts
 
     public Warning AddWarning(UserAccount account, string reason, GuildConfig config)
     {
-        Warning warn;
+        Warning warn = CreateNewWarning(account, ref reason, config);
 
+        account.Warnings.Add(warn);
+        Save();
+
+        return warn;
+    }
+
+    private static Warning CreateNewWarning(UserAccount account, ref string reason, GuildConfig config)
+    {
         if (config.PointBasedWarns)
         {
             string[] words = reason.Split(' ');
@@ -105,17 +113,10 @@ public class UserAccounts
                 reason += $" {words[i]}";
             }
 
-            warn = Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), value, reason, config.WarnDuration);
-        }
-        else
-        {
-            warn = Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), reason, config.WarnDuration);
+            return Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), value, reason, config.WarnDuration);
         }
 
-        account.Warnings.Add(warn);
-        Save();
-
-        return warn;
+        return Warnings.CreateWarning(Warnings.GetNextId(account.Warnings), reason, config.WarnDuration);
     }
 
     public void RemoveWarning(UserAccount account, int warnId)
