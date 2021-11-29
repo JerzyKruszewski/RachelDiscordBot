@@ -34,6 +34,7 @@
 - [License][License]
 - [Changelog][Changelog]
 - [What I have learned working on this project][WhatIHaveLearned]
+- [Information for contributors][InfoForContributors]
 
 ***
 ## Feature list
@@ -444,6 +445,14 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 [Back to top][BackToTop]
 
+***
+## Information for contributors
+Rachel uses external libraries (found in Assemblies folder):
+- Discord.Addons.Labs.Interactive which is just port of [foxbot's][FoxBotGitHub] [Discord.Addons.Interactive][DiscAddIntActRepo]
+to Discord.Net.Labs.
+
+[Back to top][BackToTop]
+
 [BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#table-of-contents
 [FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
 [BansAndKicks]: https://github.com/JerzyKruszewski/RachelDiscordBot#banning-and-kicking-users
@@ -471,6 +480,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [License]: https://github.com/JerzyKruszewski/RachelDiscordBot#license
 [Changelog]: https://github.com/JerzyKruszewski/RachelDiscordBot#changelog
 [WhatIHaveLearned]: https://github.com/JerzyKruszewski/RachelDiscordBot#what-i-have-learned-working-on-this-project
+[InfoForContributors]: https://github.com/JerzyKruszewski/RachelDiscordBot#information-for-contributors
 
 [CodeFactorBadge]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot/badge
 [CodeFactorRepository]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot
@@ -489,3 +499,5 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [CYOATool]: https://bitbucket.org/JurijK/chooseyourownadventure/downloads/
 [ArtistInstagram]: https://www.instagram.com/aster_atheris/
 [PatreonPage]: https://www.patreon.com/bajarzdevelopment?fan_landing=true
+[FoxBotGitHub]: https://github.com/foxbot
+[DiscAddIntActRepo]: https://github.com/foxbot/Discord.Addons.Interactive
