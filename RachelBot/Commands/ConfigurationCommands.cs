@@ -7,6 +7,7 @@ using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Lang;
 using RachelBot.Preconditions;
+using RachelBot.Core.StaffRoles;
 
 namespace RachelBot.Commands;
 
@@ -48,38 +49,29 @@ public class ConfigurationCommands : InteractiveBase<SocketCommandContext>
         await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
     }
 
-    [Command("AddStaffRoles")]
+    [Command("AddOrChangeStaffRole")]
+    [Alias("AddStaffRole", "ChangeStaffRole")]
     [RequireUserPermission(GuildPermission.Administrator)]
-    public async Task AddStaffRoles(params SocketRole[] staffRoles)
+    public async Task AddStaffRoles(SocketRole staffRole, int permType)
     {
-        List<ulong> list = new List<ulong>();
-            
-        foreach (SocketRole role in staffRoles)
-        {
-            list.Add(role.Id);
-        }
-
         GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
 
-        configs.AddStaffRoles(list);
+        configs.AddOrChangeStaffRole(new StaffRole()
+        {
+            Id = staffRole.Id,
+            PermissionType = (StaffPermissionType)permType,
+        });
 
         await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
     }
 
-    [Command("ChangeStaffRoles")]
+    [Command("ClearStaffRoles")]
     [RequireUserPermission(GuildPermission.Administrator)]
-    public async Task ChangeStaffRoles(params SocketRole[] staffRoles)
+    public async Task ClearStaffRoles()
     {
-        List<ulong> list = new List<ulong>();
-
-        foreach (SocketRole role in staffRoles)
-        {
-            list.Add(role.Id);
-        }
-
         GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
 
-        configs.ChangeStaffRoles(list);
+        configs.ClearStaffRoles();
 
         await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
     }

@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using RachelBot.Core.StaffRoles;
 using RachelBot.Services.Storage;
 
 namespace RachelBot.Core.Configs;
@@ -65,31 +66,28 @@ public class GuildConfigs
         return _config;
     }
 
-    public GuildConfig AddStaffRoles(IEnumerable<ulong> staffRoles)
+    public GuildConfig AddOrChangeStaffRole(StaffRole role)
     {
-        foreach (ulong role in staffRoles)
-        {
-            if (_config.StaffRoleIds.Contains(role))
-            {
-                continue;
-            }
+        StaffRole staffRole = _config.StaffRoles.SingleOrDefault(r => r.Id == role.Id);
 
-            _config.StaffRoleIds.Add(role);
+        if (staffRole is not null)
+        {
+            staffRole.PermissionType = role.PermissionType;
+            Save();
+
+            return _config;
         }
+
+        _config.StaffRoles.Add(role);
 
         Save();
 
         return _config;
     }
 
-    public GuildConfig ChangeStaffRoles(IEnumerable<ulong> staffRoles)
+    public GuildConfig ClearStaffRoles()
     {
-        _config.StaffRoleIds.Clear();
-
-        foreach (ulong role in staffRoles)
-        {
-            _config.StaffRoleIds.Add(role);
-        }
+        _config.StaffRoles.Clear();
 
         Save();
 

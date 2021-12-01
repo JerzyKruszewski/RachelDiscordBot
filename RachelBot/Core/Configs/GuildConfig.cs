@@ -1,4 +1,6 @@
-﻿namespace RachelBot.Core.Configs;
+﻿using RachelBot.Core.StaffRoles;
+
+namespace RachelBot.Core.Configs;
 
 public class GuildConfig
 {
@@ -11,7 +13,7 @@ public class GuildConfig
     #endregion
 
     #region Moderation
-    public IList<ulong> StaffRoleIds { init; get; } = new List<ulong>();
+    public IList<StaffRole> StaffRoles { init; get; } = new List<StaffRole>();
 
     public ulong ModeratorChannelId { get; set; } = 0;
     #endregion

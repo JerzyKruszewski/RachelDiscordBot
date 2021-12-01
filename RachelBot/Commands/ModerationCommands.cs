@@ -11,6 +11,7 @@ using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
 using RachelBot.Core.ModerationAnnouncements;
+using RachelBot.Core.StaffRoles;
 
 namespace RachelBot.Commands;
 
@@ -25,7 +26,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
     }
 
     [Command("Ban")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     [RequireBotPermission(GuildPermission.BanMembers)]
     public async Task BanUser(SocketGuildUser user, [Remainder]string reason)
     {
@@ -41,7 +42,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Kick")]
     [Alias("Wyrzuć", "Wyrzuc")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
     [RequireBotPermission(GuildPermission.KickMembers)]
     public async Task KickUser(SocketGuildUser user, [Remainder]string reason)
     {
@@ -57,7 +58,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Praise")]
     [Alias("Pochwal")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Helper)]
     public async Task PraiseUser(SocketGuildUser user, [Remainder]string reason)
     {
         SocketGuild guild = Context.Guild;
@@ -80,7 +81,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Remove Praise")]
     [Alias("Usuń pochwałę", "Usun pochwale")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Helper)]
     public async Task RemovePraise(SocketGuildUser user, int id)
     {
         SocketGuild guild = Context.Guild;
@@ -97,7 +98,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Reprimand", RunMode = RunMode.Async)]
     [Alias("Upomnienie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Helper)]
     public async Task RebukeUser(SocketGuildUser user, [Remainder] string reason)
     {
         SocketGuild guild = Context.Guild;
@@ -123,7 +124,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Warn", RunMode = RunMode.Async)]
     [Alias("Ostrzeżenie", "Ostrzezenie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
     public async Task WarnUser(SocketGuildUser user, [Remainder] string reason)
     {
         try
@@ -214,7 +215,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Remove Warn", RunMode = RunMode.Async)]
     [Alias("Usuń Ostrzeżenie", "Usun Ostrzezenie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
     public async Task WarnUser(SocketGuildUser user, int warnId)
     {
         SocketGuild guild = Context.Guild;
@@ -241,7 +242,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Achievement")]
     [Alias("Osiągnięcie", "Osiagniecie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Helper)]
     public async Task Achievement(SocketGuildUser user, int value, [Remainder]string achievement)
     {
         SocketGuild guild = Context.Guild;
@@ -264,7 +265,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Remove Achievement")]
     [Alias("Usuń Osiągnięcie", "Usun Osiagniecie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Helper)]
     public async Task RemoveAchievement(SocketGuildUser user, int id)
     {
         SocketGuild guild = Context.Guild;
@@ -281,7 +282,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Unlock Channel")]
     [Alias("Odblokuj Kanał", "Odblokuj Kanal")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     [RequireBotPermission(GuildPermission.ManageChannels)]
     public async Task UnlockChannels(IRole role, params IGuildChannel[] channels)
     {
@@ -303,7 +304,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Lock Channel")]
     [Alias("Zablokuj Kanał", "Zablokuj Kanal")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     [RequireBotPermission(GuildPermission.ManageChannels)]
     public async Task LockChannels(IRole role, params IGuildChannel[] channels)
     {
@@ -330,7 +331,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Add Level Role")]
     [Alias("Dodaj Rolę Za Level", "Dodaj Role Za Level")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorAdmin)]
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public async Task AddLevelRole(IRole role, uint level)
     {
@@ -346,7 +347,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Remove Level Role")]
     [Alias("Usuń Rolę Za Level", "Usun Role Za Level")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorAdmin)]
     public async Task RemoveLevelRole(IRole role)
     {
         SocketGuild guild = Context.Guild;
@@ -361,7 +362,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Create Announcement", RunMode = RunMode.Async)]
     [Alias("Nowe Ogłoszenie", "Nowe Ogloszenie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task CreateAnnouncement(ITextChannel channel, [Remainder]string content)
     {
         SocketGuild guild = Context.Guild;
@@ -393,7 +394,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Update Announcement")]
     [Alias("Zaktualizuj Ogłoszenie", "Zaktualizuj Ogloszenie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task UpdateAnnouncement(ulong messageId, [Remainder] string content)
     {
         SocketGuild guild = Context.Guild;
@@ -457,7 +458,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
     }
 
     [Command("Slowmode", RunMode = RunMode.Async)]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorAdmin)]
     [RequireBotPermission(GuildPermission.ManageChannels)]
     public async Task Slowmode(int interval, params SocketTextChannel[] channels)
     {
@@ -480,7 +481,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Give Role")]
     [Alias("Daj Rolę", "Daj Role")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public async Task GiveRole(SocketRole role, SocketGuildUser user = null)
     {
@@ -500,7 +501,7 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Remove Role")]
     [Alias("Usuń Rolę", "Usun Role")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public async Task RemoveRole(SocketRole role, SocketGuildUser user = null)
     {

@@ -1,6 +1,7 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
 using RachelBot.Core.Configs;
+using RachelBot.Core.StaffRoles;
 using RachelBot.Services.Storage;
 using RachelBot.Utils;
 
@@ -219,9 +220,9 @@ public class Dialogue
 
         GuildConfig config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
 
-        foreach (ulong roleId in config.StaffRoleIds)
+        foreach (StaffRole role in config.StaffRoles)
         {
-            if (user.Roles.SingleOrDefault(r => r.Id == roleId) is not null)
+            if (user.Roles.SingleOrDefault(r => r.Id == role.Id) is not null)
             {
                 return true;
             }

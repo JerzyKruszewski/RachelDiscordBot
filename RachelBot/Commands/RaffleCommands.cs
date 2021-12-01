@@ -8,6 +8,7 @@ using RachelBot.Preconditions;
 using RachelBot.Utils;
 using RachelBot.Lang;
 using RachelBot.Core.RaffleSystem;
+using RachelBot.Core.StaffRoles;
 
 namespace RachelBot.Commands;
 
@@ -23,7 +24,7 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Create Raffle")]
     [Alias("Stwórz Loterię", "Stworz Loterie")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task CreateRaffle(bool canUsersJoin, [Remainder]string reward)
     {
         SocketGuild guild = Context.Guild;
@@ -38,7 +39,7 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Add Tickets To User")]
     [Alias("Dodaj Bilety Do Użytkownika", "Dodaj Bilety Do Uzytkownika")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task AddTickets(int id, SocketUser user, int amount)
     {
         SocketGuild guild = Context.Guild;
@@ -54,7 +55,7 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Add Tickets To Role", RunMode = RunMode.Async)]
     [Alias("Dodaj Bilety Do Roli")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task AddTickets(int id, SocketRole role, int amount)
     {
         SocketGuild guild = Context.Guild;
@@ -78,7 +79,7 @@ public class RaffleCommands : InteractiveBase<SocketCommandContext>
 
     [Command("Roll Raffle")]
     [Alias("Losuj")]
-    [RequireStaff]
+    [RequireStaff(StaffPermissionType.Moderator)]
     public async Task RollRaffle(int id)
     {
         SocketGuild guild = Context.Guild;
