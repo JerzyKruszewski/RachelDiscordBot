@@ -1,6 +1,7 @@
 ﻿{
   "SUCCESS": "Success!",
   "FAILURE": "Failed!",
+  "INSUFFICIENT_PERMISSIONS": "You are not server staff or you have insufficient permissions.",
   "USER_BANNED": "User {0} ({1}) was banned from this server with reason {2}.",
   "USER_KICKED": "User {0} ({1}) was kicked from this server with reason {2}.",
   "USER_PRAISED": "User {0} was praised by {1} with reason {2}.",

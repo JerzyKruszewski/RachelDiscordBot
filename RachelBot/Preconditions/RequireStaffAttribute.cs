@@ -4,6 +4,7 @@ using Discord.Commands;
 using RachelBot.Core.Configs;
 using RachelBot.Services.Storage;
 using RachelBot.Core.StaffRoles;
+using RachelBot.Lang;
 
 namespace RachelBot.Preconditions;
 
@@ -36,7 +37,9 @@ public class RequireStaffAttribute : PreconditionAttribute
             }
         }
 
-        return Task.FromResult(PreconditionResult.FromError($"You are not server staff"));
+        AlertsHandler alerts = new AlertsHandler(config);
+
+        return Task.FromResult(PreconditionResult.FromError(alerts.GetAlert("INSUFFICIENT_PERMISSIONS")));
     }
 
     private bool CheckPermissions(StaffPermissionType permissionType)

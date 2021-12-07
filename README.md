@@ -7,6 +7,16 @@
 ***
 ![Rachel by aster_atheris][RachelNormal]
 
+<h2><span style="color:red">
+Warning! 
+
+Version 2.0.0 introduced breaking changes!
+
+All existing information about server staff roles was reset. The rest of the config was left untouched.
+
+For more information see [pre configuration of warning system][WarningSystems] or [configuration commands][ConfigurationCommands].
+</span></h2>
+
 ## Table of Contents
 - [Feature list][FeatureList]
 	- [Banning and kicking users][BansAndKicks]
@@ -253,7 +263,7 @@ There are no hard requirements but some commands won't work properly without add
 3. Make sure Rachel role is as high as possible in role hierarchy.
 4. Call 2 commands:
 	- $ChangeToSChannel **Required**
-	- $AddStaffRoles **Required**
+	- $AddOrChangeStaffRole **Required**
 5. Enjoy!
 
 [Back to top][BackToTop]
