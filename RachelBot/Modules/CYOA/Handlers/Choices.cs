@@ -1,91 +1,85 @@
 ﻿using RachelBot.Modules.CYOA.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RachelBot.Modules.CYOA.Handlers
+namespace RachelBot.Modules.CYOA.Handlers;
+
+public class Choices
 {
-    public class Choices
+    public static Choice GetChoice(Page page, int id)
     {
-        public static Choice GetChoice(Page page, int id)
+        return page.Choices.SingleOrDefault(c => c.Id == id);
+    }
+
+    public static Choice GetRandomChoice(Page page)
+    {
+        Random random = new Random();
+        IList<double> cumulativeDistribution = new List<double>()
         {
-            return page.Choices.SingleOrDefault(c => c.Id == id);
+            0.0
+        };
+
+        double sumOfWeights = page.Choices.Sum(c => c.Weight);
+        double randomNumber = random.NextDouble();
+
+        for (int i = 1; i < page.Choices.Count; i++)
+        {
+            cumulativeDistribution.Add(cumulativeDistribution[i - 1] + (page.Choices[i - 1].Weight / sumOfWeights));
         }
 
-        public static Choice GetRandomChoice(Page page)
+        for (int i = 0; i < cumulativeDistribution.Count - 1; i++)
         {
-            Random random = new Random();
-            List<double> cumulativeDistribution = new List<double>()
+            if (randomNumber > cumulativeDistribution[i] && randomNumber <= cumulativeDistribution[i + 1])
             {
-                0.0
-            };
-
-            double sumOfWeights = page.Choices.Sum(c => c.Weight);
-            double randomNumber = random.NextDouble();
-
-            for (int i = 1; i < page.Choices.Count; i++)
-            {
-                cumulativeDistribution.Add(cumulativeDistribution[i - 1] + page.Choices[i - 1].Weight / sumOfWeights);
+                return page.Choices[i];
             }
-
-            for (int i = 0; i < cumulativeDistribution.Count - 1; i++)
-            {
-                if (randomNumber > cumulativeDistribution[i] && randomNumber <= cumulativeDistribution[i + 1])
-                {
-                    return page.Choices[i];
-                }
-            }
-
-            return page.Choices[^1];
         }
 
-        public static Choice CreateChoice(Adventure adventure, Page page, string content, int pointsToPageWithId, int weight = 10)
+        return page.Choices[^1];
+    }
+
+    public static Choice CreateChoice(Adventure adventure, Page page, string content, int pointsToPageWithId, int weight = 10)
+    {
+        if (adventure.Pages.SingleOrDefault(p => p.Id == pointsToPageWithId) is null)
         {
-            if (adventure.Pages.SingleOrDefault(p => p.Id == pointsToPageWithId) is null)
-            {
-                throw new ArgumentNullException($"Couldn't find page with id {pointsToPageWithId}.");
-            }
-
-            Choice choice = new Choice()
-            {
-                Id = page.Choices.Count > 0 ? page.Choices.Max(c => c.Id) + 1 : 1,
-                Content = content,
-                Weight = weight,
-                PointsToPageWithId = pointsToPageWithId
-            };
-
-            page.Choices.Add(choice);
-            Adventures.Save(adventure);
-
-            return choice;
+            throw new ArgumentNullException($"Couldn't find page with id {pointsToPageWithId}.");
         }
+
+        Choice choice = new Choice()
+        {
+            Id = (page.Choices.Count > 0) ? page.Choices.Max(c => c.Id) + 1 : 1,
+            Content = content,
+            Weight = weight,
+            PointsToPageWithId = pointsToPageWithId
+        };
+
+        page.Choices.Add(choice);
+        Adventures.Save(adventure);
+
+        return choice;
+    }
 
 #nullable enable
-        public static Choice EditChoice(Adventure adventure, Page page, Choice choice, string newContent, int? newPointsToPageWithId = null, int weight = 10)
+    public static Choice EditChoice(Adventure adventure, Page page, Choice choice, string newContent, int? newPointsToPageWithId = null, int weight = 10)
+    {
+        choice.Content = newContent;
+
+        if (newPointsToPageWithId.HasValue)
         {
-            choice.Content = newContent;
+            Page newPointPage = adventure.Pages.SingleOrDefault(p => p.Id == newPointsToPageWithId.Value) ??
+                    throw new ArgumentNullException($"Couldn't find page with id {newPointsToPageWithId.Value}");
 
-            if (newPointsToPageWithId.HasValue)
+            if (newPointPage == page)
             {
-                Page newPointPage = adventure.Pages.SingleOrDefault(p => p.Id == newPointsToPageWithId.Value) ??
-                     throw new ArgumentNullException($"Couldn't find page with id {newPointsToPageWithId.Value}");
-
-                if (newPointPage == page)
-                {
-                    throw new ArgumentException($"Choice couldn't point to it's own page");
-                }
-
-                choice.PointsToPageWithId = newPointsToPageWithId.Value;
+                throw new ArgumentException($"Choice couldn't point to it's own page");
             }
 
-            choice.Weight = weight;
-
-            Adventures.Save(adventure);
-
-            return choice;
+            choice.PointsToPageWithId = newPointsToPageWithId.Value;
         }
-#nullable restore
+
+        choice.Weight = weight;
+
+        Adventures.Save(adventure);
+
+        return choice;
     }
+#nullable restore
 }

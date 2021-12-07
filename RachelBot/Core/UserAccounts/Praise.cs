@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace RachelBot.Core.UserAccounts;
 
-namespace RachelBot.Core.UserAccounts
+public class Praise
 {
-    public class Praise
-    {
-        public int Id { init; get; }
+    public int Id { init; get; }
 
-        public ulong GiverId { init; get; }
+    public ulong GiverId { init; get; }
 
-        public string Reason { get; set; }
+    public string Reason { get; set; }
 
-        public DateTime GivenAt { init; get; } = DateTime.Now;
-    }
+    public DateTime GivenAt { init; get; } = DateTime.Now;
 }

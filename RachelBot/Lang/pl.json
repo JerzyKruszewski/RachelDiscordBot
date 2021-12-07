@@ -1,6 +1,7 @@
 ﻿{
   "SUCCESS": "Sukces!",
   "FAILURE": "Porażka!",
+  "INSUFFICIENT_PERMISSIONS": "Nie jesteś członkiem ekipy serwerowej lub masz za małe uprawnienia.",
   "USER_BANNED": "Użytkownik {0} ({1}) został zbanowany z tego serwera z powodu {2}.",
   "USER_KICKED": "Użytkownik {0} ({1}) został wyrzucony z tego serwera z powodu {2}.",
   "USER_PRAISED": "Użytkownik {0} otrzymał pochwałę od {1} z powodu {2}.",

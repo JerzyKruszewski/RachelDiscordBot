@@ -1,9 +1,8 @@
-﻿namespace RachelBot.Core.LevelingSystem
-{
-    public class LevelRoleReward
-    {
-        public ulong RoleId { get; set; }
+﻿namespace RachelBot.Core.LevelingSystem;
 
-        public uint RequiredLevel { get; set; }
-    }
+public class LevelRoleReward
+{
+    public ulong RoleId { get; set; }
+
+    public uint RequiredLevel { get; set; }
 }

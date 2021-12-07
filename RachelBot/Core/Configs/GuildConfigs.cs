@@ -1,244 +1,240 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
+using RachelBot.Core.StaffRoles;
 using RachelBot.Services.Storage;
 
-namespace RachelBot.Core.Configs
+namespace RachelBot.Core.Configs;
+
+public class GuildConfigs
 {
-    public class GuildConfigs
+    private readonly IStorageService _storage;
+    private readonly string _folderPath;
+    private readonly string _filePath;
+    private readonly GuildConfig _config;
+
+    public GuildConfigs(ulong id, IStorageService storage)
     {
-        private readonly IStorageService _storage;
-        private readonly string _folderPath;
-        private readonly string _filePath;
-        private readonly GuildConfig _config;
+        _storage = storage;
+        _folderPath = $"./Guilds/{id}";
 
-        public GuildConfigs(ulong id, IStorageService storage)
+        _storage.EnsureDirectoryExist(_folderPath);
+
+        _filePath = $"{_folderPath}/Config.json";
+
+        if (_storage.FileExist(_filePath))
         {
-            _storage = storage;
-            _folderPath = $"./Guilds/{id}";
+            _config = _storage.RestoreObject<GuildConfig>(_filePath);
 
-            _storage.EnsureDirectoryExist(_folderPath);
-
-            _filePath = $"{_folderPath}/Config.json";
-
-            if (_storage.FileExist(_filePath))
-            {
-                _config = _storage.RestoreObject<GuildConfig>(_filePath);
-            }
-            else
-            {
-                _config = new GuildConfig()
-                {
-                    GuildId = id,
-                    GuildPrefix = ConfigurationManager.AppSettings["Prefix"],
-                    WelcomeMessage = ConfigurationManager.AppSettings["UserJoinedMessage"],
-                    LeftMessage = ConfigurationManager.AppSettings["UserLeftMessage"]
-                };
-
-                Save();
-            }
+            return;
         }
 
-        private void Save()
+        _config = new GuildConfig()
         {
-            _storage.StoreObject(_config, _filePath);
-        }
+            GuildId = id,
+            GuildPrefix = ConfigurationManager.AppSettings["Prefix"],
+            WelcomeMessage = ConfigurationManager.AppSettings["UserJoinedMessage"],
+            LeftMessage = ConfigurationManager.AppSettings["UserLeftMessage"]
+        };
 
-        public GuildConfig GetGuildConfig()
+        Save();
+    }
+
+    private void Save()
+    {
+        _storage.StoreObject(_config, _filePath);
+    }
+
+    public GuildConfig GetGuildConfig()
+    {
+        return _config;
+    }
+
+    public GuildConfig ChangeGuildPrefix(string prefix)
+    {
+        _config.GuildPrefix = prefix;
+
+        Save();
+
+        return _config;
+    }
+
+    public GuildConfig ChangeGuildLanguage(string languageIso)
+    {
+        _config.GuildLanguageIso = languageIso;
+
+        Save();
+
+        return _config;
+    }
+
+    public GuildConfig AddOrChangeStaffRole(StaffRole role)
+    {
+        StaffRole staffRole = _config.StaffRoles.SingleOrDefault(r => r.Id == role.Id);
+
+        if (staffRole is not null)
         {
-            return _config;
-        }
-
-        public GuildConfig ChangeGuildPrefix(string prefix)
-        {
-            _config.GuildPrefix = prefix;
-
+            staffRole.PermissionType = role.PermissionType;
             Save();
 
             return _config;
         }
 
-        public GuildConfig ChangeGuildLanguage(string languageIso)
-        {
-            _config.GuildLanguageIso = languageIso;
+        _config.StaffRoles.Add(role);
 
-            Save();
+        Save();
 
-            return _config;
-        }
+        return _config;
+    }
 
-        public GuildConfig AddStaffRoles(IEnumerable<ulong> staffRoles)
-        {
-            foreach (ulong role in staffRoles)
-            {
-                if (_config.StaffRoleIds.Contains(role))
-                {
-                    continue;
-                }
+    public GuildConfig ClearStaffRoles()
+    {
+        _config.StaffRoles.Clear();
 
-                _config.StaffRoleIds.Add(role);
-            }
+        Save();
 
-            Save();
+        return _config;
+    }
 
-            return _config;
-        }
+    public GuildConfig ChangeGuildModerationChannel(ulong id)
+    {
+        _config.ModeratorChannelId = id;
 
-        public GuildConfig ChangeStaffRoles(IEnumerable<ulong> staffRoles)
-        {
-            _config.StaffRoleIds.Clear();
+        Save();
 
-            foreach (ulong role in staffRoles)
-            {
-                _config.StaffRoleIds.Add(role);
-            }
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeUsersJoiningChannel(ulong id)
+    {
+        _config.InChannelId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeGuildModerationChannel(ulong id)
-        {
-            _config.ModeratorChannelId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWelcomeMessage(string welcomeMessage)
+    {
+        _config.WelcomeMessage = welcomeMessage;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeUsersJoiningChannel(ulong id)
-        {
-            _config.InChannelId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeUsersLeftChannel(ulong id)
+    {
+        _config.OutChannelId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWelcomeMessage(string welcomeMessage)
-        {
-            _config.WelcomeMessage = welcomeMessage;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeUserLeftMessage(string leftMessage)
+    {
+        _config.LeftMessage = leftMessage;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeUsersLeftChannel(ulong id)
-        {
-            _config.OutChannelId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangePunishmentRole(ulong id)
+    {
+        _config.PunishmentRoleId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeUserLeftMessage(string leftMessage)
-        {
-            _config.LeftMessage = leftMessage;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangePunishmentChannel(ulong id)
+    {
+        _config.PunishmentChannelId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangePunishmentRole(ulong id)
-        {
-            _config.PunishmentRoleId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig TogglePointSystemWarns(bool toggle)
+    {
+        _config.PointBasedWarns = toggle;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangePunishmentChannel(ulong id)
-        {
-            _config.PunishmentChannelId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWarnDuration(uint days)
+    {
+        _config.WarnDuration = days;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig TogglePointSystemWarns(bool toggle)
-        {
-            _config.PointBasedWarns = toggle;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWarnCountTillBan(uint warnCount)
+    {
+        _config.WarnCountTillBan = warnCount;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWarnDuration(uint days)
-        {
-            _config.WarnDuration = days;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWarnCountTillPunishment(uint warnCount)
+    {
+        _config.WarnCountTillPunishment = warnCount;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWarnCountTillBan(uint warnCount)
-        {
-            _config.WarnCountTillBan = warnCount;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWarnPointsTillBan(uint warnPoints)
+    {
+        _config.WarnPointsTillBan = warnPoints;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWarnCountTillPunishment(uint warnCount)
-        {
-            _config.WarnCountTillPunishment = warnCount;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeWarnPointsTillPunishment(uint warnPoints)
+    {
+        _config.WarnPointsTillPunishment = warnPoints;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWarnPointsTillBan(uint warnPoints)
-        {
-            _config.WarnPointsTillBan = warnPoints;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeAnnouncementChannel(ulong id)
+    {
+        _config.AnnouncementChannelId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeWarnPointsTillPunishment(uint warnPoints)
-        {
-            _config.WarnPointsTillPunishment = warnPoints;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ChangeToSChannel(ulong id)
+    {
+        _config.ToSChannelId = id;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeAnnouncementChannel(ulong id)
-        {
-            _config.AnnouncementChannelId = id;
+        return _config;
+    }
 
-            Save();
+    public GuildConfig ToggleReactionToBotMessages(bool toggle)
+    {
+        _config.ReactToBotMessages = toggle;
 
-            return _config;
-        }
+        Save();
 
-        public GuildConfig ChangeToSChannel(ulong id)
-        {
-            _config.ToSChannelId = id;
-
-            Save();
-
-            return _config;
-        }
-
-        public GuildConfig ToggleReactionToBotMessages(bool toggle)
-        {
-            _config.ReactToBotMessages = toggle;
-
-            Save();
-
-            return _config;
-        }
+        return _config;
     }
 }

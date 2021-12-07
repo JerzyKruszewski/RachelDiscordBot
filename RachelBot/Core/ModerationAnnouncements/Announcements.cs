@@ -1,77 +1,70 @@
 ﻿using RachelBot.Services.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RachelBot.Core.ModerationAnnouncements
+namespace RachelBot.Core.ModerationAnnouncements;
+
+public class Announcements
 {
-    public class Announcements
+    private readonly IStorageService _storage;
+    private readonly string _folderPath;
+    private readonly string _filePath;
+    private readonly IList<Announcement> _announcements;
+
+    public Announcements(ulong id, IStorageService storage)
     {
-        private readonly IStorageService _storage;
-        private readonly string _folderPath;
-        private readonly string _filePath;
-        private readonly IList<Announcement> _announcements;
+        _storage = storage;
+        _folderPath = $"./Guilds/{id}";
 
-        public Announcements(ulong id, IStorageService storage)
+        _storage.EnsureDirectoryExist(_folderPath);
+
+        _filePath = $"{_folderPath}/Announcements.json";
+
+        if (_storage.FileExist(_filePath))
         {
-            _storage = storage;
-            _folderPath = $"./Guilds/{id}";
-
-            _storage.EnsureDirectoryExist(_folderPath);
-
-            _filePath = $"{_folderPath}/Announcements.json";
-
-            if (_storage.FileExist(_filePath))
-            {
-                _announcements = _storage.RestoreObject<List<Announcement>>(_filePath);
-            }
-            else
-            {
-                _announcements = new List<Announcement>();
-                Save();
-            }
+            _announcements = _storage.RestoreObject<List<Announcement>>(_filePath);
+            return;
         }
 
-        private void Save()
+        _announcements = new List<Announcement>();
+        Save();
+    }
+
+    private void Save()
+    {
+        _storage.StoreObject(_announcements, _filePath);
+    }
+
+    public Announcement CreateAnnouncement(ulong messageId, ulong channelId, string content)
+    {
+        Announcement announcement = new Announcement()
         {
-            _storage.StoreObject(_announcements, _filePath);
+            MessageId = messageId,
+            ChannelId = channelId,
+            Content = content
+        };
+
+        _announcements.Add(announcement);
+        Save();
+
+        return announcement;
+    }
+
+    public Announcement UpdateAnnouncement(ulong messageId, string newContent)
+    {
+        Announcement announcement = GetAnnouncement(messageId);
+
+        if (announcement is null)
+        {
+            return null;
         }
 
-        public Announcement CreateAnnouncement(ulong messageId, ulong channelId, string content)
-        {
-            Announcement announcement = new Announcement()
-            {
-                MessageId = messageId,
-                ChannelId = channelId,
-                Content = content
-            };
+        announcement.Content = newContent;
+        Save();
 
-            _announcements.Add(announcement);
-            Save();
+        return announcement;
+    }
 
-            return announcement;
-        }
-
-        public Announcement UpdateAnnouncement(ulong messageId, string newContent)
-        {
-            Announcement announcement = GetAnnouncement(messageId);
-
-            if (announcement is null)
-            {
-                return null;
-            }
-
-            announcement.Content = newContent;
-            Save();
-
-            return announcement;
-        }
-
-        private Announcement GetAnnouncement(ulong messageId)
-        {
-            return _announcements.SingleOrDefault(a => a.MessageId == messageId);
-        }
+    private Announcement GetAnnouncement(ulong messageId)
+    {
+        return _announcements.SingleOrDefault(a => a.MessageId == messageId);
     }
 }

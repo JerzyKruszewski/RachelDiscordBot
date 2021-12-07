@@ -7,6 +7,16 @@
 ***
 ![Rachel by aster_atheris][RachelNormal]
 
+<h2><span style="color:red">
+Warning! 
+
+Version 2.0.0 introduced breaking changes!
+
+All existing information about server staff roles was reset. The rest of the config was left untouched.
+
+For more information see [pre configuration of warning system][WarningSystems] or [configuration commands][ConfigurationCommands].
+</span></h2>
+
 ## Table of Contents
 - [Feature list][FeatureList]
 	- [Banning and kicking users][BansAndKicks]
@@ -34,6 +44,7 @@
 - [License][License]
 - [Changelog][Changelog]
 - [What I have learned working on this project][WhatIHaveLearned]
+- [Information for contributors][InfoForContributors]
 
 ***
 ## Feature list
@@ -52,7 +63,14 @@ To fully utilize warning system you will need to have:
 - Configured ToS channel
 - Configured punishment role
 
-To configure staff roles server administrator will need to call `$ChangeStaffRoles {ping of roles}` or `$AddStaffRoles {ping of roles}` command.
+To configure staff roles server administrator will need to call `$AddOrChangeStaffRole {ping of role} {number of permission level}` command.
+
+Permission Levels:
+- Helper = 0
+- Jr. Mod = 1
+- Mod = 2
+- Jr. Admin = 3
+- Admin = 4
 
 To configure ToS channel server administrator will need to call `$ChangeToSChannel {ping of channel}` command.
 
@@ -70,7 +88,7 @@ To add auto giving punishment role feature after certain point threshold server 
 
 This feature is disabled by default.
 
-Every staff member will be able to warn users with `$Warn {user ping} {warn power (number)} {warn reason}` command. 
+Every staff member (with permissions level at least: Jr. Mod) will be able to warn users with `$Warn {user ping} {warn power (number)} {warn reason}` command. 
 
 **Quantity-based system:**
 
@@ -87,7 +105,7 @@ To add auto giving punishment role feature after certain quantity threshold serv
 
 This feature is disabled by default.
 
-Every staff member will be able to warn users with `$Warn {user ping} {warn reason}` command.
+Every staff member (with permissions level at least: Jr. Mod) will be able to warn users with `$Warn {user ping} {warn reason}` command.
 
 Every warn given in quantity based system has 20 points so it's easly convertable to point-based one.
 
@@ -97,25 +115,25 @@ To change warn duration (default 30 days) server administrator will need to call
 
 Every user can check each other warns using `$warns {optional user ping}`.
 
-Every staff member can remove warning before it expires using `$remove warn {user ping} {warn id}` command (to get `{warn id}` staff member will need to call `$warns {user ping}` command and check leftmost number of warning to remove).
+Every staff member (with permissions level at least: Jr. Mod) can remove warning before it expires using `$remove warn {user ping} {warn id}` command (to get `{warn id}` staff member will need to call `$warns {user ping}` command and check leftmost number of warning to remove).
 
-If staff members decides that warning would be too extreme punishment, he could use `$reprimand {user ping} {reprimand reason}`. It will send a DM message to user and will not have any more consequences.
+If staff member (with permissions level at least: Helper) decides that warning would be too extreme punishment, he could use `$reprimand {user ping} {reprimand reason}`. It will send a DM message to user and will not have any more consequences.
 
 In every warn and reprimand DM send to user will be direct link to server ToS channel. Make sure you have it configured, because if it's not configured correctly user will get a message that ends with: "Please read rules on #deleted-channel".
 
 ### Praise system
-Every staff member will be able to praise users with `$Praise {user ping} {praise reason}` command.
+Every staff member (with permissions level at least: Helper) will be able to praise users with `$Praise {user ping} {praise reason}` command.
 
 Every user can check each other praises using `$praises {optional user ping}`.
 
-Every staff member can remove praise using `$remove praise {user ping} {praise id}` command (to get `{praise id}` staff member will need to call `$praises {user ping}` command and check leftmost number of praise to remove).
+Every staff member (with permissions level at least: Helper) can remove praise using `$remove praise {user ping} {praise id}` command (to get `{praise id}` staff member will need to call `$praises {user ping}` command and check leftmost number of praise to remove).
 
 ### Point-based, XBOX-like  achievement system
-Every staff member will be able to give user achievement with `$Achievement {user ping} {achievement points} {achievement text}` command.
+Every staff member (with permissions level at least: Helper) will be able to give user achievement with `$Achievement {user ping} {achievement points} {achievement text}` command.
 
 Every user can check each other achievements using `$achievements {optional user ping}`.
 
-Every staff member can remove achievement using `$remove achievement {user ping} {achievement id}` command (to get `{achievement id}` staff member will need to call `$achievements {user ping}` command and check leftmost number of achievement to remove).
+Every staff member (with permissions level at least: Helper) can remove achievement using `$remove achievement {user ping} {achievement id}` command (to get `{achievement id}` staff member will need to call `$achievements {user ping}` command and check leftmost number of achievement to remove).
 
 ### Customizable guild (server) wise command prefix (default $)
 Server administrator can call `$ChangeGuildPrefix {new prefix}` command to change command prefix for this server.
@@ -142,12 +160,12 @@ Every time user sends message he will get 50xp.
 
 After user level up it is possible to give user role reward.
 
-Every staff member will be able to add and remove role rewards using `$Add Level Role {role ping} {required lvl}` and `$Remove Level Role {role ping}` commands.
+Every staff member (with permissions level at least: Jr. Admin) will be able to add and remove role rewards using `$Add Level Role {role ping} {required lvl}` and `$Remove Level Role {role ping}` commands.
 
 ### Moderation announcement system
-Moderation announcements are special messages that can be modified by any staff member.
+Moderation announcements are special messages that can be modified by any staff member (with permissions level at least: Mod).
 
-To add new moderation announcement every staff member can use `$Create Announcement {channel where put announcement} {title of announcement}|{content of announcement}` command.
+To add new moderation announcement every staff member (with permissions level at least: Mod) can use `$Create Announcement {channel where put announcement} {title of announcement}|{content of announcement}` command.
 It is very important that first | character is end of title, so no spoilers in title (in content they are possible).
 
 To update already existing announcement staff member will need to have discord message id of edited announcement.
@@ -158,13 +176,13 @@ Just like in announcement creation: First | character is end of title.
 Announcement author will be changed to staff member who edited announcement most recently.
 
 ### Raffle system
-In order to create new raffle every staff member can use `$Create Raffle {true - if you want users to enter raffle by themselfs, false - if you want full control over raffle} {raffle reward}`.
+In order to create new raffle every staff member (with permissions level at least: Mod) can use `$Create Raffle {true - if you want users to enter raffle by themselfs, false - if you want full control over raffle} {raffle reward}`.
 
-To add tickets to user every staff member can use `$Add Tickets To User {raffle id} {user ping} {tickets amount}` command that
-will add specified ticket amount to user. Every staff member can use `$Add Tickets To Role {raffle id} {role ping} {tickets amount}` 
+To add tickets to user every staff member (with permissions level at least: Mod) can use `$Add Tickets To User {raffle id} {user ping} {tickets amount}` command that
+will add specified ticket amount to user. Every staff member (with permissions level at least: Mod) can use `$Add Tickets To Role {raffle id} {role ping} {tickets amount}` 
 command that will add specified ticket amount to all users with role.
 
-To roll winner of raffle every staff member can use `$Roll Raffle {raffle id}`.
+To roll winner of raffle every staff member (with permissions level at least: Mod) can use `$Roll Raffle {raffle id}`.
 
 Every user can try to enter a raffle using `$Join Raffle {raffle id}` command.
 This command will add one ticket to raffle only if user didn't already enter it and staff member set raffle to open for all users.
@@ -245,7 +263,7 @@ There are no hard requirements but some commands won't work properly without add
 3. Make sure Rachel role is as high as possible in role hierarchy.
 4. Call 2 commands:
 	- $ChangeToSChannel **Required**
-	- $AddStaffRoles **Required**
+	- $AddOrChangeStaffRole **Required**
 5. Enjoy!
 
 [Back to top][BackToTop]
@@ -264,8 +282,8 @@ There are no hard requirements but some commands won't work properly without add
 | --- | --- | --- | --- |
 | ChangeGuildPrefix | string representing new command prefix | Change guild command prefix | $ChangeGuildPrefix 12 |
 | ChangeGuildLanguage | string representing [language ISO code][ISOCodes] | Change guild language | $ChangeGuildLanguage pl |
-| **AddStaffRoles** | at least one SocketRole object (discord role) | Adds roles to staff roles | $AddStaffRoles @Owner @Admin @Moderator |
-| ChangeStaffRoles | at least one SocketRole object (discord role) | Clears staff roles and adds specified roles to staff roles | $ChangeStaffRoles @Owner @Admin @Moderator |
+| **AddOrChangeStaffRole** | SocketRole object (discord role ping) and number | Adds role to staff roles with permissions: 0 - Helper, 1 - Jr. Mod, 2 - Mod, 3 - Jr. Admin, 4 - Admin  | $AddStaffRoles @Moderator 2 |
+| ClearStaffRoles | --- | Clears staff roles | $ClearStaffRoles |
 | ChangeModerationChannel | Text channel object | Change where to log moderation commands output | $ChangeModerationChannel #server-staff |
 | ChangeUsersJoiningChannel | Text channel object | Change where to welcome users | $ChangeUsersJoiningChannel #welcome-channel |
 | ChangeWelcomeMessage | string representing new welcome message | Change welcome message (more detailed information in different section) | $ChangeWelcomeMessage User {1} joined our server! |
@@ -287,30 +305,30 @@ There are no hard requirements but some commands won't work properly without add
 ### Moderator commands
 **All moderation commands require user to have one of staff roles and some Rachel to have additional privileges (Banning members, kicking members, managing roles and channels).**
 
-| Command | Aliases | Parameters | Outcome | Example |
-| --- | --- | --- | --- | --- |
-| Ban | --- | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason |
-| Kick | Wyrzuć, Wyrzuc | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason |
-| Praise | Pochwal | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason |
-| Remove Praise | Usuń pochwałę, Usun pochwale | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 |
-| Reprimand | Upomnienie | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason |
-| Warn | Ostrzeżenie, Ostrzezenie | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason |
-| Remove Warn | Usuń Ostrzeżenie, Usun Ostrzezenie | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 |
-| Achievement | Osiągnięcie, Osiagniecie | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement |
-| Remove Achievement | Usuń Osiągnięcie, Usun Osiagniecie | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 |
-| Unlock Channel | Odblokuj Kanał, Odblokuj Kanal | Role and at least one channel object | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel |
-| Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel object | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel |
-| Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 |
-| Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole |
-| Create Announcement | Nowe Ogłoszenie, Nowe Ogloszenie | Channel object and announcement title and content divided by \| character | Will send a message with title and content on specified channel. | $Create Announcement #example-channel Lorem Ipsum|dolor sit amet. |
-| Update Announcement | Zaktualizuj Ogłoszenie, Zaktualizuj Ogloszenie | Announcement message id and new announcement title and content divided by \| character | Will update announcement with new title and content. | $Update Announcement 803662621169418290 Lorem Ipsum|Lorem ipsum dolor sit amet. |
-| Create Raffle | Stwórz Loterię, Stworz Loterie | true or false if you want users to join raffle by themselfs, string representing reward | Will create raffle for specified reward | $Create Raffle true rally awesome reward |
-| Add Tickets To User | Dodaj Bilety Do Użytkownika, Dodaj Bilety Do Uzytkownika | Raffle id, user object and ticket amount | Will add specified amount of tickets to user for specified raffle | $Add Tickets To User 1 @Jurij98 100 |
-| Add Tickets To Role | Dodaj Bilety Do Roli | Raffle id, role object and ticket amount | Will add specified amount of tickets to all users with role for specified raffle | $Add Tickets To Role 1 @ExampleRole 100 |
-| Roll Raffle | Losuj | Raffle id | Will roll raffle winner | $Roll Raffle 1 |
-| Slowmode | --- | Integer representing slowmode interval in seconds and list at least one channel object | Will add slowmode with specified interval to channels | %slowmode 1 #🥂general-discussion🥂 #😂memes😂 #🛰bot-channel🛰 |
-| Give Role | Daj Rolę, Daj Role | Role object and optional user ping | Will add role to user | $give role @exampleRole @Jurij98 |
-| Remove Role | Usuń Rolę, Usun Role | Role object and optional user ping | Will remove role from user | $remove role @exampleRole @Jurij98 |
+| Command | Aliases | Parameters | Outcome | Example | Minimum Permission Level |
+| --- | --- | --- | --- | --- | --- |
+| Ban | --- | User object and string representing ban reason | Will ban user | $ban @Jurij98 ban reason | Mod = 2 |
+| Kick | Wyrzuć, Wyrzuc | User object and string representing kick reason | Will kick user | $kick @Jurij98 kick reason | Jr. Mod = 1 |
+| Praise | Pochwal | User object and string representing praise reason | Will add praise to user account | $praise @Jurij98 praise reason | Helper = 0 |
+| Remove Praise | Usuń pochwałę, Usun pochwale | User object and integer representing praise id | Will remove praise from user account | $remove praise @Jurij98 1 | Helper = 0 |
+| Reprimand | Upomnienie | User object and string representing reprimand reason | Will reprimand user | $Reprimand @Jurij98 reason | Helper = 0 |
+| Warn | Ostrzeżenie, Ostrzezenie | User object and string representing warn reason | Will add warn to user account. If you use point-based warning system reason should start with non-negative integer | $warn @Jurij98 10 warn reason | Jr. Mod = 1 |
+| Remove Warn | Usuń Ostrzeżenie, Usun Ostrzezenie | User object and integer representing warn id | Remove warn with specified id from user | $remove warn @Jurij98 23 | Jr. Mod = 1 |
+| Achievement | Osiągnięcie, Osiagniecie | User object, integer representing value of achievement and string representing achievement | Will add achievement to user account | $achievement @Jurij98 20 achievement | Helper = 0 |
+| Remove Achievement | Usuń Osiągnięcie, Usun Osiagniecie | User object and integer representing achievement id | Will remove achievement from user account | $remove achievement @Jurij98 1 | Helper = 0 |
+| Unlock Channel | Odblokuj Kanał, Odblokuj Kanal | Role and at least one channel object | Will unlock channel for role with default permissions | $unlock channel @Role #channel #other-channel | Mod = 2 |
+| Lock Channel | Zablokuj Kanał, Zablokuj Kanal | Role and at least one channel object | Will lock channel for role with default permissions | $lock channel @Role #channel #other-channel | Mod = 2 |
+| Add Level Role | Dodaj Rolę Za Level, Dodaj Role Za Level | Role and non-negative integer representing level requirement | Will add role as leveling reward | $add level role @100lvlRole 100 | Jr. Admin = 3 |
+| Remove Level Role | Usuń Rolę Za Level, Usun Role Za Level | Role object |  Will remove role from leveling rewards | $remove level role @100lvlRole | Jr. Admin = 3 |
+| Create Announcement | Nowe Ogłoszenie, Nowe Ogloszenie | Channel object and announcement title and content divided by \| character | Will send a message with title and content on specified channel. | $Create Announcement #example-channel Lorem Ipsum\|dolor sit amet. | Mod = 2 |
+| Update Announcement | Zaktualizuj Ogłoszenie, Zaktualizuj Ogloszenie | Announcement message id and new announcement title and content divided by \| character | Will update announcement with new title and content. | $Update Announcement 803662621169418290 Lorem Ipsum\|Lorem ipsum dolor sit amet. | Mod = 2 |
+| Create Raffle | Stwórz Loterię, Stworz Loterie | true or false if you want users to join raffle by themselfs, string representing reward | Will create raffle for specified reward | $Create Raffle true rally awesome reward | Mod = 2 |
+| Add Tickets To User | Dodaj Bilety Do Użytkownika, Dodaj Bilety Do Uzytkownika | Raffle id, user object and ticket amount | Will add specified amount of tickets to user for specified raffle | $Add Tickets To User 1 @Jurij98 100 | Mod = 2 |
+| Add Tickets To Role | Dodaj Bilety Do Roli | Raffle id, role object and ticket amount | Will add specified amount of tickets to all users with role for specified raffle | $Add Tickets To Role 1 @ExampleRole 100 | Mod = 2 |
+| Roll Raffle | Losuj | Raffle id | Will roll raffle winner | $Roll Raffle 1 | Mod = 2 |
+| Slowmode | --- | Integer representing slowmode interval in seconds and list at least one channel object | Will add slowmode with specified interval to channels | %slowmode 1 #🥂general-discussion🥂 #😂memes😂 #🛰bot-channel🛰 | Jr. Admin = 3 |
+| Give Role | Daj Rolę, Daj Role | Role object and optional user ping | Will add role to user | $give role @exampleRole @Jurij98 | Jr. Mod = 1 |
+| Remove Role | Usuń Rolę, Usun Role | Role object and optional user ping | Will remove role from user | $remove role @exampleRole @Jurij98 | Jr. Mod = 1 |
 
 [Back to top][BackToTop]
 
@@ -379,6 +397,10 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 2.0.0
+	- **Changed staff role system (BROKEN CONFIGS)**
+	- Upgrade .NET 5 to .NET 6
+	- Changed libraries form [Discord.Net][DiscNetRepo] to [Discord.Net.Labs][DiscNetLabRepo]
 - Version 1.10.0
 	- Added CYOA Player with 2 stories
 - Version 1.9.0
@@ -444,6 +466,16 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 [Back to top][BackToTop]
 
+***
+## Information for contributors
+Rachel uses external libraries (found in Assemblies folder):
+- Discord.Addons.Interactive which is just port of [foxbot's][FoxBotGitHub] [Discord.Addons.Interactive][DiscAddIntActRepo]
+to Discord.Net.Labs.
+
+[Back to top][BackToTop]
+***
+
+
 [BackToTop]: https://github.com/JerzyKruszewski/RachelDiscordBot#table-of-contents
 [FeatureList]: https://github.com/JerzyKruszewski/RachelDiscordBot#feature-list
 [BansAndKicks]: https://github.com/JerzyKruszewski/RachelDiscordBot#banning-and-kicking-users
@@ -471,6 +503,7 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [License]: https://github.com/JerzyKruszewski/RachelDiscordBot#license
 [Changelog]: https://github.com/JerzyKruszewski/RachelDiscordBot#changelog
 [WhatIHaveLearned]: https://github.com/JerzyKruszewski/RachelDiscordBot#what-i-have-learned-working-on-this-project
+[InfoForContributors]: https://github.com/JerzyKruszewski/RachelDiscordBot#information-for-contributors
 
 [CodeFactorBadge]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot/badge
 [CodeFactorRepository]: https://www.codefactor.io/repository/github/jerzykruszewski/racheldiscordbot
@@ -489,3 +522,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 [CYOATool]: https://bitbucket.org/JurijK/chooseyourownadventure/downloads/
 [ArtistInstagram]: https://www.instagram.com/aster_atheris/
 [PatreonPage]: https://www.patreon.com/bajarzdevelopment?fan_landing=true
+
+[FoxBotGitHub]: https://github.com/foxbot
+[DiscAddIntActRepo]: https://github.com/foxbot/Discord.Addons.Interactive
+[DiscNetLabRepo]: https://github.com/Discord-Net-Labs/Discord.Net-Labs
+[DiscNetRepo]: https://github.com/discord-net/Discord.Net

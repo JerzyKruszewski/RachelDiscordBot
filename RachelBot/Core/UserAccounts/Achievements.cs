@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace RachelBot.Core.UserAccounts;
 
-namespace RachelBot.Core.UserAccounts
+public class Achievements
 {
-    public class Achievements
+    public static Achievement GetAchievement(UserAccount user, int id)
     {
-        public static Achievement GetAchievement(UserAccount user, int id)
-        {
-            return user.Achievements.SingleOrDefault(a => a.Id == id);
-        }
+        return user.Achievements.SingleOrDefault(a => a.Id == id);
+    }
 
-        public static Achievement CreateAchievement(int id, int value, string content)
+    public static Achievement CreateAchievement(int id, int value, string content)
+    {
+        return new Achievement()
         {
-            return new Achievement()
-            {
-                Id = id,
-                Value = value,
-                Content = content
-            };
-        }
+            Id = id,
+            Value = value,
+            Content = content
+        };
+    }
 
-        public static int GetNextId(IList<Achievement> achievements)
+    public static int GetNextId(IList<Achievement> achievements)
+    {
+        try
         {
-            try
-            {
-                return achievements.Max(w => w.Id) + 1;
-            }
-            catch (Exception)
-            {
-                return 1;
-            }
+            return achievements.Max(w => w.Id) + 1;
+        }
+        catch (Exception)
+        {
+            return 1;
         }
     }
 }
