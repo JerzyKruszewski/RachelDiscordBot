@@ -12,9 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net.Labs" Version="3.4.0" />
-    <PackageReference Include="Discord.Net.Labs.Core" Version="3.4.0" />
-    <PackageReference Include="Discord.Net.Labs.Interactions" Version="3.4.0" />
+    <PackageReference Include="Discord.Net.Labs" Version="3.4.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />

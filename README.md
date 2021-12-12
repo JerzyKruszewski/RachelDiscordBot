@@ -397,6 +397,8 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 2.0.1
+	- Fixed issue with not recognising server members
 - Version 2.0.0
 	- **Changed staff role system (BROKEN CONFIGS)**
 	- Upgrade .NET 5 to .NET 6

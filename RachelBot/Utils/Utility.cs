@@ -6,7 +6,7 @@ namespace RachelBot.Utils;
 
 public class Utility
 {
-    public const string Version = "2.0.0";
+    public const string Version = "2.0.1";
 
     public const ulong MotherServerId = 701156872698462299;
 

@@ -196,7 +196,7 @@ public class EventHandler
                 IResult result = await _commands.ExecuteAsync(context, argPos, _service);
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
                 {
-                    Console.WriteLine(result.ErrorReason);
+                    Console.WriteLine(result.ToString());
                     await context.Channel.SendMessageAsync(result.ErrorReason);
                     Program.LogToFile($"WARNING: {result.ErrorReason}");
                 }

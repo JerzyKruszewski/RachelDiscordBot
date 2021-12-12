@@ -29,7 +29,8 @@ internal class Program
             {
                 LogLevel = LogSeverity.Verbose,
                 MessageCacheSize = 0, 
-                AlwaysDownloadUsers = true
+                AlwaysDownloadUsers = true,
+                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers
             });
 
             await InitializationClient();
