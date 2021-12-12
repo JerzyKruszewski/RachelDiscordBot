@@ -13,21 +13,14 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net.Labs" Version="3.4.9" />
+    <PackageReference Include="Discord.Net.Labs.Core" Version="3.4.9" />
+    <PackageReference Include="Discord.Net.Labs.Interactions" Version="3.4.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Discord.Addons.Interactive">
-      <HintPath>Assemblies\Discord.Addons.Interactive.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Assemblies\Discord.Addons.Interactive.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Images\affectionate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
