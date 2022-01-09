@@ -64,5 +64,7 @@
   "RAFFLE_JOIN_FAIL": "Couldn't join this raffle. This raffle cannot be entered by user, or you already enter once.'",
   "RAFFLE_TITLE": "Raffle #{0} for {1}",
   "RAFFLE": "Raffle participants:{0}",
-  "RAFFLES_TITLE": "Raffles"
+  "RAFFLES_TITLE": "Raffles",
+  "USER_INFO": "Username: {0}\nId: {1}\nNickname: {2}\nAccount created: {3} UTC\nJoined guild: {4} UTC (While his account was {5} old)\n\n{6}",
+  "USER_BANNED_NOTIFICATION": "User {0} ({1}) was banned with reason: {2}"
 }

@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using RachelBot.Core.Configs;
+using RachelBot.Core.UserAccounts;
+using RachelBot.Lang;
 
 namespace RachelBot.Utils;
 
@@ -86,5 +88,17 @@ Creator of ℜ𝔞𝔠𝔥𝔢𝔩";
     public static SocketGuild GetGuildFromSocketMessageComponent(DiscordSocketClient client, SocketMessageComponent messageComponent)
     {
         return client.Guilds.Single(g => g.TextChannels.Any(ch => ch.Id == messageComponent.Channel.Id));
+    }
+
+    public static string GetStatusMessage(SocketGuildUser user, GuildConfig config, AlertsHandler alerts, UserAccount account)
+    {
+        if (config.PointBasedWarns)
+        {
+            return alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
+                                                                    account.Warnings.Count, UserAccounts.GetWarningsPower(account));
+        }
+
+        return alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
+                                                          account.Warnings.Count);
     }
 }

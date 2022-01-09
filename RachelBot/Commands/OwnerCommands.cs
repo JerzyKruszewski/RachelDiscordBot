@@ -117,6 +117,6 @@ public class OwnerCommands : InteractiveBase<SocketCommandContext>
         builder.WithButton(label: "Lorem", customId: "LoremId", style: ButtonStyle.Success)
                .WithButton(label: "Ipsum", customId: "IpsumId", style: ButtonStyle.Danger);
 
-        await ReplyAsync("Btn test:", component: builder.Build());
+        await ReplyAsync("Btn test:", components: builder.Build());
     }
 }
