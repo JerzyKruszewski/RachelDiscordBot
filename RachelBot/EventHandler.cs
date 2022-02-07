@@ -10,6 +10,8 @@ using RachelBot.Core.Configs;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
 using RachelBot.Lang;
+using RachelBot.Core.AntiPhishing;
+using RachelBot.Core.StaffRoles;
 
 namespace RachelBot;
 
@@ -55,6 +57,11 @@ public class EventHandler
         GuildConfig config = new GuildConfigs(arg2.Id, _storage).GetGuildConfig();
         AlertsHandler alerts = new AlertsHandler(config);
         ISocketMessageChannel channel = Utility.GetMessageChannelById(arg2, config.ModeratorChannelId);
+
+        if (channel is null)
+        {
+            return;
+        }
 
         await channel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED_NOTIFICATION", arg1.Username, arg1.Id, (await arg2.GetBanAsync(arg1)).Reason));
     }
@@ -182,6 +189,19 @@ public class EventHandler
             if (context.Channel is not IPrivateChannel)
             {
                 config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
+                AlertsHandler alerts = new AlertsHandler(config);
+
+                if (config.PhishingProtection && PhishingProtector.IsDangerous(arg.Content))
+                {
+                    ISocketMessageChannel modChannel = Utility.GetMessageChannelById(context.Guild, config.ModeratorChannelId) ?? context.Channel;
+                    StringBuilder staffRolesPing = new StringBuilder();
+                    foreach (StaffRole role in config.StaffRoles)
+                    {
+                        staffRolesPing.Append($"<@&{role.Id}> ");
+                    }
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("PHISHING_ALERT", arg.GetJumpUrl(), staffRolesPing.ToString()));
+                    await arg.AddReactionAsync(new Emoji("⚠️"));
+                }
 
                 if (!config.ReactToBotMessages && context.User.IsBot)
                 {

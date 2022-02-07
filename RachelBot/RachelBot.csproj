@@ -28,6 +28,9 @@
     <None Update="Assemblies\Discord.Addons.Interactive.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Core\AntiPhishing\domain-list.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\affectionate.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -66,5 +66,6 @@
   "RAFFLE": "Uczestnicy loterii:{0}",
   "RAFFLES_TITLE": "Loterie",
   "USER_INFO": "Username: {0}\nId: {1}\nNick: {2}\nKonto utworzono: {3} UTC\nData dołączenia na serwer: {4} UTC (Konto miało wtedy {5})\n\n{6}",
-  "USER_BANNED_NOTIFICATION": "Użytkownik {0} ({1}) został zbanowany z powodu: {2}"
+  "USER_BANNED_NOTIFICATION": "Użytkownik {0} ({1}) został zbanowany z powodu: {2}",
+  "PHISHING_ALERT": "**!Phishing Alert!**\n{0}\n{1}"
 }

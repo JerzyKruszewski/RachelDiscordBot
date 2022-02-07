@@ -237,4 +237,13 @@ public class GuildConfigs
 
         return _config;
     }
+
+    public GuildConfig TogglePhishingProtection(bool toggle)
+    {
+        _config.PhishingProtection = toggle;
+
+        Save();
+
+        return _config;
+    }
 }

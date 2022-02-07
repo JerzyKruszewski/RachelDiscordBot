@@ -251,4 +251,15 @@ public class ConfigurationCommands : InteractiveBase<SocketCommandContext>
 
         await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
     }
+
+    [Command("TogglePhishingProtection")]
+    [RequireUserPermission(GuildPermission.Administrator)]
+    public async Task TogglePhishingProtection(bool toggle)
+    {
+        GuildConfigs configs = new GuildConfigs(Context.Guild.Id, _storage);
+
+        configs.TogglePhishingProtection(toggle);
+
+        await Context.Channel.SendMessageAsync(new AlertsHandler(configs.GetGuildConfig()).GetAlert("SUCCESS"));
+    }
 }
