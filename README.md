@@ -397,6 +397,10 @@ Images: All rights reserved. They are intellectual properties of respective arti
 
 ***
 ## Changelog
+- Version 2.1.0
+	- Added Phishing protection
+	- Added ability to ban users who already left the server (`$banById {user id}`)
+	- Added ability for moderators (JuniorMod+) to show user informations (`$user-info {user ping}`)
 - Version 2.0.1
 	- Fixed issue with not recognising server members
 - Version 2.0.0

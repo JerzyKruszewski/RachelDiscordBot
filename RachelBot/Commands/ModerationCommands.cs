@@ -518,4 +518,59 @@ public class ModerationCommands : InteractiveBase<SocketCommandContext>
 
         await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
     }
+
+    [Command("user-info")]
+    [Alias("userinfo")]
+    [RequireStaff(StaffPermissionType.JuniorModerator)]
+    public async Task GetUserInfo(SocketGuildUser user = null)
+    {
+        SocketGuild guild = Context.Guild;
+        GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+        AlertsHandler alerts = new AlertsHandler(config);
+
+        if (user is null)
+        {
+            user = Context.User as SocketGuildUser;
+        }
+
+        UserAccounts accounts = new UserAccounts(guild.Id, _storage);
+        UserAccount account = accounts.GetUserAccount(user.Id);
+        DateTime joined = user.JoinedAt.Value.UtcDateTime;
+        DateTime created = user.CreatedAt.UtcDateTime;
+        TimeSpan accountAge = joined - created;
+        string ageFormatted = string.Format("{0}d {1}h {2}min", accountAge.Days, accountAge.Hours, accountAge.Minutes);
+
+        string message = alerts.GetFormattedAlert("USER_INFO",
+                                                  user.Username,
+                                                  user.Id,
+                                                  user.Nickname ?? "---",
+                                                  created,
+                                                  joined,
+                                                  ageFormatted,
+                                                  Utility.GetStatusMessage(user, config, alerts, account));
+
+        EmbedBuilder embed = new EmbedBuilder()
+        {
+            Title = $"{user.Username} info",
+            Description = message,
+            Color = new Color(1, 69, 44),
+            ImageUrl = user.GetAvatarUrl(size: 2048)
+        };
+
+        await Context.Channel.SendMessageAsync(embed: embed.Build());
+    }
+
+    [Command("BanById")]
+    [RequireStaff(StaffPermissionType.Moderator)]
+    [RequireBotPermission(GuildPermission.BanMembers)]
+    public async Task BanById(ulong id, [Remainder]string reason)
+    {
+        SocketGuild guild = Context.Guild;
+        GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
+        AlertsHandler alerts = new AlertsHandler(config);
+
+        await Context.Guild.AddBanAsync(id, pruneDays: 0, reason);
+
+        await Context.Channel.SendMessageAsync(alerts.GetAlert("SUCCESS"));
+    }
 }

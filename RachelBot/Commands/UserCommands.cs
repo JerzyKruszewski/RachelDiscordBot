@@ -39,7 +39,7 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
 
         accounts.DeleteExpiredWarnings(account);
 
-        string message = GetStatusMessage(user, config, alerts, account);
+        string message = Utility.GetStatusMessage(user, config, alerts, account);
 
         await Context.Channel.SendMessageAsync(message);
     }
@@ -332,18 +332,6 @@ public class UserCommands : InteractiveBase<SocketCommandContext>
     {
         string msg = Dialogue.GetRandomResponse(Context);
         await Context.Channel.SendMessageAsync(msg);
-    }
-
-    private static string GetStatusMessage(SocketGuildUser user, GuildConfig config, AlertsHandler alerts, UserAccount account)
-    {
-        if (config.PointBasedWarns)
-        {
-            return alerts.GetFormattedAlert("STATUS_MESSAGE_POINT", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
-                                                                    account.Warnings.Count, UserAccounts.GetWarningsPower(account));
-        }
-
-        return alerts.GetFormattedAlert("STATUS_MESSAGE", user.Username, account.LevelNumber, account.XP, account.Praises.Count, account.Achievements.Count,
-                                                          account.Warnings.Count);
     }
 
     private static string GetUserWarningsMessage(SocketGuildUser user, GuildConfig config, AlertsHandler alerts, UserAccount account)

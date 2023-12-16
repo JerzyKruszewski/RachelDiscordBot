@@ -9,6 +9,9 @@ using RachelBot.Services.Storage;
 using RachelBot.Core.Configs;
 using RachelBot.Utils;
 using RachelBot.Core.LevelingSystem;
+using RachelBot.Lang;
+using RachelBot.Core.AntiPhishing;
+using RachelBot.Core.StaffRoles;
 
 namespace RachelBot;
 
@@ -46,6 +49,21 @@ public class EventHandler
         _client.UserLeft += HandleUserLeftAsync;
         _client.ButtonExecuted += HandleButtonClicked;
         _client.SelectMenuExecuted += HandleSelectMenuSelected;
+        _client.UserBanned += HandleBan;
+    }
+
+    private async Task HandleBan(SocketUser arg1, SocketGuild arg2)
+    {
+        GuildConfig config = new GuildConfigs(arg2.Id, _storage).GetGuildConfig();
+        AlertsHandler alerts = new AlertsHandler(config);
+        ISocketMessageChannel channel = Utility.GetMessageChannelById(arg2, config.ModeratorChannelId);
+
+        if (channel is null)
+        {
+            return;
+        }
+
+        await channel.SendMessageAsync(alerts.GetFormattedAlert("USER_BANNED_NOTIFICATION", arg1.Username, arg1.Id, (await arg2.GetBanAsync(arg1)).Reason));
     }
 
     private async Task HandleSelectMenuSelected(SocketMessageComponent arg)
@@ -96,11 +114,10 @@ public class EventHandler
         }
     }
 
-    private async Task HandleUserLeftAsync(SocketGuildUser arg)
+    private async Task HandleUserLeftAsync(SocketGuild guild, SocketUser arg)
     {
         try
         {
-            SocketGuild guild = arg.Guild;
             GuildConfig config = new GuildConfigs(guild.Id, _storage).GetGuildConfig();
 
             EmbedBuilder embed = new EmbedBuilder()
@@ -172,6 +189,19 @@ public class EventHandler
             if (context.Channel is not IPrivateChannel)
             {
                 config = new GuildConfigs(context.Guild.Id, _storage).GetGuildConfig();
+                AlertsHandler alerts = new AlertsHandler(config);
+
+                if (config.PhishingProtection && PhishingProtector.IsDangerous(arg.Content))
+                {
+                    ISocketMessageChannel modChannel = Utility.GetMessageChannelById(context.Guild, config.ModeratorChannelId) ?? context.Channel;
+                    StringBuilder staffRolesPing = new StringBuilder();
+                    foreach (StaffRole role in config.StaffRoles)
+                    {
+                        staffRolesPing.Append($"<@&{role.Id}> ");
+                    }
+                    await modChannel.SendMessageAsync(alerts.GetFormattedAlert("PHISHING_ALERT", arg.GetJumpUrl(), staffRolesPing.ToString()));
+                    await arg.AddReactionAsync(new Emoji("⚠️"));
+                }
 
                 if (!config.ReactToBotMessages && context.User.IsBot)
                 {

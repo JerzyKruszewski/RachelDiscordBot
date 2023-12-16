@@ -54,5 +54,7 @@ public class GuildConfig
     public ulong ToSChannelId { get; set; } = 0;
 
     public bool ReactToBotMessages { get; set; } = false;
+
+    public bool PhishingProtection { get; set; } = true;
     #endregion
 }
