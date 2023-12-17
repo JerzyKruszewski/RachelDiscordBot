@@ -4,14 +4,14 @@ using System.Text;
 using Discord;
 using Discord.WebSocket;
 
-namespace RachelBot;
+namespace RachelBot.DiscordApp;
 
 internal class Program
 {
     private const string LogFilePath = "./Log.txt";
 
-    private DiscordSocketClient _client;
-    private EventHandler _handler;
+    private DiscordSocketClient? _client;
+    private EventHandler? _handler;
 
     private static void Main() => new Program().RunBotAsync().GetAwaiter().GetResult();
 
@@ -30,7 +30,7 @@ internal class Program
                 LogLevel = LogSeverity.Verbose,
                 MessageCacheSize = 0, 
                 AlwaysDownloadUsers = true,
-                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers
+                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers | GatewayIntents.MessageContent
             });
 
             await InitializationClient();
@@ -47,6 +47,10 @@ internal class Program
 
     private async Task InitializationClient()
     {
+        if (_client is null) 
+        {
+            throw new ArgumentNullException(nameof(_client));
+        }
         await _client.SetGameAsync(ConfigurationManager.AppSettings["Game"]);
         await LoginAsync();
         await HandlerInitialize();
@@ -54,18 +58,30 @@ internal class Program
 
     private async Task LoginAsync()
     {
+        if (_client is null)
+        {
+            throw new ArgumentNullException(nameof(_client));
+        }
         await _client.LoginAsync(TokenType.Bot, ConfigurationManager.AppSettings["Token"]);
         await _client.StartAsync();
     }
 
     private async Task HandlerInitialize()
     {
+        if (_client is null)
+        {
+            throw new ArgumentNullException(nameof(_client));
+        }
         _handler = new EventHandler();
         await _handler.InitializeAsync(_client);
     }
 
     private Task InitializationLogs()
     {
+        if (_client is null)
+        {
+            throw new ArgumentNullException(nameof(_client));
+        }
         _client.Log += BotLog;
 
         return Task.CompletedTask;

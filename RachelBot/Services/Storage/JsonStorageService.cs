@@ -17,7 +17,7 @@ public class JsonStorageService : IStorageService
         return File.Exists(filepath);
     }
 
-    public T RestoreObject<T>(string filepath)
+    public T? RestoreObject<T>(string filepath)
     {
         string json = File.ReadAllText(filepath);
         return JsonConvert.DeserializeObject<T>(json);

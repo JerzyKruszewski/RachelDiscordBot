@@ -1,12 +1,9 @@
 ﻿using System.Configuration;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Discord.Commands;
-using Discord.WebSocket;
-using Discord.Addons.Interactive;
 using RachelBot.Services.Storage;
 
-namespace RachelBot;
+namespace RachelBot.DiscordApp;
 
 public class EventHandler
 {
@@ -25,7 +22,6 @@ public class EventHandler
             .AddSingleton(_random)
             .AddSingleton(_storage)
             .AddSingleton(_client)
-            .AddSingleton(new InteractiveService(_client))
             .BuildServiceProvider();
 
         CommandServiceConfig cmdConfig = new CommandServiceConfig
